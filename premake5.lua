@@ -14,8 +14,19 @@ configurations
 IncludeDir = {}
 
 IncludeDir["Shard_SRC"] = "Shard/src"
--- IncludeDir["SPDLOG"] = "Shard/vendor/spdlog/include"
 IncludeDir["GLFW"] = "Shard/vendor/glfw/include"
+IncludeDir["GLEW"] = "Shard/vendor/glew/include"
+
+-- Library files
+LibFile = {}
+
+LibFile["GLEW"] = "glew32.lib"
+LibFile["OPENGL"] = "opengl32.lib"
+
+-- Library directories
+LibDir = {}
+
+LibDir["GLEW"] = "vendor/glew/lib"
 
 -- Output directory
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
@@ -30,9 +41,6 @@ project "Shard"
     targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 
-    -- pchheader "Shardpch.h"
-    -- pchsource "%{IncludeDir.Shard_SRC}/Shardpch.cpp"
-
     files
 	{
 		"%{prj.name}/src/**.h",
@@ -42,13 +50,20 @@ project "Shard"
     includedirs
     {
         "%{IncludeDir.Shard_SRC}",
-        "%{IncludeDir.GLFW}"
-        -- "%{IncludeDir.SPDLOG}"
+        "%{IncludeDir.GLFW}",
+        "%{IncludeDir.GLEW}"
     }
+
+    libdirs
+	{
+		"%{LibDir.GLEW}"
+	}
 
     links
     {
-        "GLFW"
+        "GLFW",
+        "%{LibFile.GLEW}",
+        "%{LibFile.OPENGL}"
     }
 
     filter "system:windows"
@@ -92,13 +107,23 @@ project "Game"
     includedirs
     {
         "%{IncludeDir.Shard_SRC}",
-        "%{IncludeDir.SPDLOG}"
+        "%{IncludeDir.GLFW}",
+		"%{IncludeDir.GLEW}"
     }
 
-    links
-    {
-        "Shard"
-    }
+    libdirs
+	{
+		"%{LibDir.GLFW}",
+		"%{LibDir.GLEW}"
+	}
+
+	links
+	{
+		"Shard",
+		"GLFW",
+		"%{LibFile.GLEW}",
+		"%{LibFile.OPENGL}"
+	}
 
 	filter "system:windows"
 	    cppdialect "C++11"
