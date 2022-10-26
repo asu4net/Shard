@@ -13,20 +13,20 @@ configurations
 -- Include directories 
 IncludeDir = {}
 
-IncludeDir["Shard_SRC"] = "Shard/src"
+IncludeDir["SHARD_SRC"] = "Shard/src"
 IncludeDir["GLFW"] = "Shard/vendor/glfw/include"
 IncludeDir["GLEW"] = "Shard/vendor/glew/include"
 
 -- Library files
 LibFile = {}
 
-LibFile["GLEW"] = "glew32.lib"
+LibFile["GLEW"] = "glew32s.lib"
 LibFile["OPENGL"] = "opengl32.lib"
 
 -- Library directories
 LibDir = {}
 
-LibDir["GLEW"] = "vendor/glew/lib"
+LibDir["GLEW"] = "Shard/vendor/glew/lib"
 
 -- Output directory
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
@@ -49,7 +49,7 @@ project "Shard"
 
     includedirs
     {
-        "%{IncludeDir.Shard_SRC}",
+        "%{IncludeDir.SHARD_SRC}",
         "%{IncludeDir.GLFW}",
         "%{IncludeDir.GLEW}"
     }
@@ -72,8 +72,8 @@ project "Shard"
 
         defines
         {
-            "Shard_PLATFORM_WINDOWS",
-            "Shard_BUILD_DLL"
+            "SHARD_PLATFORM_WINDOWS",
+            "SHARD_BUILD_DLL"
         }
 
         postbuildcommands
@@ -82,11 +82,11 @@ project "Shard"
 		}
 
     filter "configurations:Debug"
-        defines "Shard_DEBUG"
+        defines "SHARD_DEBUG"
         symbols "On"
 
     filter "configurations:Release"
-        defines "Shard_RELEASE"
+        defines "SHARD_RELEASE"
         symbols "On"
         optimize "On"
 
@@ -106,7 +106,7 @@ project "Game"
 
     includedirs
     {
-        "%{IncludeDir.Shard_SRC}",
+        "%{IncludeDir.SHARD_SRC}",
         "%{IncludeDir.GLFW}",
 		"%{IncludeDir.GLEW}"
     }
@@ -131,14 +131,14 @@ project "Game"
 
 	    defines 
 	    {
-		    "Shard_PLATFORM_WINDOWS"
+		    "SHARD_PLATFORM_WINDOWS"
 	    }
 
 	filter "configurations:Debug"
-		defines "Shard_DEBUG"
+		defines "SHARD_DEBUG"
 		symbols "On"
 
 	filter "configurations:Release"
-		defines "Shard_RELEASE"
+		defines "SHARD_RELEASE"
 		symbols "On"
 		optimize "On"
