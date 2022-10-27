@@ -1,6 +1,7 @@
 #include "Shard/Core/Application.h"
 #include "Shard/Core/EntryPoint.h"
-#include "Shard/Event/Event.h"
+#include "Shard/ShardEvents/Event.h"
+#include "Shard/Rendering/Window.h"
 
 namespace Game
 {
@@ -9,6 +10,9 @@ namespace Game
         virtual void Start() override
         {
             Application::Start();
+
+            Shard::Rendering::Window window;
+            window.StartLoop();
         }
     };
 }

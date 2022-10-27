@@ -10,26 +10,29 @@ configurations
 
 -- VARIABLES --
 
+-- Output directory
+outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
+
 -- Include directories 
 IncludeDir = {}
 
 IncludeDir["SHARD_SRC"] = "Shard/src"
 IncludeDir["GLFW"] = "Shard/vendor/glfw/include"
 IncludeDir["GLEW"] = "Shard/vendor/glew/include"
+IncludeDir["SHARD"] = "Shard/src/Shard"
+IncludeDir["SHARD_CORE"] = "Shard/src/Shard/Core"
 
 -- Library files
 LibFile = {}
 
-LibFile["GLEW"] = "glew32s.lib"
+LibFile["GLEW_STATIC"] = "glew32s.lib"
+LibFile["GLEW"] = "glew32.lib"
 LibFile["OPENGL"] = "opengl32.lib"
 
 -- Library directories
 LibDir = {}
 
 LibDir["GLEW"] = "Shard/vendor/glew/lib"
-
--- Output directory
-outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 include "Shard/vendor/glfw/premake5.lua"
 
@@ -50,6 +53,8 @@ project "Shard"
     includedirs
     {
         "%{IncludeDir.SHARD_SRC}",
+        "%{IncludeDir.SHARD_CORE}",
+		"%{IncludeDir.SHARD}",
         "%{IncludeDir.GLFW}",
         "%{IncludeDir.GLEW}"
     }
@@ -63,15 +68,17 @@ project "Shard"
     {
         "GLFW",
         "%{LibFile.GLEW}",
+        "%{LibFile.GLEW_STATIC}",
         "%{LibFile.OPENGL}"
     }
 
     filter "system:windows"
-        cppdialect "C++11"
+        cppdialect "C++17"
         systemversion "latest"
 
         defines
         {
+			-- "GLEW_STATIC",
             "SHARD_PLATFORM_WINDOWS",
             "SHARD_BUILD_DLL"
         }
@@ -107,6 +114,8 @@ project "Game"
     includedirs
     {
         "%{IncludeDir.SHARD_SRC}",
+        "%{IncludeDir.SHARD_CORE}",
+		"%{IncludeDir.SHARD}",
         "%{IncludeDir.GLFW}",
 		"%{IncludeDir.GLEW}"
     }
@@ -121,16 +130,18 @@ project "Game"
 	{
 		"Shard",
 		"GLFW",
+		"%{LibFile.GLEW_STATIC}",
 		"%{LibFile.GLEW}",
 		"%{LibFile.OPENGL}"
 	}
 
 	filter "system:windows"
-	    cppdialect "C++11"
+	    cppdialect "C++17"
 	    systemversion "latest"
 
 	    defines 
 	    {
+			-- "GLEW_STATIC",
 		    "SHARD_PLATFORM_WINDOWS"
 	    }
 

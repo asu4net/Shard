@@ -3,7 +3,7 @@
 #include <functional>
 #include <vector>
 
-namespace Shard
+namespace Shard::ShardEvents
 {
 	//Add Listener macro...
 
