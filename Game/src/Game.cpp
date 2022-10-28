@@ -2,7 +2,7 @@
 #include "Shard/Core/EntryPoint.h"
 #include "Shard/ShardEvents/Event.h"
 #include "Shard/Rendering/Window.h"
-#include "Shard/Math/Vector.h"
+#include "Shard/Math/Vector2.h"
 
 namespace Game
 {
@@ -15,7 +15,7 @@ namespace Game
             Shard::Rendering::Window window;
             window.StartLoop();
 
-            Shard::Math::Vector3 vector;
+            Shard::Math::Vector2 vector;
         }
     };
 }
