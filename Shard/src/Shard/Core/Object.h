@@ -3,7 +3,7 @@
 
 namespace Shard
 {
-    class Object
+    class SHARD_API Object
     {
     public:
         virtual std::string ToString() const
