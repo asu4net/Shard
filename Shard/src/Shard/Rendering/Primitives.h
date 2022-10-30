@@ -17,7 +17,7 @@ namespace Shard::Rendering::Primitives
 		glm::mat4 projection;
 		glm::mat4 view;
 
-		void CalculateMatrix()
+		void Draw()
 		{
 			projection = glm::mat4(1);
 			view = glm::mat4(1);
@@ -30,14 +30,15 @@ namespace Shard::Rendering::Primitives
 			glm::vec3 up = glm::vec3(0, 1.f, 0);
 			
 			view = glm::lookAt(cameraPos, cameraPos + forward, up);
+			Render();
 		}
 
-		virtual void Draw() = 0;
+		virtual void Render() = 0;
     };
 	
 	struct Quad : public Shape
 	{
-		virtual void Draw() override
+		virtual void Render() override
 		{
 			Renderer::DrawQuad(transform, view, projection, color);
 		}
@@ -48,7 +49,7 @@ namespace Shard::Rendering::Primitives
 		float thickness = 1.f;
 		float fade = 0.005f;
 
-		virtual void Draw() override
+		virtual void Render() override
 		{
 			Renderer::DrawCircle(transform, view, projection, color, thickness, fade);
 		}

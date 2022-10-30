@@ -6,8 +6,6 @@
 #include "TimeData.h"
 #include "Renderer.h"
 
-//TODO: Getters y setters: mouse, tamaño de ventana, nombre de ventana, aspect ratio
-
 namespace Shard::Rendering
 {
 	bool Window::s_ShowOpenGLDebugMessages = true;

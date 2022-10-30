@@ -5,7 +5,6 @@
 #include "Math/Color.h"
 #include <string>
 
-#include "Rendering/Primitives.h"
 #include "gtc/matrix_transform.hpp"
 
 struct GLFWwindow;

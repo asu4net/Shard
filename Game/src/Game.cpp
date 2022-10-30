@@ -1,6 +1,7 @@
 #include "Shard/Core/Application.h"
 #include "Shard/Core/EntryPoint.h"
 #include "Rendering/Primitives.h"
+#include "TimeData.h"
 #include "Input.h"
 
 namespace Game
@@ -21,10 +22,7 @@ namespace Game
 
         virtual void OnRenderFrame(ShardEvents::OnRenderFrameEventArgs _Args) override
         {
-            circle.CalculateMatrix();
             circle.Draw();
-
-            quad.CalculateMatrix();
             quad.Draw();
 
             glm::vec2 mousePos = Input::GetMousePosition();
