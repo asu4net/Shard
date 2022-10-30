@@ -1,21 +1,35 @@
 #include "Shard/Core/Application.h"
 #include "Shard/Core/EntryPoint.h"
-#include "Shard/ShardEvents/Event.h"
-#include "Shard/Rendering/Window.h"
-#include "Shard/Math/Vector2.h"
+#include "Rendering/Primitives.h"
+#include "Input.h"
 
 namespace Game
 {
-    class Game final : public Shard::Application
+    using namespace Shard;
+
+    class Game final : public Application
     {
-        virtual void Start() override
+        Rendering::Primitives::Quad quad;
+        Rendering::Primitives::Circle circle;
+        glm::mat4 model;
+
+        virtual void OnRenderReady(ShardEvents::OnRenderReadyEventArgs _Args) override
         {
-            Application::Start();
+            circle.color = glm::vec4(0, 1, 0, 1);
+            model = quad.transform;
+        }
 
-            Shard::Rendering::Window window;
-            window.StartLoop();
+        virtual void OnRenderFrame(ShardEvents::OnRenderFrameEventArgs _Args) override
+        {
+            circle.CalculateMatrix();
+            circle.Draw();
 
-            Shard::Math::Vector2 vector;
+            quad.CalculateMatrix();
+            quad.Draw();
+
+            glm::vec2 mousePos = Input::GetMousePosition();
+            glm::vec3 screenWorld = m_Window.ScreenToWorldPoint(glm::vec3(mousePos.x, mousePos.y, 0), quad.projection, quad.view);
+            quad.transform = glm::translate(model, glm::vec3(screenWorld.x, screenWorld.y, 0));
         }
     };
 }

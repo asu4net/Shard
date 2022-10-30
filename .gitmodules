@@ -1,3 +1,6 @@
 [submodule "Shard/vendor/glfw"]
 	path = Shard/vendor/glfw
 	url = https://github.com/asu4net/glfw.git
+[submodule "Shard/vendor/glm"]
+	path = Shard/vendor/glm
+	url = https://github.com/g-truc/glm.git

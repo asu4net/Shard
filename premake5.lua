@@ -17,6 +17,7 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 IncludeDir = {}
 
 IncludeDir["SHARD_SRC"] = "Shard/src"
+IncludeDir["GLM"] = "Shard/vendor/glm/glm"
 IncludeDir["GLFW"] = "Shard/vendor/glfw/include"
 IncludeDir["GLEW"] = "Shard/vendor/glew/include"
 IncludeDir["SHARD"] = "Shard/src/Shard"
@@ -56,6 +57,7 @@ project "Shard"
         "%{IncludeDir.SHARD_CORE}",
 		"%{IncludeDir.SHARD}",
         "%{IncludeDir.GLFW}",
+		"%{IncludeDir.GLM}",
         "%{IncludeDir.GLEW}"
     }
 
@@ -117,6 +119,7 @@ project "Game"
         "%{IncludeDir.SHARD_CORE}",
 		"%{IncludeDir.SHARD}",
         "%{IncludeDir.GLFW}",
+		"%{IncludeDir.GLM}",
 		"%{IncludeDir.GLEW}"
     }
 
