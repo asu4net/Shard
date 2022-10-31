@@ -31,8 +31,8 @@ namespace Shard::Rendering
         Window();
         Window(int _Width, int _Height, const char* _Name, Math::Color _Color);
 
-        const std::string& GetName() const;
-        void SetName(const char* _Name);
+        const std::string& GetTitle() const;
+        void SetTitle(const std::string& _Title);
 
         CursorMode GetCursorMode() const;
         void SetCursorMode(CursorMode _Mode);
@@ -43,7 +43,7 @@ namespace Shard::Rendering
         void StartLoop();
 
     private:
-        std::string m_Name;
+        std::string m_Title;
         GLFWwindow* m_Window;
         int m_Width, m_Height;
         Math::Color m_Color;

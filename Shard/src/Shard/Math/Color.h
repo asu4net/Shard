@@ -15,9 +15,11 @@ namespace Shard::Math
         static const Color clear;
         static const Color cyan;
         static const Color gray;
+        static const Color darkGray;
         static const Color green;
         static const Color lightGreen;
         static const Color grey;
+        static const Color darkGrey;
         static const Color magenta;
         static const Color red;
         static const Color lightRed;

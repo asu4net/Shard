@@ -8,9 +8,11 @@ namespace Shard::Math
     const Color Color::clear = { 0, 0, 0, 0 };
     const Color Color::cyan = { 0, 1, 1, 1 };
     const Color Color::gray = { .5f, .5f, .5f, 1 };
+    const Color Color::darkGray = { .2f, .2f, .2f, 1 };
     const Color Color::green = { 0, 1, 0, 1 };
     const Color Color::lightGreen = { .3f, 1, .3f, 1 };
     const Color Color::grey = { .5f, .5f, .5f, 1 };
+    const Color Color::darkGrey = { .8f, .8f, .8f, 1 };
     const Color Color::magenta = { 1, 0, 1, 1 };
     const Color Color::red = { 1, 0, 0, 1 };
     const Color Color::lightRed = { 1, .3f, .3f, 1 };

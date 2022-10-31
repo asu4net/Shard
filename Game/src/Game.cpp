@@ -4,6 +4,7 @@
 #include "Shard/Math/Math.h"
 #include "TimeData.h"
 #include "Input.h"
+#include "Conversions.h"
 
 namespace Game
 {
@@ -35,14 +36,24 @@ namespace Game
             mouseQuad.Draw();
 
             Vector2 mousePos = Input::GetMousePosition();
-            Vector3 screenWorld = m_Window.ScreenToWorldPoint(mousePos, mouseQuad.projection, mouseQuad.view);
-            mouseQuad.Translate(screenWorld);
+            Vector3 mouseWorldPos = m_Window.ScreenToWorldPoint(mousePos, mouseQuad.projection, mouseQuad.view);
+            mouseQuad.SetPosition(mouseWorldPos);
 
             deltaRadians += (degreesPerSecond * g_Radians) * Time::DeltaTime();
 
-            Vector2 newPos = Vector2::RotateAround(screenWorld, Vector2(screenWorld) + Vector2::one * circleOffset, deltaRadians);
+            Vector2 newPos = Vector2::RotateAround(mouseWorldPos, Vector2(mouseWorldPos) + Vector2::one * circleOffset, deltaRadians);
 
-            circle.Translate(newPos);
+            circle.SetPosition(newPos);
+
+            float angle = Vector2::Angle(mouseWorldPos, circle.GetPosition());
+            float distance = Vector2::Distance(Vector3::zero, mouseWorldPos);
+
+            std::string title = "Distance: "
+                + StringFromNumber(distance)
+                + " -- Angle: "
+                + StringFromNumber(angle);
+
+            m_Window.SetTitle(title);
         }
     };
 }

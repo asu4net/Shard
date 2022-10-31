@@ -41,11 +41,16 @@ namespace Shard::Rendering::Primitives
 			Render();
 		}
 
-		void Translate(const Vector3& _Position)
+		void SetPosition(const Vector3& _Position)
 		{
 			glm::mat4 model = glm::mat4(1);
 			model = glm::translate(model, _Position.ToGlm());
 			transform = model;
+		}
+
+		Vector3 GetPosition() const
+		{
+			return transform[3];
 		}
 
 		virtual void Render() = 0;

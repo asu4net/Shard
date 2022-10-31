@@ -33,16 +33,16 @@ namespace Shard::Rendering
 	}
 
 	Window::Window()
-		: m_Name("Default Shard Window")
+		: m_Title("Default Shard Window")
 		, m_Height(600)
 		, m_Width(800)
-		, m_Color(Math::Color())
+		, m_Color(Math::Color::darkGray)
 	{
 		Init();
 	}
 
-	Window::Window(int _Width, int _Height, const char* _Name, Math::Color _Color)
-		: m_Name(_Name)
+	Window::Window(int _Width, int _Height, const char* _Title, Math::Color _Color)
+		: m_Title(_Title)
 		, m_Height(_Height)
 		, m_Width(_Width)
 		, m_Color(_Color)
@@ -65,7 +65,7 @@ namespace Shard::Rendering
 
 		SetProperties();
 
-		m_Window = glfwCreateWindow(m_Width, m_Height, m_Name.c_str(), nullptr, nullptr);
+		m_Window = glfwCreateWindow(m_Width, m_Height, m_Title.c_str(), nullptr, nullptr);
 
 		if (!m_Window)
 		{
@@ -109,12 +109,12 @@ namespace Shard::Rendering
 		return true;
 	}
 
-	const std::string& Window::GetName() const { return m_Name; }
+	const std::string& Window::GetTitle() const { return m_Title; }
 
-	void Window::SetName(const char* _Name)
+	void Window::SetTitle(const std::string& _Title)
 	{
-		m_Name = _Name;
-		glfwSetWindowTitle(m_Window, _Name);
+		m_Title = _Title;
+		glfwSetWindowTitle(m_Window, _Title.c_str());
 	}
 
 	CursorMode Window::GetCursorMode() const { return m_CursorMode; }
