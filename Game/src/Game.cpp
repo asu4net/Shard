@@ -40,9 +40,9 @@ namespace Game
 
             deltaRadians += (degreesPerSecond * g_Radians) * Time::DeltaTime();
 
-            Vector2 newPos = Vector2::RotateAround(screenWorld, Vector2(screenWorld) + Vector2(circleOffset, circleOffset), deltaRadians);
+            Vector2 newPos = Vector2::RotateAround(screenWorld, Vector2(screenWorld) + Vector2::one * circleOffset, deltaRadians);
 
-            circle.Translate(Vector3(newPos, 0));
+            circle.Translate(newPos);
         }
     };
 }

@@ -24,7 +24,7 @@ namespace Shard::Math
         Vector3();
         Vector3(float _x, float _y, float _z);
         Vector3(const glm::vec3& _other);
-        Vector3(const Vector2& _other, float _z);
+        Vector3(const Vector2& _other, float _z = 0);
         Vector3 operator+(const Vector3& _other) const;
         Vector3 operator-(const Vector3& _other) const;
         Vector3 operator*(float _float) const;
