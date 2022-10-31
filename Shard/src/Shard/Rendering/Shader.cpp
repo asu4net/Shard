@@ -147,10 +147,10 @@ namespace Shard::Rendering
 		glUniform4fv(location, 1, glm::value_ptr(value));
 	}
 	
-	void Shader::SetUniformVec3(const char* name, glm::vec3 value)
+	void Shader::SetUniformVec3(const char* name, Math::Vector3 value)
 	{
 		int location = GetUniform(name);
-		glUniform3fv(location, 1, glm::value_ptr(value));
+		glUniform3fv(location, 1, glm::value_ptr(value.ToGlm()));
 	}
 	void Shader::Bind()
 	{

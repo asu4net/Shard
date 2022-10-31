@@ -25,7 +25,7 @@ namespace Shard
 		return false;
 	}
 
-	glm::vec2 Input::GetMousePosition()
+	Math::Vector2 Input::GetMousePosition()
 	{
 		double x, y;
 		glfwGetCursorPos(m_Window, &x, &y);

@@ -28,7 +28,7 @@ namespace Shard::Rendering
         quad = std::make_shared<Mesh>(MESH_2D, true, vertices, indices, 16, 6);
     }
 
-    void Renderer::DrawQuad(glm::mat4 model, glm::mat4 view, glm::mat4 projection, glm::vec4 color)
+    void Renderer::DrawQuad(glm::mat4 model, glm::mat4 view, glm::mat4 projection, Math::Color color)
     {
         defaultShader->Bind();
 
@@ -36,7 +36,7 @@ namespace Shard::Rendering
         defaultShader->SetUnfiformMat4(UNIFORM_PROJECTION_MATRIX_NAME, projection);
         defaultShader->SetUnfiformMat4(UNIFORM_VIEW_MATRIX_NAME, view);
 
-        defaultShader->SetUniformVec4(UNIFORM_DEFAULT_COLOR_NAME, color);
+        defaultShader->SetUniformVec4(UNIFORM_DEFAULT_COLOR_NAME, color.ToGlm());
 
         quad->m_vertexArray->Bind();
         quad->m_indexBuffer->Bind();
@@ -47,7 +47,7 @@ namespace Shard::Rendering
         defaultShader->Unbind();
     }
 
-    void Renderer::DrawCircle(glm::mat4 model, glm::mat4 view, glm::mat4 projection, glm::vec4 color, float thickness, float fade)
+    void Renderer::DrawCircle(glm::mat4 model, glm::mat4 view, glm::mat4 projection, Math::Color color, float thickness, float fade)
     {
         circleShader->Bind();
 
@@ -55,7 +55,7 @@ namespace Shard::Rendering
         circleShader->SetUnfiformMat4(UNIFORM_PROJECTION_MATRIX_NAME, projection);
         circleShader->SetUnfiformMat4(UNIFORM_VIEW_MATRIX_NAME, view);
 
-        circleShader->SetUniformVec4(UNIFORM_DEFAULT_COLOR_NAME, color);
+        circleShader->SetUniformVec4(UNIFORM_DEFAULT_COLOR_NAME, color.ToGlm());
         circleShader->SetUniformFloat(UNIFORM_CIRCLE_THICKNESS_NAME, thickness);
         circleShader->SetUniformFloat(UNIFORM_CIRCLE_FADE_NAME, fade);
 

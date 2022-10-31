@@ -2,7 +2,7 @@
 #include "Core.h"
 #include "ShardEvents/EventArgs.h"
 #include "ShardEvents/Event.h"
-#include "Math/Color.h"
+#include "Math/Math.h"
 #include <string>
 
 #include "gtc/matrix_transform.hpp"
@@ -37,7 +37,7 @@ namespace Shard::Rendering
         CursorMode GetCursorMode() const;
         void SetCursorMode(CursorMode _Mode);
 
-        glm::vec3 ScreenToWorldPoint(glm::vec2 _ScreenPoint, glm::mat4 _Proj = glm::mat4(1), glm::mat4 _View = glm::mat4(1));
+        Math::Vector3 ScreenToWorldPoint(Math::Vector2 _ScreenPoint, glm::mat4 _Proj = glm::mat4(1), glm::mat4 _View = glm::mat4(1));
 
         float CurrentTime() const;
         void StartLoop();

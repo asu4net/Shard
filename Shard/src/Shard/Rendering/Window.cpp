@@ -119,7 +119,7 @@ namespace Shard::Rendering
 
 	CursorMode Window::GetCursorMode() const { return m_CursorMode; }
 
-	glm::vec3 Window::ScreenToWorldPoint(glm::vec2 _ScreenPoint, glm::mat4 _Proj, glm::mat4 _View)
+	Math::Vector3 Window::ScreenToWorldPoint(Math::Vector2 _ScreenPoint, glm::mat4 _Proj, glm::mat4 _View)
 	{
 		float halfScreenWidth =  static_cast<float>(m_Width) / 2;
 		float halfScreenHeight =  static_cast<float>(m_Height) / 2;

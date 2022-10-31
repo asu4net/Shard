@@ -1,6 +1,7 @@
 #include "Vector2.h"
 #include <cmath>
 #include "Conversions.h"
+#include "Vector3.h"
 
 namespace Shard::Math
 {
@@ -19,6 +20,16 @@ namespace Shard::Math
     Vector2::Vector2(float _x, float _y)
         : x(_x)
         , y(_y)
+    {}
+
+    Vector2::Vector2(const glm::vec2 & _other)
+        : x(_other.x)
+        , y(_other.y)
+    {}
+
+    Vector2::Vector2(const Vector3& _other)
+        : x(_other.x)
+        , y(_other.y)
     {}
 
     Vector2 Vector2::operator+(const Vector2& _other) const
@@ -62,6 +73,11 @@ namespace Shard::Math
         *this = this->Normalized();
     }
 
+    glm::vec2 Vector2::ToGlm() const
+    {
+        return glm::vec2(x, y);
+    }
+
     float Vector2::Dot(const Vector2& _a, const Vector2& _b)
     {
         return _a.x * _b.x + _a.y * _b.y;
@@ -76,6 +92,22 @@ namespace Shard::Math
     {
         float cosAngle = Dot(_a, _b) / (_a.Magnitude() * _b.Magnitude());
         return std::acosf(cosAngle);
+    }
+
+    Vector2 Vector2::RotateAround(const Vector2& _Center, const Vector2& _Point, float _Angle)
+    {
+        Vector2 result = _Point;
+
+        float x1 = result.x - _Center.x;
+        float y1 = result.y - _Center.y;
+
+        float x2 = x1 * std::cosf(_Angle) - y1 * std::sinf(_Angle);
+        float y2 = x1 * std::sinf(_Angle) + y1 * std::cosf(_Angle);
+
+        result.x = x2 + _Center.x;
+        result.y = y2 + _Center.y;
+
+        return result;
     }
 
     std::string Vector2::ToString() const

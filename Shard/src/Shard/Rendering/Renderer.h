@@ -7,6 +7,7 @@
 #include "VertexBuffer.h"
 #include "ShaderStrings.h"
 #include "Mesh.h"
+#include "Math/Color.h"
 
 namespace Shard::Rendering
 {
@@ -22,12 +23,12 @@ namespace Shard::Rendering
 		static void DrawQuad(glm::mat4 model,
 							 glm::mat4 view,
 							 glm::mat4 projection,
-			                 glm::vec4 color);
+			                 Math::Color color);
 
 		static void DrawCircle(glm::mat4 model,
 			                   glm::mat4 view,
 			                   glm::mat4 projection,
-							   glm::vec4 color,
+							   Math::Color color,
 							   float thickness,
 							   float fade);
 	};

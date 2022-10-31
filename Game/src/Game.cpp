@@ -1,33 +1,47 @@
 #include "Shard/Core/Application.h"
 #include "Shard/Core/EntryPoint.h"
-#include "Rendering/Primitives.h"
+#include "Shard/Rendering/Primitives.h"
+#include "Shard/Math/Math.h"
 #include "TimeData.h"
 #include "Input.h"
 
 namespace Game
 {
     using namespace Shard;
+    using namespace Math;
+    using namespace Rendering::Primitives;
 
     class Game final : public Application
     {
-        Rendering::Primitives::Quad quad;
-        Rendering::Primitives::Circle circle;
-        glm::mat4 model;
+        Quad mouseQuad;
+        Quad centerQuad;
+        Circle circle;
+        float degreesPerSecond = 32.f;
+        float deltaRadians = 0;
+        float circleOffset = 2.f;
 
         virtual void OnRenderReady(ShardEvents::OnRenderReadyEventArgs _Args) override
         {
-            circle.color = glm::vec4(0, 1, 0, 1);
-            model = quad.transform;
+            circle = Circle(Color::lightBlue);
+            centerQuad = Quad(Color::lightRed);
+            mouseQuad = Quad(Color::lightGreen);
         }
 
         virtual void OnRenderFrame(ShardEvents::OnRenderFrameEventArgs _Args) override
         {
+            centerQuad.Draw();
             circle.Draw();
-            quad.Draw();
+            mouseQuad.Draw();
 
-            glm::vec2 mousePos = Input::GetMousePosition();
-            glm::vec3 screenWorld = m_Window.ScreenToWorldPoint(glm::vec3(mousePos.x, mousePos.y, 0), quad.projection, quad.view);
-            quad.transform = glm::translate(model, glm::vec3(screenWorld.x, screenWorld.y, 0));
+            Vector2 mousePos = Input::GetMousePosition();
+            Vector3 screenWorld = m_Window.ScreenToWorldPoint(Vector3(mousePos.x, mousePos.y, 0), mouseQuad.projection, mouseQuad.view);
+            mouseQuad.Translate(screenWorld);
+
+            deltaRadians += (degreesPerSecond * g_Radians) * Time::DeltaTime();
+
+            Vector2 newPos = Vector2::RotateAround(screenWorld, Vector2(screenWorld) + Vector2(circleOffset, circleOffset), deltaRadians);
+
+            circle.Translate(Vector3(newPos, 0));
         }
     };
 }

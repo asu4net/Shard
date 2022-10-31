@@ -2,6 +2,7 @@
 #include "Core.h"
 #include "glm.hpp"
 #include <string>
+#include "Math/Math.h"
 
 namespace Shard::Rendering
 {
@@ -25,7 +26,7 @@ namespace Shard::Rendering
 		
 		void SetUnfiformMat4(const char* name, glm::mat4 value);
 		void SetUniformVec4(const char* name, glm::vec4 value);
-		void SetUniformVec3(const char* name, glm::vec3 value);
+		void SetUniformVec3(const char* name, Math::Vector3 value);
 
 		void Bind();
 		void Unbind();
