@@ -16,6 +16,7 @@ namespace Game
         Quad mouseQuad;
         Quad centerQuad;
         Circle circle;
+
         float degreesPerSecond = 32.f;
         float deltaRadians = 0;
         float circleOffset = 2.f;
@@ -34,7 +35,7 @@ namespace Game
             mouseQuad.Draw();
 
             Vector2 mousePos = Input::GetMousePosition();
-            Vector3 screenWorld = m_Window.ScreenToWorldPoint(Vector3(mousePos.x, mousePos.y, 0), mouseQuad.projection, mouseQuad.view);
+            Vector3 screenWorld = m_Window.ScreenToWorldPoint(mousePos, mouseQuad.projection, mouseQuad.view);
             mouseQuad.Translate(screenWorld);
 
             deltaRadians += (degreesPerSecond * g_Radians) * Time::DeltaTime();

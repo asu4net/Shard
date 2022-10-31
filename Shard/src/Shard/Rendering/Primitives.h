@@ -30,7 +30,7 @@ namespace Shard::Rendering::Primitives
 			projection = glm::mat4(1);
 			view = glm::mat4(1);
 
-			glm::vec2 size = glm::vec2(2.f, 1.5f) * 4.f;
+			Vector2 size = Vector2(2.f, 1.5f) * 4.f;
 			projection = glm::ortho(-size.x, size.x, -size.y, size.y, .1f, 100.f);
 
 			Vector3 cameraPos = { 0, 0, -6.f };
