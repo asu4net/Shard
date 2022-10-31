@@ -88,7 +88,8 @@ project "Shard"
         postbuildcommands
 		{
 			("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Game"),
-			("{COPY}  %{prj.location}/vendor/glew/glew32.dll ../bin/" .. outputdir .. "/Game")
+			("{COPY}  %{prj.location}/vendor/glew/glew32.dll ../bin/" .. outputdir .. "/Game"),
+			("{COPY}  %{wks.location}/Game/Shaders ../bin/" .. outputdir .. "/Game/Shaders")
 		}
 
     filter "configurations:Debug"
