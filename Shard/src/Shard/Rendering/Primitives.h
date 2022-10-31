@@ -34,8 +34,8 @@ namespace Shard::Rendering::Primitives
 			projection = glm::ortho(-size.x, size.x, -size.y, size.y, .1f, 100.f);
 
 			Vector3 cameraPos = { 0, 0, -6.f };
-			Vector3 forward = Vector3(0, 0, 1.f);
-			Vector3 up = Vector3(0, 1.f, 0);
+			Vector3 forward = { 0, 0, 1.f };
+			Vector3 up = { 0, 1.f, 0 };
 			
 			view = glm::lookAt(cameraPos.ToGlm(), (cameraPos + forward).ToGlm(), up.ToGlm());
 			Render();
