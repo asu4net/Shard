@@ -16,8 +16,8 @@ namespace Shard::Rendering::Primitives
         Color color = { 1, 0, 0, 1 };
 
 		glm::mat4 transform = glm::mat4(1);
-		glm::mat4 projection = glm::mat4(1);;
-		glm::mat4 view = glm::mat4(1);;
+		glm::mat4 projection = glm::mat4(1);
+		glm::mat4 view = glm::mat4(1);
 
 		Shape() = default;
 
@@ -58,18 +58,33 @@ namespace Shard::Rendering::Primitives
 	
 	struct Quad : public Shape
 	{
+		std::string texturePath;
+
 		using Shape::Shape;
 
-		Quad(Color _color)
+		Quad(Color _color, std::string _texturePath = "")
 			: Shape(_color)
+			, texturePath(_texturePath)
+			, m_useTex(false)
 		{
-			Renderer::AddTexture("Textures/fire.png");
+			m_useTex = !texturePath.empty();
+			if (!m_useTex) return;
+			Renderer::AddTexture(texturePath);
+		}
+
+		void AddTexture(std::string texturePath)
+		{
+			m_useTex = true;
+			Renderer::AddTexture(texturePath);
 		}
 
 		virtual void Render() override
 		{
-			Renderer::DrawQuad(transform, view, projection, color, true, "Textures/fire.png");
+			Renderer::DrawQuad(transform, view, projection, color, m_useTex, texturePath);
 		}
+
+	private:
+		bool m_useTex;
 	};
 
 	struct Circle : public Shape
