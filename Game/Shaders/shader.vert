@@ -1,21 +1,28 @@
 #version 330
 in vec3 aPosition;
+in vec2 texCoord;
 
 uniform mat4 u_view;
 uniform mat4 u_projection;
 uniform mat4 u_model;
 
 uniform vec4 u_color;
+uniform float u_useTexture;
 
 struct VertexOutput
 {
     vec4 color;
+    float useTexture;
+    vec2 texCoord;
 };
 
-out VertexOutput output;
+out VertexOutput vertexOutput;
 
 void main()
 {
-    output.color = u_color;
+    vertexOutput.color = u_color;
+    vertexOutput.useTexture = u_useTexture;
+    vertexOutput.texCoord = texCoord;
+
     gl_Position = u_projection * u_view * u_model * vec4(aPosition, 1.0);
 }

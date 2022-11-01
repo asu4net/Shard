@@ -22,6 +22,7 @@ IncludeDir["GLFW"] = "Shard/vendor/glfw/include"
 IncludeDir["GLEW"] = "Shard/vendor/glew/include"
 IncludeDir["SHARD"] = "Shard/src/Shard"
 IncludeDir["SHARD_CORE"] = "Shard/src/Shard/Core"
+IncludeDir["STB_IMAGE"] = "Shard/vendor/stb_image"
 
 -- Library files
 LibFile = {}
@@ -48,7 +49,9 @@ project "Shard"
     files
 	{
 		"%{prj.name}/src/**.h",
-		"%{prj.name}/src/**.cpp"
+		"%{prj.name}/src/**.cpp",
+		"%{prj.name}/vendor/stb_image/stb_image.h",
+		"%{prj.name}/vendor/stb_image/stb_image.cpp"
 	}
 
     includedirs
@@ -58,7 +61,8 @@ project "Shard"
 		"%{IncludeDir.SHARD}",
         "%{IncludeDir.GLFW}",
 		"%{IncludeDir.GLM}",
-        "%{IncludeDir.GLEW}"
+        "%{IncludeDir.GLEW}",
+		"%{IncludeDir.STB_IMAGE}"
     }
 
     libdirs

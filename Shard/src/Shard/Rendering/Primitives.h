@@ -60,9 +60,15 @@ namespace Shard::Rendering::Primitives
 	{
 		using Shape::Shape;
 
+		Quad(Color _color)
+			: Shape(_color)
+		{
+			Renderer::AddTexture("Textures/fire.png");
+		}
+
 		virtual void Render() override
 		{
-			Renderer::DrawQuad(transform, view, projection, color);
+			Renderer::DrawQuad(transform, view, projection, color, true, "Textures/fire.png");
 		}
 	};
 

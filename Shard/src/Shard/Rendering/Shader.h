@@ -21,10 +21,10 @@ namespace Shard::Rendering
 		~Shader();
 
 		const int GetUniform(const char* name) const;
-
-		void SetUniformFloat(const char* name, float value);
 		
-		void SetUnfiformMat4(const char* name, glm::mat4 value);
+		void SetUniformInt(const char* name, int value);
+		void SetUniformFloat(const char* name, float value);
+		void SetUniformMat4(const char* name, glm::mat4 value);
 		void SetUniformVec4(const char* name, glm::vec4 value);
 		void SetUniformVec3(const char* name, Math::Vector3 value);
 

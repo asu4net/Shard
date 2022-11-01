@@ -135,7 +135,13 @@ namespace Shard::Rendering
 		int location = GetUniform(name);
 		glUniform1f(location, value);
 	}
-	void Shader::SetUnfiformMat4(const char* name, glm::mat4 value)
+	void Shader::SetUniformInt(const char* name, int value)
+	{
+		int location = GetUniform(name);
+		glUniform1i(location, value);
+
+	}
+	void Shader::SetUniformMat4(const char* name, glm::mat4 value)
 	{
 		int location = GetUniform(name);
 		glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(value));

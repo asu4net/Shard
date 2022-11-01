@@ -9,8 +9,8 @@
 #define UNIFORM_MODEL_MATRIX_NAME "u_model"
 #define UNIFORM_PROJECTION_MATRIX_NAME "u_projection"
 #define UNIFORM_VIEW_MATRIX_NAME "u_view"
-
+#define UNIFORM_USE_TEXTURE_NAME "u_useTexture"
+#define UNIFORM_TEXTURE_NAME "u_texture"
 #define UNIFORM_DEFAULT_COLOR_NAME "u_color"
-
 #define UNIFORM_CIRCLE_THICKNESS_NAME "u_thickness"
 #define UNIFORM_CIRCLE_FADE_NAME "u_fade"
