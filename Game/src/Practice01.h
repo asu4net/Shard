@@ -25,15 +25,15 @@ namespace Game
         virtual void OnRenderReady(ShardEvents::OnRenderReadyEventArgs _Args) override
         {
             circle = Circle(Color::lightBlue);
-            centerQuad = Quad(Color::lightRed, "Textures/fire.png");
             mouseQuad = Quad(Color::lightGreen);
+            centerQuad = Quad(Color::lightRed);         
         }
 
         virtual void OnRenderFrame(ShardEvents::OnRenderFrameEventArgs _Args) override
         {
-            centerQuad.Draw();
             mouseQuad.Draw();
             circle.Draw();
+            centerQuad.Draw();
 
             Vector2 mousePos = Input::GetMousePosition();
             Vector3 mouseWorldPos = m_Window.ScreenToWorldPoint(mousePos, mouseQuad.projection, mouseQuad.view);
