@@ -32,12 +32,12 @@ namespace Game
         virtual void OnRenderFrame(ShardEvents::OnRenderFrameEventArgs _Args) override
         {
             centerQuad.Draw();
-            circle.Draw();
             mouseQuad.Draw();
+            circle.Draw();
 
             Vector2 mousePos = Input::GetMousePosition();
             Vector3 mouseWorldPos = m_Window.ScreenToWorldPoint(mousePos, mouseQuad.projection, mouseQuad.view);
-            mouseQuad.position = mouseWorldPos;
+            mouseQuad.position = Vector3(mouseWorldPos, 0);
 
             deltaRadians += (degreesPerSecond * g_Radians) * Time::DeltaTime();
 
