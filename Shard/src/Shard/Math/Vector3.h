@@ -1,6 +1,5 @@
 #pragma once
 #include "Core.h"
-#include "Object.h"
 #include <string>
 #include "glm.hpp"
 
@@ -8,7 +7,7 @@ namespace Shard::Math
 {
     struct Vector2;
 
-    struct SHARD_API Vector3 : public Object
+    struct SHARD_API Vector3
     {
         float x, y, z;
 
@@ -37,7 +36,5 @@ namespace Shard::Math
 
         static float Dot(const Vector3& _a, const Vector3& _b);
         static float Distance(const Vector3& _a, const Vector3& _b);
-
-        virtual std::string ToString() const override;
     };
 }

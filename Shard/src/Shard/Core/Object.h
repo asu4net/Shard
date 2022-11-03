@@ -1,14 +1,19 @@
 #pragma once
 #include <string>
+#include "Type.h"
 
 namespace Shard
 {
-    class SHARD_API Object
+    class Object
     {
+        static Type m_Type;
     public:
-        virtual std::string ToString() const
-        {
-            return "Base Object";
-        }
+        static Object* CreateObject() { return new Object(); };
+
+        const Type* GetStaticType() const { return &m_Type; }
+
+        virtual const Type* GetDynamicType() const { return &m_Type; }
+
+        virtual std::string ToString() const { return "Base Object"; }
     };
 }

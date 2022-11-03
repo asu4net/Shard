@@ -109,9 +109,4 @@ namespace Shard::Math
 
         return result;
     }
-
-    std::string Vector2::ToString() const
-    {
-        return "(" + StringFromNumber(x) + ", " + StringFromNumber(y) + ")";
-    }
 }

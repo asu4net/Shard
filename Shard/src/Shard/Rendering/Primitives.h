@@ -13,6 +13,10 @@ namespace Shard::Rendering::Primitives
 
     struct Shape
     {
+		Vector3 position;
+		Vector3 scale = {1, 1, 1};
+		Vector3 rotation;
+
         Color color = { 1, 0, 0, 1 };
 
 		glm::mat4 transform = glm::mat4(1);
@@ -29,6 +33,11 @@ namespace Shard::Rendering::Primitives
 		{
 			projection = glm::mat4(1);
 			view = glm::mat4(1);
+			glm::mat4 model = glm::mat4(1);
+
+			model = glm::translate(model, position.ToGlm());
+			model = glm::scale(model, scale.ToGlm());
+			transform = model;
 
 			Vector2 size = Vector2(2.f, 1.5f) * 4.f;
 			projection = glm::ortho(-size.x, size.x, -size.y, size.y, .1f, 100.f);
@@ -41,25 +50,16 @@ namespace Shard::Rendering::Primitives
 			Render();
 		}
 
-		void SetPosition(const Vector3& _Position)
-		{
-			glm::mat4 model = glm::mat4(1);
-			model = glm::translate(model, _Position.ToGlm());
-			transform = model;
-		}
-
-		Vector3 GetPosition() const
-		{
-			return transform[3];
-		}
-
 		virtual void Render() = 0;
     };
 	
 	struct Quad : public Shape
 	{
+	private:
+		bool m_useTex;
+	
+	public:
 		std::string texturePath;
-
 		using Shape::Shape;
 
 		Quad(Color _color, std::string _texturePath = "")
@@ -82,9 +82,6 @@ namespace Shard::Rendering::Primitives
 		{
 			Renderer::DrawQuad(transform, view, projection, color, m_useTex, texturePath);
 		}
-
-	private:
-		bool m_useTex;
 	};
 
 	struct Circle : public Shape

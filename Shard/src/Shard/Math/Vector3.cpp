@@ -93,9 +93,4 @@ namespace Shard::Math
     {
         return std::sqrtf(std::powf(_a.x - _b.x, 2) + std::powf(_a.y - _b.y, 2) + std::powf(_a.z - _b.z, 2));
     }
-
-    std::string Vector3::ToString() const
-    {
-        return "(" + StringFromNumber(x) + ", " + StringFromNumber(y) + ", " + StringFromNumber(z) + ")";
-    }
 }

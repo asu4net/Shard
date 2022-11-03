@@ -18,15 +18,15 @@ struct VertexOutput
     float fade;
 };
 
-out VertexOutput output;
+out VertexOutput vertexOutput;
 
 void main()
 {
     //output pass...
-    output.localPosition = aPosition;
-    output.color = u_color;
-    output.thickness = u_thickness;
-    output.fade = u_fade;
+    vertexOutput.localPosition = aPosition;
+    vertexOutput.color = u_color;
+    vertexOutput.thickness = u_thickness;
+    vertexOutput.fade = u_fade;
 
     gl_Position = u_projection * u_view * u_model * vec4(aPosition, 1.0);
 }
