@@ -60,6 +60,7 @@ namespace Shard::Rendering::Primitives
 	
 	public:
 		std::string texturePath;
+		
 		using Shape::Shape;
 
 		Quad(Color _color, std::string _texturePath = "")

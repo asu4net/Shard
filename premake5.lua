@@ -93,7 +93,8 @@ project "Shard"
 		{
 			("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Game"),
 			("{COPY}  %{prj.location}/vendor/glew/glew32.dll ../bin/" .. outputdir .. "/Game"),
-			("{COPY}  %{wks.location}/Game/Shaders ../bin/" .. outputdir .. "/Game/Shaders")
+			("{COPY}  %{wks.location}/Game/Shaders ../bin/" .. outputdir .. "/Game/Shaders"),
+			("{COPY}  %{wks.location}/Game/Textures ../bin/" .. outputdir .. "/Game/Textures")
 		}
 
     filter "configurations:Debug"
