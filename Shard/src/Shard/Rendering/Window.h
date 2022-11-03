@@ -36,6 +36,8 @@ namespace Shard::Rendering
         CursorMode GetCursorMode() const;
         void SetCursorMode(CursorMode _Mode);
 
+        float GetAspect() const { return (float) m_BufferWidth / (float) m_BufferHeight; }
+        
         Math::Vector3 ScreenToWorldPoint(Math::Vector2 _ScreenPoint, glm::mat4 _Proj = glm::mat4(1), glm::mat4 _View = glm::mat4(1));
 
         float CurrentTime() const;

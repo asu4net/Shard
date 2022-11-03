@@ -34,8 +34,8 @@ namespace Shard::Rendering
 
 	Window::Window()
 		: m_Title("Default Shard Window")
-		, m_Height(600)
-		, m_Width(800)
+		, m_Height(1080)
+		, m_Width(1920)
 		, m_Color(Math::Color::darkGray)
 	{
 		Init();

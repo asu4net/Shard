@@ -23,6 +23,8 @@ namespace Shard::Rendering::Primitives
 		glm::mat4 projection = glm::mat4(1);
 		glm::mat4 view = glm::mat4(1);
 
+		Window* window = nullptr;
+    	
 		Shape() = default;
 
 		Shape(Color _Color)
@@ -33,14 +35,15 @@ namespace Shard::Rendering::Primitives
 		{
 			projection = glm::mat4(1);
 			view = glm::mat4(1);
-			glm::mat4 model = glm::mat4(1);
 
+			glm::mat4 model = glm::mat4(1);
 			model = glm::translate(model, position.ToGlm());
 			model = glm::scale(model, scale.ToGlm());
 			transform = model;
 
-			Vector2 size = Vector2(2.f, 1.5f) * 4.f;
-			projection = glm::ortho(-size.x, size.x, -size.y, size.y, .1f, 100.f);
+			float size = 5.f;
+			
+			projection = glm::ortho(-window->GetAspect() * size, window->GetAspect() * size, -1.0f * size, 1.0f * size, -100.f, 100.f);
 
 			Vector3 cameraPos = { 0, 0, -6.f };
 			Vector3 forward = { 0, 0, 1.f };

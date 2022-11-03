@@ -24,13 +24,17 @@ namespace Game
 
         virtual void OnRenderReady(ShardEvents::OnRenderReadyEventArgs _Args) override
         {
+            centerQuad = Quad(Color::lightRed);
             circle = Circle(Color::lightBlue);
             mouseQuad = Quad(Color::lightGreen);
-            centerQuad = Quad(Color::lightRed);         
         }
 
         virtual void OnRenderFrame(ShardEvents::OnRenderFrameEventArgs _Args) override
         {
+            centerQuad.window = &m_Window;
+            mouseQuad.window = &m_Window;
+            circle.window = &m_Window;
+            
             mouseQuad.Draw();
             circle.Draw();
             centerQuad.Draw();
