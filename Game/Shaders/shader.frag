@@ -18,7 +18,14 @@ void main()
     if (vertexOutput.useTexture != 0)
     {
         vec4 textureColor = texture(u_texture, vertexOutput.texCoord);
-        FragColor = textureColor * vertexOutput.color;
+        vec4 finalColor = textureColor * vertexOutput.color;
+
+        if (finalColor.a == 0)
+        {
+            discard;
+        }
+
+        FragColor = finalColor;
         return;
     }
 
