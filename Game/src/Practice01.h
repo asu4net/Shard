@@ -25,7 +25,7 @@ namespace Game
         virtual void OnRenderReady(ShardEvents::OnRenderReadyEventArgs _Args) override
         {
             circle = Circle(Color::lightBlue);
-            centerQuad = Quad(Color::lightRed);
+            centerQuad = Quad(Color::lightRed, "Textures/fire.png");
             mouseQuad = Quad(Color::lightGreen);
         }
 

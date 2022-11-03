@@ -1,11 +1,10 @@
 #pragma once
-#include "Core.h"
 #include "glm.hpp"
 #include "Object.h"
 
 namespace Shard::Math
 {
-    struct SHARD_API Color : public Object
+    struct Color : public Object
     {
         float r, g, b, a;
 

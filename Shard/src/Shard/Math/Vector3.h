@@ -1,5 +1,4 @@
 #pragma once
-#include "Core.h"
 #include <string>
 #include "glm.hpp"
 
@@ -7,7 +6,7 @@ namespace Shard::Math
 {
     struct Vector2;
 
-    struct SHARD_API Vector3
+    struct Vector3
     {
         float x, y, z;
 

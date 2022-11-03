@@ -56,7 +56,7 @@ namespace Shard::Rendering::Primitives
 	struct Quad : public Shape
 	{
 	private:
-		bool m_useTex;
+		bool m_useTex = false;
 	
 	public:
 		std::string texturePath;

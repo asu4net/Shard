@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Core.h"
 #include "VertexArray.h"
 #include "VertexBuffer.h"
 #include "IndexBuffer.h"
@@ -11,7 +10,7 @@
 
 namespace Shard::Rendering
 {
-	class SHARD_API Mesh
+	class Mesh
 	{
 
 	public:

@@ -1,5 +1,4 @@
 #pragma once
-#include "Core.h"
 #include "ShardEvents/EventArgs.h"
 #include "ShardEvents/Event.h"
 #include "Math/Math.h"
@@ -21,7 +20,7 @@ namespace Shard::Rendering
 
     using namespace Shard::ShardEvents;
 
-    class SHARD_API Window
+    class Window
     {
     public:
         Event<OnRenderFrameEventArgs> OnRenderFrame;

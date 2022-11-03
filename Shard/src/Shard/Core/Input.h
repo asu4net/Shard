@@ -1,5 +1,4 @@
 #pragma once
-#include "Core.h"
 #include "Math/Math.h"
 #include "KeyCodes.h"
 
@@ -7,7 +6,7 @@ struct GLFWwindow;
 
 namespace Shard
 {
-	class SHARD_API Input
+	class Input
 	{
 	public:
 		static void Init(GLFWwindow* window);

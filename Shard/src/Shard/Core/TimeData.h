@@ -1,5 +1,4 @@
 #pragma once
-#include "Core.h"
 
 #define DELTA_TIME Time::DeltaTime();
 
@@ -10,7 +9,7 @@ namespace Shard
         class Window;
     }
 
-    class SHARD_API Time
+    class Time
     {
     public:
         static float DeltaTime();

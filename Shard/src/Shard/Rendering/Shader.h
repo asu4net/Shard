@@ -1,12 +1,11 @@
 #pragma once
-#include "Core.h"
 #include "glm.hpp"
 #include <string>
 #include "Math/Math.h"
 
 namespace Shard::Rendering
 {
-	class SHARD_API Shader
+	class Shader
 	{
 		int shaderID, modelLocation, projectionLocation, viewLocation;
 

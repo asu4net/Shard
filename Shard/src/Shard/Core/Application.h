@@ -1,11 +1,10 @@
 #pragma once
-#include "Core.h"
 #include "Rendering/Window.h"
 #include "ShardEvents/EventArgs.h"
 
 namespace Shard
 {
-    class SHARD_API Application
+    class Application
     {
     public:
         Rendering::Window m_Window;

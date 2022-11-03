@@ -1,5 +1,4 @@
 #pragma once
-#include "Core.h"
 #include <memory>
 #include "Shader.h"
 #include "IndexBuffer.h"
@@ -14,7 +13,7 @@
 
 namespace Shard::Rendering
 {
-	class SHARD_API Renderer
+	class Renderer
 	{
 		static std::map<const std::string, Texture> textures;
 		static std::shared_ptr<Mesh> quad;

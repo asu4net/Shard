@@ -1,10 +1,9 @@
 #pragma once
-#include "Core.h"
 #include <string>
 
 namespace Shard::Rendering
 {
-	class SHARD_API Texture
+	class Texture
 	{
 	public:
 		Texture();

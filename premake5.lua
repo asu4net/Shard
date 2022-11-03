@@ -27,8 +27,7 @@ IncludeDir["STB_IMAGE"] = "Shard/vendor/stb_image"
 -- Library files
 LibFile = {}
 
-LibFile["GLEW_STATIC"] = "glew32s.lib"
-LibFile["GLEW"] = "glew32.lib"
+LibFile["GLEW"] = "glew32s.lib"
 LibFile["OPENGL"] = "opengl32.lib"
 
 -- Library directories
@@ -40,9 +39,11 @@ include "Shard/vendor/glfw/premake5.lua"
 
 project "Shard"
     location "Shard"
-    kind "SharedLib"
+    kind "StaticLib"
     language "C++"
-
+	cppdialect "C++17"
+	staticruntime "on"
+	
     targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 
@@ -74,42 +75,41 @@ project "Shard"
     {
         "GLFW",
         "%{LibFile.GLEW}",
-        "%{LibFile.GLEW_STATIC}",
         "%{LibFile.OPENGL}"
     }
 
     filter "system:windows"
-        cppdialect "C++17"
         systemversion "latest"
 
         defines
         {
-			-- "GLEW_STATIC",
+			"GLEW_STATIC",
             "SHARD_PLATFORM_WINDOWS",
             "SHARD_BUILD_DLL"
         }
 
         postbuildcommands
 		{
-			("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Game"),
-			("{COPY}  %{prj.location}/vendor/glew/glew32.dll ../bin/" .. outputdir .. "/Game"),
 			("{COPY}  %{wks.location}/Game/Shaders ../bin/" .. outputdir .. "/Game/Shaders"),
 			("{COPY}  %{wks.location}/Game/Textures ../bin/" .. outputdir .. "/Game/Textures")
 		}
 
     filter "configurations:Debug"
         defines "SHARD_DEBUG"
-        symbols "On"
+		runtime "Debug"
+        symbols "on"
 
     filter "configurations:Release"
         defines "SHARD_RELEASE"
-        symbols "On"
-        optimize "On"
+        runtime "Release"
+        optimize "on"
 
 project "Game"
     location "Game"
 	kind "ConsoleApp"
 	language "C++"
+	cppdialect "C++17"
+	staticruntime "on"
 
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -140,26 +140,25 @@ project "Game"
 	{
 		"Shard",
 		"GLFW",
-		"%{LibFile.GLEW_STATIC}",
 		"%{LibFile.GLEW}",
 		"%{LibFile.OPENGL}"
 	}
 
 	filter "system:windows"
-	    cppdialect "C++17"
 	    systemversion "latest"
 
 	    defines 
 	    {
-			-- "GLEW_STATIC",
+			"GLEW_STATIC",
 		    "SHARD_PLATFORM_WINDOWS"
 	    }
 
 	filter "configurations:Debug"
 		defines "SHARD_DEBUG"
-		symbols "On"
+		runtime "Debug"
+        symbols "on"
 
 	filter "configurations:Release"
 		defines "SHARD_RELEASE"
-		symbols "On"
-		optimize "On"
+		runtime "Release"
+        optimize "on"
