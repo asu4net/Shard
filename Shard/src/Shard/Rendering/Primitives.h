@@ -31,14 +31,43 @@ namespace Shard::Rendering::Primitives
 			view = glm::lookAt(position.ToGlm(), (position + forward).ToGlm(), up.ToGlm());
 		}
 	};
-	
-    struct Shape
-    {
+
+	enum class BlendingMode
+	{
+		Solid,
+		Alpha,
+		Add,
+		Multiply
+	};
+
+	inline void SetBlendMode(const BlendingMode mode)
+	{
+		glEnable(GL_BLEND);
+		switch (mode) {
+		case BlendingMode::Solid:
+			glBlendFunc(GL_ONE, GL_ZERO);
+			break;
+		case BlendingMode::Alpha:
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			break;
+		case BlendingMode::Add:
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+			break;
+		case BlendingMode::Multiply:
+			glBlendFunc(GL_DST_COLOR, GL_ZERO);
+			break;
+		}
+		glDisable(GL_BLEND);
+	}
+
+	struct Shape
+	{
+		BlendingMode mode;
 		Vector3 position;
 		Vector3 scale = {1, 1, 1};
 		Vector3 rotation;
 
-        Color color = { 1, 0, 0, 1 };
+		Color color = { 1, 0, 0, 1 };
 
 		glm::mat4 transform = glm::mat4(1);
     	
@@ -55,11 +84,12 @@ namespace Shard::Rendering::Primitives
 			model = glm::scale(model, scale.ToGlm());
 			transform = model;
 			
+			SetBlendMode(mode);
 			Render();
 		}
 
 		virtual void Render() = 0;
-    };
+	};
 	
 	struct Quad : public Shape
 	{

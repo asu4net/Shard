@@ -30,6 +30,11 @@ namespace Game
         
         void OnRenderReady(ShardEvents::OnRenderReadyEventArgs args) override
         {
+            fire.mode = BlendingMode::Add;
+            grille.mode = BlendingMode::Alpha;
+            light.mode = BlendingMode::Multiply;
+            wall.mode = BlendingMode::Solid;
+            
             m_Window.SetBackgroundColor(Color::darkGray);
             StaticCamera::window = &m_Window;
             StaticCamera::size = cameraSize;
