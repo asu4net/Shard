@@ -35,7 +35,7 @@ namespace Game
             light.mode = BlendingMode::Multiply;
             wall.mode = BlendingMode::Solid;
             
-            m_Window.SetBackgroundColor(Color::darkGray);
+            m_Window.SetBackgroundColor(Color::red);
             StaticCamera::window = &m_Window;
             StaticCamera::size = cameraSize;
             
@@ -78,11 +78,10 @@ namespace Game
 
         void GraphicCalculations()
         {
-            
-            fire.Draw();
-            light.Draw();
-            grille.Draw();
             wall.Draw();
+            grille.Draw();
+            light.Draw();
+            fire.Draw();
             
             StaticCamera::CalculateMatrices();
         }

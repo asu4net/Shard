@@ -19,7 +19,7 @@ namespace Game
         Circle circle;
 
         float degreesPerSecond = 32.f;
-        float deltaRadians = 0;
+        float radians = 0;
         float circleOffset = 2.f;
         float cameraSize = 7.f;
 
@@ -43,9 +43,9 @@ namespace Game
             Vector3 mouseWorldPos = m_Window.ScreenToWorldPoint(mousePos, StaticCamera::projection, StaticCamera::view);
             mouseQuad.position = Vector3(mouseWorldPos, 0);
 
-            deltaRadians += (degreesPerSecond * g_Radians) * Time::DeltaTime();
+            radians += (degreesPerSecond * g_Radians) * Time::DeltaTime();
 
-            Vector2 newPos = Vector2::RotateAround(mouseWorldPos, Vector2(mouseWorldPos) + Vector2::one * circleOffset, deltaRadians);
+            Vector2 newPos = Vector2::RotateAround(mouseWorldPos, Vector2(mouseWorldPos) + Vector2::one * circleOffset, radians);
 
             circle.position = newPos;
 
@@ -55,7 +55,7 @@ namespace Game
             std::string title = "Distance: "
                 + StringFromNumber(distance)
                 + " -- Angle: "
-                + StringFromNumber(angle);
+                + StringFromNumber(radians/g_Radians);
 
             m_Window.SetTitle(title);
         }

@@ -100,7 +100,7 @@ namespace Shard::Rendering
 
 		glDebugMessageCallback(OnDebugMessage, nullptr);
 
-		glEnable(GL_DEPTH_TEST);
+		//glEnable(GL_DEPTH_TEST);
 		glViewport(0, 0, m_bufferWidth, m_bufferHeight);
 		glfwSetWindowUserPointer(m_window, this);
 

@@ -53,7 +53,7 @@ namespace Shard::Rendering::Primitives
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE);
 			break;
 		case BlendingMode::Multiply:
-			glBlendFunc(GL_DST_COLOR, GL_ONE);
+			glBlendFunc(GL_DST_COLOR, GL_ZERO);
 			break;
 		}
 	}
