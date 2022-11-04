@@ -49,6 +49,7 @@ namespace Shard::Rendering
 
         if (useTexture)
         {
+            glEnable(GL_BLEND);
             defaultShader->SetUniformInt(UNIFORM_TEXTURE_NAME, 0);
             textures[texturePath].Bind();
         }
@@ -66,8 +67,11 @@ namespace Shard::Rendering
         quad->m_vertexArray->Unbind();
 
         if (useTexture)
+        {
             textures[texturePath].Unbind();
-
+            glDisable(GL_BLEND);
+        }
+        
         defaultShader->Unbind();
     }
 

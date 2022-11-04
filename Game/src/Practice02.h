@@ -78,10 +78,12 @@ namespace Game
 
         void GraphicCalculations()
         {
+            
             fire.Draw();
             light.Draw();
             grille.Draw();
             wall.Draw();
+            
             StaticCamera::CalculateMatrices();
         }
     };

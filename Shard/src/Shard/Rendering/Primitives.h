@@ -42,7 +42,6 @@ namespace Shard::Rendering::Primitives
 
 	inline void SetBlendMode(const BlendingMode mode)
 	{
-		glEnable(GL_BLEND);
 		switch (mode) {
 		case BlendingMode::Solid:
 			glBlendFunc(GL_ONE, GL_ZERO);
@@ -54,10 +53,9 @@ namespace Shard::Rendering::Primitives
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE);
 			break;
 		case BlendingMode::Multiply:
-			glBlendFunc(GL_DST_COLOR, GL_ZERO);
+			glBlendFunc(GL_DST_COLOR, GL_ONE);
 			break;
 		}
-		glDisable(GL_BLEND);
 	}
 
 	struct Shape
