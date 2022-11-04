@@ -4,6 +4,7 @@
 #include "Shard/Math/Math.h"
 #include "Input.h"
 #include "Conversions.h"
+#include "TimeData.h"
 
 namespace Game
 {
@@ -15,6 +16,12 @@ namespace Game
     {
     public:
         float cameraSize = 2.f;
+        float fireScaleSpeed = .2f;
+        float lightScaleSpeed = .2f;
+        float maxFireScale = 1.5f;
+        float minFireScale = 1.f;
+        float minLightScale = 4.f;
+        float maxLightScale = 4.5f;
         
         Quad fire = Quad(Color::white, "Textures/fire.png");
         Quad grille = Quad(Color::white, "Textures/grille.png");
@@ -37,6 +44,25 @@ namespace Game
             
             fire.position = MouseWorld();
             light.position = MouseWorld();
+
+            AnimateScale(fire.scale, fireScaleSpeed, minFireScale, maxFireScale);
+            AnimateScale(light.scale, lightScaleSpeed, minLightScale, maxLightScale);
+        }
+
+        void AnimateScale(Vector3& scale, float& speed, float min, float max)
+        {
+            scale = scale + Vector3::one * speed * Time::DeltaTime();
+            
+            if (scale.x >= max)
+            {
+                scale = Vector3::one * max;
+                speed *= -1;
+            }
+            else if (scale.x <= min)
+            {
+                scale = Vector3::one * min;
+                speed *= -1;
+            }
         }
 
         Vector3 MouseWorld()
