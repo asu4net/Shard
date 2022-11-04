@@ -23,7 +23,7 @@ namespace Game
         
         void OnRenderReady(ShardEvents::OnRenderReadyEventArgs args) override
         {
-            m_Window.SetBackgroundColor(Color::black);
+            m_Window.SetBackgroundColor(Color::darkGray);
             StaticCamera::window = &m_Window;
             StaticCamera::size = cameraSize;
             
@@ -48,8 +48,8 @@ namespace Game
         void GraphicCalculations()
         {
             fire.Draw();
-            grille.Draw();
             light.Draw();
+            grille.Draw();
             wall.Draw();
             StaticCamera::CalculateMatrices();
         }

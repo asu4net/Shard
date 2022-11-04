@@ -19,6 +19,10 @@ void main()
     {
         vec4 textureColor = texture(u_texture, vertexOutput.texCoord);
         vec4 finalColor = textureColor * vertexOutput.color;
+        
+        if (finalColor.a < 0.1)
+            discard;
+        
         FragColor = finalColor;
         return;
     }
