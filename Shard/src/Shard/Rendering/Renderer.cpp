@@ -1,4 +1,5 @@
 #include "Renderer.h"
+#include "Window.h"
 
 namespace Shard::Rendering
 {
@@ -15,13 +16,15 @@ namespace Shard::Rendering
         defaultShader = std::make_shared<Shader>();
         circleShader = std::make_shared<Shader>(CIRCLE_VERTEX_PATH, CIRCLE_FRAGMENT_PATH);
 
+        constexpr  float quadDimension = .5f;
+        
         //Quad data...
         float vertices[] = {
             // x	 y	   u	 v
-            -0.5f, -0.5f, 1.0f, 0.0f, // 0
-             0.5f, -0.5f, 0.0f, 0.0f, // 1
-             0.5f,  0.5f, 0.0f, 1.0f, // 2
-            -0.5f,	0.5f, 1.0f, 1.0f, // 3 
+            -quadDimension, -quadDimension, 1.0f, 0.0f, // 0
+             quadDimension, -quadDimension, 0.0f, 0.0f, // 1
+             quadDimension,  quadDimension, 0.0f, 1.0f, // 2
+            -quadDimension,	quadDimension, 1.0f, 1.0f, // 3 
         };
 
         unsigned int indices[] = {

@@ -1,6 +1,6 @@
 #version 330
 in vec3 aPosition;
-in vec2 texCoord;
+layout(location = 1) in vec2 texCoord;
 
 uniform mat4 u_view;
 uniform mat4 u_projection;

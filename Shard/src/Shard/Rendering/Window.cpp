@@ -8,12 +8,12 @@
 
 namespace Shard::Rendering
 {
-	bool Window::s_ShowOpenGLDebugMessages = true;
+	bool Window::ShowOpenGlDebugMessages = true;
 
 	static void APIENTRY OnDebugMessage(GLenum source, GLenum type, unsigned int id, GLenum severity,
 		GLsizei length, const char* message, const void* userParam)
 	{
-		if (!Window::s_ShowOpenGLDebugMessages) return;
+		if (!Window::ShowOpenGlDebugMessages) return;
 		printf("OpenGL: %s\n", message);
 	}
 
@@ -33,29 +33,29 @@ namespace Shard::Rendering
 	}
 
 	Window::Window()
-		: m_Title("Default Shard Window")
-		, m_Height(1080)
-		, m_Width(1920)
-		, m_Color(Math::Color::darkGray)
+		: m_title("Default Shard Window")
+		, m_height(1080)
+		, m_width(1920)
+		, m_color(Math::Color::darkGray)
 	{
 		Init();
 	}
 
-	Window::Window(int _Width, int _Height, const char* _Title, Math::Color _Color)
-		: m_Title(_Title)
-		, m_Height(_Height)
-		, m_Width(_Width)
-		, m_Color(_Color)
+	Window::Window(int width, int height, const char* _Title, Math::Color color)
+		: m_title(_Title)
+		, m_height(height)
+		, m_width(width)
+		, m_color(color)
 	{
 		Init();
 	}
 
 	bool Window::Init()
 	{
-		m_Window = nullptr;
-		m_BufferWidth = 0;
-		m_BufferHeight = 0;
-		m_CursorMode = CursorMode::Normal;
+		m_window = nullptr;
+		m_bufferWidth = 0;
+		m_bufferHeight = 0;
+		m_cursorMode = CursorMode::Normal;
 
 		if (!glfwInit())
 		{
@@ -65,22 +65,22 @@ namespace Shard::Rendering
 
 		SetProperties();
 
-		m_Window = glfwCreateWindow(m_Width, m_Height, m_Title.c_str(), nullptr, nullptr);
+		m_window = glfwCreateWindow(m_width, m_height, m_title.c_str(), nullptr, nullptr);
 
-		if (!m_Window)
+		if (!m_window)
 		{
 			printf("GLFW window creation failed!\n");
 			glfwTerminate();
 			return false;
 		}
 
-		glfwGetFramebufferSize(m_Window, &m_BufferWidth, &m_BufferHeight);
+		glfwGetFramebufferSize(m_window, &m_bufferWidth, &m_bufferHeight);
 
 		//Provides glfwWindow as open gl context.
-		glfwMakeContextCurrent(m_Window);
+		glfwMakeContextCurrent(m_window);
 
 		//INPUT ASSIGNEMENT
-		Input::Init(m_Window);
+		Input::Init(m_window);
 
 		//Cursor settings
 		SetCursorMode(CursorMode::Normal);
@@ -90,7 +90,7 @@ namespace Shard::Rendering
 		if (glewInit() != GLEW_OK)
 		{
 			printf("GLEW initialisation failed!\n");
-			glfwDestroyWindow(m_Window);
+			glfwDestroyWindow(m_window);
 			glfwTerminate();
 			return false;
 		}
@@ -101,47 +101,47 @@ namespace Shard::Rendering
 		glDebugMessageCallback(OnDebugMessage, nullptr);
 
 		glEnable(GL_DEPTH_TEST);
-		glViewport(0, 0, m_BufferWidth, m_BufferHeight);
-		glfwSetWindowUserPointer(m_Window, this);
+		glViewport(0, 0, m_bufferWidth, m_bufferHeight);
+		glfwSetWindowUserPointer(m_window, this);
 
 		Renderer::Init();
 
 		return true;
 	}
 
-	const std::string& Window::GetTitle() const { return m_Title; }
+	const std::string& Window::GetTitle() const { return m_title; }
 
-	void Window::SetTitle(const std::string& _Title)
+	void Window::SetTitle(const std::string& title)
 	{
-		m_Title = _Title;
-		glfwSetWindowTitle(m_Window, _Title.c_str());
+		m_title = title;
+		glfwSetWindowTitle(m_window, title.c_str());
 	}
 
-	CursorMode Window::GetCursorMode() const { return m_CursorMode; }
+	CursorMode Window::GetCursorMode() const { return m_cursorMode; }
 
-	Math::Vector3 Window::ScreenToWorldPoint(Math::Vector2 _ScreenPoint, glm::mat4 _Proj, glm::mat4 _View)
+	Math::Vector3 Window::ScreenToWorldPoint(Math::Vector2 _ScreenPoint, glm::mat4 proj, glm::mat4 view)
 	{
-		float halfScreenWidth =  static_cast<float>(m_Width) / 2;
-		float halfScreenHeight =  static_cast<float>(m_Height) / 2;
-		glm::mat4 inverseMV = glm::inverse(_Proj * _View);
+		float halfScreenWidth =  static_cast<float>(m_width) / 2;
+		float halfScreenHeight =  static_cast<float>(m_height) / 2;
+		glm::mat4 inverseMV = glm::inverse(proj * view);
 		glm::vec4 near = glm::vec4(((_ScreenPoint.x - halfScreenWidth) / halfScreenWidth),
 			(-1 * (_ScreenPoint.y - halfScreenHeight) / halfScreenHeight), -1, 1.0);
 		glm::vec4 nearResult = inverseMV * near;
 		nearResult /= nearResult.w;
-		return nearResult;
+		return Math::Vector3(nearResult.x, nearResult.y, 0);
 	}
 
-	void Window::SetCursorMode(CursorMode _Mode)
+	void Window::SetCursorMode(CursorMode mode)
 	{
-		m_CursorMode = _Mode;
-		glfwSetInputMode(m_Window, GLFW_CURSOR, CursorModeValue(m_CursorMode));
+		m_cursorMode = mode;
+		glfwSetInputMode(m_window, GLFW_CURSOR, CursorModeValue(m_cursorMode));
 	}
 
 	void Window::SetProperties()
     {
         //OpenGL version 3.3
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, g_OpenGLMajorVersion);
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, g_OpenGLMinorVersion);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, OpenGlMajorVersion);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, OpenGlMinorVersion);
         //Disables deprecated code
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
         //Enables new code
@@ -152,12 +152,12 @@ namespace Shard::Rendering
 	{
 		OnRenderReady.Invoke({});
 
-		while (!glfwWindowShouldClose(m_Window))
+		while (!glfwWindowShouldClose(m_window))
 		{
 			//Input events
 			glfwPollEvents();
 
-			glClearColor(m_Color.r, m_Color.g, m_Color.b, m_Color.a);
+			glClearColor(m_color.r, m_color.g, m_color.b, m_color.a);
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 			Time::CalculateDeltaTime(CurrentTime());
@@ -165,7 +165,7 @@ namespace Shard::Rendering
 			//DRAW STUFF
 			OnRenderFrame.Invoke({});
 
-			glfwSwapBuffers(m_Window);
+			glfwSwapBuffers(m_window);
 		}
 	}
 

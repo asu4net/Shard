@@ -10,8 +10,8 @@ struct GLFWwindow;
 
 namespace Shard::Rendering
 {
-    constexpr int g_OpenGLMinorVersion = 3;
-    constexpr int g_OpenGLMajorVersion = 3;
+    constexpr int OpenGlMinorVersion = 3;
+    constexpr int OpenGlMajorVersion = 3;
 
     enum class CursorMode
     {
@@ -25,31 +25,32 @@ namespace Shard::Rendering
     public:
         Event<OnRenderFrameEventArgs> OnRenderFrame;
         Event<OnRenderReadyEventArgs> OnRenderReady;
-        static bool s_ShowOpenGLDebugMessages;
+        static bool ShowOpenGlDebugMessages;
         
         Window();
-        Window(int _Width, int _Height, const char* _Name, Math::Color _Color);
+        Window(int width, int height, const char* name, Math::Color color);
 
         const std::string& GetTitle() const;
-        void SetTitle(const std::string& _Title);
+        void SetTitle(const std::string& title);
 
         CursorMode GetCursorMode() const;
-        void SetCursorMode(CursorMode _Mode);
+        void SetCursorMode(CursorMode mode);
 
-        float GetAspect() const { return (float) m_BufferWidth / (float) m_BufferHeight; }
+        float GetAspect() const { return static_cast<float>(m_bufferWidth) / static_cast<float>(m_bufferHeight); }
+        void SetBackgroundColor(const Math::Color& color) { m_color = color; }
         
-        Math::Vector3 ScreenToWorldPoint(Math::Vector2 _ScreenPoint, glm::mat4 _Proj = glm::mat4(1), glm::mat4 _View = glm::mat4(1));
+        Math::Vector3 ScreenToWorldPoint(Math::Vector2 screenPoint, glm::mat4 proj = glm::mat4(1), glm::mat4 view = glm::mat4(1));
 
         float CurrentTime() const;
         void StartLoop();
 
     private:
-        std::string m_Title;
-        GLFWwindow* m_Window;
-        int m_Width, m_Height;
-        Math::Color m_Color;
-        int m_BufferWidth, m_BufferHeight;
-        CursorMode m_CursorMode;
+        std::string m_title;
+        GLFWwindow* m_window;
+        int m_width, m_height;
+        Math::Color m_color;
+        int m_bufferWidth, m_bufferHeight;
+        CursorMode m_cursorMode;
 
         bool Init();
         void SetProperties();

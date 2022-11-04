@@ -11,6 +11,27 @@ namespace Shard::Rendering::Primitives
 {
 	using namespace Math;
 
+	struct StaticCamera
+	{
+		inline static Window* window = nullptr;
+		inline static float size = 3.f;
+		inline static glm::mat4 projection = glm::mat4(1);
+		inline static glm::mat4 view = glm::mat4(1);
+
+		inline static Vector3 position = { 0, 0, 0.f };
+		inline static Vector3 forward = { 0, 0, 1.f };
+		inline static Vector3 up = { 0, 1.f, 0 };
+
+		static void CalculateMatrices()
+		{
+			if (!window) return;
+			projection = glm::mat4(1);
+			view = glm::mat4(1);
+			projection = glm::ortho(-window->GetAspect() * size, window->GetAspect() * size, -1.0f * size, 1.0f * size, -100.f, 100.f);
+			view = glm::lookAt(position.ToGlm(), (position + forward).ToGlm(), up.ToGlm());
+		}
+	};
+	
     struct Shape
     {
 		Vector3 position;
@@ -20,10 +41,6 @@ namespace Shard::Rendering::Primitives
         Color color = { 1, 0, 0, 1 };
 
 		glm::mat4 transform = glm::mat4(1);
-		glm::mat4 projection = glm::mat4(1);
-		glm::mat4 view = glm::mat4(1);
-
-		Window* window = nullptr;
     	
 		Shape() = default;
 
@@ -33,23 +50,11 @@ namespace Shard::Rendering::Primitives
 
 		void Draw()
 		{
-			projection = glm::mat4(1);
-			view = glm::mat4(1);
-
 			glm::mat4 model = glm::mat4(1);
 			model = glm::translate(model, position.ToGlm());
 			model = glm::scale(model, scale.ToGlm());
 			transform = model;
-
-			float size = 5.f;
 			
-			projection = glm::ortho(-window->GetAspect() * size, window->GetAspect() * size, -1.0f * size, 1.0f * size, -100.f, 100.f);
-
-			Vector3 cameraPos = { 0, 0, -6.f };
-			Vector3 forward = { 0, 0, 1.f };
-			Vector3 up = { 0, 1.f, 0 };
-			
-			view = glm::lookAt(cameraPos.ToGlm(), (cameraPos + forward).ToGlm(), up.ToGlm());
 			Render();
 		}
 
@@ -66,7 +71,7 @@ namespace Shard::Rendering::Primitives
 		
 		using Shape::Shape;
 
-		Quad(Color _color, std::string _texturePath = "")
+		Quad(Color _color = Color::white, std::string _texturePath = "")
 			: Shape(_color)
 			, texturePath(_texturePath)
 			, m_useTex(false)
@@ -84,7 +89,7 @@ namespace Shard::Rendering::Primitives
 
 		virtual void Render() override
 		{
-			Renderer::DrawQuad(transform, view, projection, color, m_useTex, texturePath);
+			Renderer::DrawQuad(transform, StaticCamera::view, StaticCamera::projection, color, m_useTex, texturePath);
 		}
 	};
 
@@ -107,7 +112,7 @@ namespace Shard::Rendering::Primitives
 
 		virtual void Render() override
 		{
-			Renderer::DrawCircle(transform, view, projection, color, thickness, fade);
+			Renderer::DrawCircle(transform, StaticCamera::view, StaticCamera::projection, color, thickness, fade);
 		}
 	};
 }

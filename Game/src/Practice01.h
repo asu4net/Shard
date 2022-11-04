@@ -21,26 +21,26 @@ namespace Game
         float degreesPerSecond = 32.f;
         float deltaRadians = 0;
         float circleOffset = 2.f;
+        float cameraSize = 7.f;
 
-        virtual void OnRenderReady(ShardEvents::OnRenderReadyEventArgs _Args) override
+        void OnRenderReady(ShardEvents::OnRenderReadyEventArgs args) override
         {
             centerQuad = Quad(Color::lightRed);
             circle = Circle(Color::lightBlue);
             mouseQuad = Quad(Color::lightGreen);
+            StaticCamera::window = &m_Window;
+            StaticCamera::size = cameraSize;
         }
 
-        virtual void OnRenderFrame(ShardEvents::OnRenderFrameEventArgs _Args) override
+        void OnRenderFrame(ShardEvents::OnRenderFrameEventArgs args) override
         {
-            centerQuad.window = &m_Window;
-            mouseQuad.window = &m_Window;
-            circle.window = &m_Window;
-            
             mouseQuad.Draw();
             circle.Draw();
             centerQuad.Draw();
-
+            StaticCamera::CalculateMatrices();
+            
             Vector2 mousePos = Input::GetMousePosition();
-            Vector3 mouseWorldPos = m_Window.ScreenToWorldPoint(mousePos, mouseQuad.projection, mouseQuad.view);
+            Vector3 mouseWorldPos = m_Window.ScreenToWorldPoint(mousePos, StaticCamera::projection, StaticCamera::view);
             mouseQuad.position = Vector3(mouseWorldPos, 0);
 
             deltaRadians += (degreesPerSecond * g_Radians) * Time::DeltaTime();
@@ -62,4 +62,4 @@ namespace Game
     };
 }
 
-Shard::Application* Shard::CreateApplication() { return new Game::Game(); }
+inline Shard::Application* Shard::CreateApplication() { return new Game::Game(); }

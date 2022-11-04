@@ -13,12 +13,15 @@
 
 namespace Shard::Rendering
 {
+
+	class Window;
 	class Renderer
 	{
 		static std::map<const std::string, Texture> textures;
 		static std::shared_ptr<Mesh> quad;
 		static std::shared_ptr<Shader> defaultShader;
 		static std::shared_ptr<Shader> circleShader;
+		
 
 	public:
 		static void Init();
