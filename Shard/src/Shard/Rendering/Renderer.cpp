@@ -10,9 +10,6 @@ namespace Shard::Rendering
 
     void Renderer::Init()
     {
-        glEnable(GL_BLEND);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-        
         defaultShader = std::make_shared<Shader>();
         circleShader = std::make_shared<Shader>(CIRCLE_VERTEX_PATH, CIRCLE_FRAGMENT_PATH);
 

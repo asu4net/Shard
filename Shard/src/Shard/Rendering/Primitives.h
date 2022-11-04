@@ -62,7 +62,7 @@ namespace Shard::Rendering::Primitives
 
 	struct Shape
 	{
-		BlendingMode mode;
+		BlendingMode mode = BlendingMode::Alpha;
 		Vector3 position;
 		Vector3 scale = {1, 1, 1};
 		Vector3 rotation;
