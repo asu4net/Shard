@@ -4,7 +4,7 @@
 #include "Vector2.h"
 #include "Vector3.h"
 
-constexpr float g_Radians = 0.0174533f;
+constexpr float ToRadians = 0.0174533f;
 
 namespace Shard::Math
 {

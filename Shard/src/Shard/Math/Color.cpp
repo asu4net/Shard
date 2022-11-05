@@ -12,7 +12,7 @@ namespace Shard::Math
     const Color Color::Green = { 0, 1, 0, 1 };
     const Color Color::LightGreen = { .3f, 1, .3f, 1 };
     const Color Color::Grey = { .5f, .5f, .5f, 1 };
-    const Color Color::DarkGrey = { .8f, .8f, .8f, 1 };
+    const Color Color::DarkGrey = { .2f, .2f, .2f, 1 };
     const Color Color::Magenta = { 1, 0, 1, 1 };
     const Color Color::Red = { 1, 0, 0, 1 };
     const Color Color::LightRed = { 1, .3f, .3f, 1 };

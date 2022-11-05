@@ -14,50 +14,57 @@ namespace Game
 
     class Game final : public Application
     {
-        Quad mouseQuad;
-        Quad centerQuad;
-        Circle circle;
+        Quad mouseQuad = Quad(Color::LightRed);
+        Quad centerQuad = Quad(Color::LightGreen);
+        Circle circle = Circle(Color::LightBlue);
 
+        const float startDegreeOffset = 45.f;
+        const float startRadians = startDegreeOffset * ToRadians;
+        
         float degreesPerSecond = 32.f;
-        float radians = 0;
+        float radians = startRadians;
         float circleOffset = 2.f;
         float cameraSize = 7.f;
 
         void OnRenderReady(ShardEvents::OnRenderReadyEventArgs args) override
         {
-            centerQuad = Quad(Color::LightRed);
-            circle = Circle(Color::LightBlue);
-            mouseQuad = Quad(Color::LightGreen);
             StaticCamera::window = &m_Window;
             StaticCamera::size = cameraSize;
         }
 
         void OnRenderFrame(ShardEvents::OnRenderFrameEventArgs args) override
         {
+            DrawCalls();
+            
+            mouseQuad.position = MouseWorld();
+
+            radians += (degreesPerSecond * ToRadians) * Time::DeltaTime();
+            
+            const float displayRadians = radians / ToRadians - startDegreeOffset;
+            if (displayRadians >= 360) radians = startRadians;
+
+            circle.position = Vector2::RotateAround(mouseQuad.position, Vector2(mouseQuad.position) + Vector2::one * circleOffset, radians);
+
+            const std::string title = "Practice 01 - Alejandro :D |||| Distance: "
+                + StringFromNumber(Vector2::Distance(Vector3::zero, mouseQuad.position))
+                + " -- Angle: "
+                + StringFromNumber(displayRadians);
+
+            m_Window.SetTitle(title);
+        }
+
+        Vector3 MouseWorld()
+        {
+            const Vector3 mousePos = Input::GetMousePosition();
+            return m_Window.ScreenToWorldPoint(mousePos, StaticCamera::projection, StaticCamera::view);
+        }
+
+        void DrawCalls()
+        {
             mouseQuad.Draw();
             circle.Draw();
             centerQuad.Draw();
             StaticCamera::CalculateMatrices();
-            
-            Vector2 mousePos = Input::GetMousePosition();
-            Vector3 mouseWorldPos = m_Window.ScreenToWorldPoint(mousePos, StaticCamera::projection, StaticCamera::view);
-            mouseQuad.position = Vector3(mouseWorldPos, 0);
-
-            radians += (degreesPerSecond * g_Radians) * Time::DeltaTime();
-
-            Vector2 newPos = Vector2::RotateAround(mouseWorldPos, Vector2(mouseWorldPos) + Vector2::one * circleOffset, radians);
-
-            circle.position = newPos;
-
-            float angle = Vector2::Angle(mouseWorldPos, circle.position);
-            float distance = Vector2::Distance(Vector3::zero, mouseWorldPos);
-
-            std::string title = "Distance: "
-                + StringFromNumber(distance)
-                + " -- Angle: "
-                + StringFromNumber(radians/g_Radians);
-
-            m_Window.SetTitle(title);
         }
     };
 }
