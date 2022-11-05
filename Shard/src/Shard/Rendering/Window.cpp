@@ -51,6 +51,7 @@ namespace Shard::Rendering
 		if (!glfwInit())
 		{
 			printf("GLFW initialisation failed!\n");
+			assert(true);
 			return;
 		}
 
@@ -61,6 +62,7 @@ namespace Shard::Rendering
 		if (!m_window)
 		{
 			printf("GLFW window creation failed!\n");
+			assert(true);
 			glfwTerminate();
 			return;
 		}
@@ -78,6 +80,7 @@ namespace Shard::Rendering
 			printf("GLEW initialisation failed!\n");
 			glfwDestroyWindow(m_window);
 			glfwTerminate();
+			assert(true);
 			return;
 		}
 
