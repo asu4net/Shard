@@ -20,29 +20,18 @@ namespace Shard::Rendering
 		glViewport(0, 0, width, height);
 		glScissor(0, 0, width, height);
 	}
-	
+
+	//Default parameters
 	const char* Window::DefaultTitle = "Default Shard Window";
 	constexpr int Window::DefaultWidth = 1920;
 	constexpr int Window::DefaultHeight = 1080;
 	const Math::Color Window::DefaultColor = Math::Color::DarkGrey;
 	constexpr CursorMode Window::DefaultCursorMode = CursorMode::Normal;
+
+	//Static parameters
 	bool Window::ShowOpenGlDebugMessages = true;
 	bool Window::KeepWindowOpened = true;
 	
-	Window::Window()
-		: m_title(DefaultTitle)
-		, m_window(nullptr)
-		, m_width(DefaultWidth)
-		, m_height(DefaultHeight)
-		, m_color(DefaultColor)
-		, m_bufferWidth(0)
-		, m_bufferHeight(0)
-		, m_cursorMode(DefaultCursorMode)
-		, m_loopStarted(false)
-	{
-		Initialise();
-	}
-
 	Window::Window(const int width, const int height, const char* name, const Math::Color& color)
 		: m_title(name)
 		, m_window(nullptr)
@@ -51,7 +40,7 @@ namespace Shard::Rendering
 		, m_color(color)
 		, m_bufferWidth(0)
 		, m_bufferHeight(0)
-		, m_cursorMode(CursorMode::Normal)
+		, m_cursorMode(DefaultCursorMode)
 		, m_loopStarted(false)
 	{
 		Initialise();
@@ -153,7 +142,8 @@ namespace Shard::Rendering
 	{
 		if (m_loopStarted)
 		{
-			assert(true, "Error! Window loop already started");
+			printf("Error! Window loop already started");
+			assert(true);
 			return;
 		}
 

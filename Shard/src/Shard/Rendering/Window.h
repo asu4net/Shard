@@ -33,8 +33,7 @@ namespace Shard::Rendering
         ShardEvents::Event<ShardEvents::OnRenderFrameEventArgs> OnRenderFrame;
         ShardEvents::Event<ShardEvents::OnRenderReadyEventArgs> OnRenderReady;
         
-        Window();
-        Window(const int width, const int height, const char* name = DefaultTitle, const Math::Color& color = DefaultColor);
+        explicit Window(const int width = DefaultWidth, const int height = DefaultHeight, const char* name = DefaultTitle, const Math::Color& color = DefaultColor);
         Window(const Window& other) = delete;
         Window(Window&& other) = delete;
         ~Window() = default;
