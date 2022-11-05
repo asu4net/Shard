@@ -33,10 +33,10 @@ namespace Game
         float minFireDegrees = -10.f;
         float maxFireDegrees = 10.f;
         
-        Quad fire = Quad("Textures/fire.png", BlendingMode::Add);
-        Quad grille = Quad("Textures/grille.png", BlendingMode::Alpha, 6.f);
-        Quad light = Quad("Textures/light.png", BlendingMode::Multiply);
-        Quad wall = Quad("Textures/wall.jpg", BlendingMode::Solid, 4.f);
+        Quad fire = Quad("res/Textures/fire.png", BlendingMode::Add);
+        Quad grille = Quad("res/Textures/grille.png", BlendingMode::Alpha, 6.f);
+        Quad light = Quad("res/Textures/light.png", BlendingMode::Multiply);
+        Quad wall = Quad("res/Textures/wall.jpg", BlendingMode::Solid, 4.f);
         
         Quad lightBorderDown = Quad(Color::Black, Quad::DefaultPosition, Quad::DefaultRotation, {20, 3, 0});
         Quad lightBorderTop = Quad(Color::Black, Quad::DefaultPosition, Quad::DefaultRotation, {20, 3, 0});

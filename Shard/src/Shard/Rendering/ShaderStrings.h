@@ -1,10 +1,10 @@
 #pragma once
 
-#define CIRCLE_VERTEX_PATH "Shaders/circleShader.vert"
-#define CIRCLE_FRAGMENT_PATH "Shaders/circleShader.frag"
+#define CIRCLE_VERTEX_PATH "res/Shaders/circleShader.vert"
+#define CIRCLE_FRAGMENT_PATH "res/Shaders/circleShader.frag"
 
-#define DEFAULT_VERTEX_PATH "Shaders/shader.vert"
-#define DEFAULT_FRAGMENT_PATH "Shaders/shader.frag"
+#define DEFAULT_VERTEX_PATH "res/Shaders/shader.vert"
+#define DEFAULT_FRAGMENT_PATH "res/Shaders/shader.frag"
 
 #define UNIFORM_MODEL_MATRIX_NAME "u_model"
 #define UNIFORM_PROJECTION_MATRIX_NAME "u_projection"

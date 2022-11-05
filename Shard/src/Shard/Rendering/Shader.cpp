@@ -35,7 +35,7 @@ namespace Shard::Rendering
 		const char* theCode[1];
 		theCode[0] = shaderCode;
 
-		int codeLength[1];
+		GLint codeLength[1];
 		codeLength[0] = strlen(shaderCode);
 
 		glShaderSource(theShader, 1, theCode, codeLength);

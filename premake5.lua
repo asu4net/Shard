@@ -23,6 +23,7 @@ IncludeDir["GLEW"] = "Shard/vendor/glew/include"
 IncludeDir["SHARD"] = "Shard/src/Shard"
 IncludeDir["SHARD_CORE"] = "Shard/src/Shard/Core"
 IncludeDir["STB_IMAGE"] = "Shard/vendor/stb_image"
+IncludeDir["STB_TRUETYPE"] = "Shard/vendor/stb_truetype"
 
 -- Library files
 LibFile = {}
@@ -63,7 +64,8 @@ project "Shard"
         "%{IncludeDir.GLFW}",
 		"%{IncludeDir.GLM}",
         "%{IncludeDir.GLEW}",
-		"%{IncludeDir.STB_IMAGE}"
+		"%{IncludeDir.STB_IMAGE}",
+		"%{IncludeDir.STB_TRUETYPE}"
     }
 
     libdirs
@@ -90,8 +92,7 @@ project "Shard"
 
         postbuildcommands
 		{
-			("{COPY}  %{wks.location}/Game/Shaders ../bin/" .. outputdir .. "/Game/Shaders"),
-			("{COPY}  %{wks.location}/Game/Textures ../bin/" .. outputdir .. "/Game/Textures")
+			("{COPY}  %{wks.location}/Game/res ../bin/" .. outputdir .. "/Game/res")
 		}
 
     filter "configurations:Debug"
