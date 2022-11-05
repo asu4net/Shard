@@ -60,24 +60,34 @@ namespace Shard::Rendering::Primitives
 
 	struct Shape
 	{
-		Vector3 position;
-		Vector3 scale = {1, 1, 1};
-		Vector3 rotation;
-
-		Color color = { 1, 0, 0, 1 };
-
+		inline static const Color DefaultColor = {1, 1, 1, 1};
+		inline static const Vector3 DefaultPosition = {0, 0, 0};
+		inline static const glm::quat DefaultRotation = {1, 0, 0, 0};
+		inline static const Vector3 DefaultScale = {1, 1, 1};
+		
+		Vector3 position = DefaultPosition;
+		Vector3 scale = DefaultScale;
+		glm::quat rotation = DefaultRotation;
+		
+		Color color = DefaultColor;
 		glm::mat4 transform = glm::mat4(1);
     	
 		Shape() = default;
 
-		Shape(Color _Color)
-			: color(_Color)
+		explicit Shape(const Color& color = DefaultColor,
+			const Vector3& position = DefaultPosition, const glm::quat& rotation = DefaultRotation, const Vector3& scale = DefaultScale)
+			: position(position)
+			, scale(scale)
+			, rotation(rotation)
+			, color(color)
 		{}
+		virtual ~Shape() = default;
 
 		void Draw()
 		{
 			glm::mat4 model = glm::mat4(1);
 			model = glm::translate(model, position.ToGlm());
+			model *= glm::toMat4(rotation);
 			model = glm::scale(model, scale.ToGlm());
 			transform = model;
 			
@@ -89,58 +99,66 @@ namespace Shard::Rendering::Primitives
 	
 	struct Quad : Shape
 	{
-		BlendingMode mode = BlendingMode::Alpha;
-		float uvMultiplier = 1;
+		static constexpr BlendingMode DefaultBlendingMode = BlendingMode::Alpha;
+		static constexpr float DefaultUvMultiplier = 1;
 		
-	private:
-		bool m_useTex = false;
-	
-	public:
-		std::string texturePath;
+		BlendingMode blendingMode = DefaultBlendingMode;
+		float uvMultiplier = DefaultUvMultiplier;
 		
 		using Shape::Shape;
 
-		Quad(Color _color = Color::White, std::string _texturePath = "")
-			: Shape(_color)
-			, texturePath(_texturePath)
-			, m_useTex(false)
+		explicit Quad(const std::string& texturePath = "", const BlendingMode mode = DefaultBlendingMode,
+			const float uvMultiplier = DefaultUvMultiplier, const Color& theColor = DefaultColor,
+			const Vector3& thePosition = DefaultPosition, const glm::quat& theRotation = DefaultRotation, const Vector3& theScale = DefaultScale)
+		
+			: Shape(theColor, thePosition, theRotation, theScale)
+			, blendingMode(mode)
+			, uvMultiplier(uvMultiplier)
+			, m_texturePath(texturePath)
 		{
 			m_useTex = !texturePath.empty();
 			if (!m_useTex) return;
-			Renderer::AddTexture(texturePath);
+			AddTexture(texturePath);
 		}
 
-		void AddTexture(std::string texturePath)
+		void AddTexture(const std::string& path)
 		{
 			m_useTex = true;
-			Renderer::AddTexture(texturePath);
+			m_texturePath = path;
+			Renderer::AddTexture(m_texturePath);
 		}
 
-		virtual void Render() override
+		void Render() override
 		{
-			SetBlendMode(mode);
-			Renderer::DrawQuad(transform, StaticCamera::view, StaticCamera::projection, color, m_useTex, texturePath, uvMultiplier);
+			SetBlendMode(blendingMode);
+			Renderer::DrawQuad(transform, StaticCamera::view, StaticCamera::projection, color, m_useTex, m_texturePath, uvMultiplier);
 		}
+
+	private:
+		bool m_useTex = false;
+		std::string m_texturePath;
 	};
 
-	struct Circle : public Shape
+	struct Circle : Shape
 	{
-		float thickness = 1.f;
-		float fade = 0.005f;
+		constexpr static float DefaultFade = 0.005f;
+		constexpr static float DefaultThickness = 1.f;
+		
+		float thickness = DefaultThickness;
+		float fade = DefaultFade;
 
 		Circle() = default;
+		using Shape::Shape;
 
-		Circle(Color _Color)
-			: Shape(_Color) 
+		explicit Circle(const float thickness = DefaultThickness, const float fade = DefaultFade, const Color& theColor = DefaultColor,
+			const Vector3& thePosition = DefaultPosition, const glm::quat& theRotation = DefaultRotation, const Vector3& theScale = DefaultScale)
+		
+			: Shape(theColor, thePosition, theRotation, theScale)
+			, thickness(thickness)
+			, fade(fade) 
 		{}
 
-		Circle(Color _Color, float _Thickness, float _Fade)
-			: Shape(_Color)
-			, thickness(_Thickness)
-			, fade(_Fade) 
-		{}
-
-		virtual void Render() override
+		void Render() override
 		{
 			Renderer::DrawCircle(transform, StaticCamera::view, StaticCamera::projection, color, thickness, fade);
 		}
