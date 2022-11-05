@@ -33,7 +33,8 @@ namespace Shard::Rendering
 							 glm::mat4 projection,
 			                 Math::Color color,
 							 bool useTexture = false,
-							 const std::string& texturePath = "");
+							 const std::string& texturePath = "",
+							 float uvMultiplier = 1);
 
 		static void DrawCircle(glm::mat4 model,
 			                   glm::mat4 view,

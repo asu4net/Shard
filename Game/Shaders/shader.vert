@@ -5,6 +5,7 @@ layout(location = 1) in vec2 texCoord;
 uniform mat4 u_view;
 uniform mat4 u_projection;
 uniform mat4 u_model;
+uniform float u_uvMultiplier = 1;
 
 uniform vec4 u_color;
 uniform float u_useTexture;
@@ -22,7 +23,7 @@ void main()
 {
     vertexOutput.color = u_color;
     vertexOutput.useTexture = u_useTexture;
-    vertexOutput.texCoord = texCoord;
+    vertexOutput.texCoord = texCoord * u_uvMultiplier;
 
     gl_Position = u_projection * u_view * u_model * vec4(aPosition, 1.0);
 }

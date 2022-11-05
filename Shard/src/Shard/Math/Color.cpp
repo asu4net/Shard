@@ -2,22 +2,22 @@
 
 namespace Shard::Math
 {
-    const Color Color::black = { 0, 0, 0, 1 };
-    const Color Color::blue = { 0, 0, 1, 1 };
-    const Color Color::lightBlue = { .3f, .3f, 1, 1 };
-    const Color Color::clear = { 0, 0, 0, 0 };
-    const Color Color::cyan = { 0, 1, 1, 1 };
-    const Color Color::gray = { .5f, .5f, .5f, 1 };
-    const Color Color::darkGray = { .2f, .2f, .2f, 1 };
-    const Color Color::green = { 0, 1, 0, 1 };
-    const Color Color::lightGreen = { .3f, 1, .3f, 1 };
-    const Color Color::grey = { .5f, .5f, .5f, 1 };
-    const Color Color::darkGrey = { .8f, .8f, .8f, 1 };
-    const Color Color::magenta = { 1, 0, 1, 1 };
-    const Color Color::red = { 1, 0, 0, 1 };
-    const Color Color::lightRed = { 1, .3f, .3f, 1 };
-    const Color Color::white = { 1, 1, 1, 1 };
-    const Color Color::yellow = { 1, .92f, .016f, 1 }; //From Unity: the color is nice to look at!
+    const Color Color::Black = { 0, 0, 0, 1 };
+    const Color Color::Blue = { 0, 0, 1, 1 };
+    const Color Color::LightBlue = { .3f, .3f, 1, 1 };
+    const Color Color::Clear = { 0, 0, 0, 0 };
+    const Color Color::Cyan = { 0, 1, 1, 1 };
+    const Color Color::Gray = { .5f, .5f, .5f, 1 };
+    const Color Color::DarkGray = { .2f, .2f, .2f, 1 };
+    const Color Color::Green = { 0, 1, 0, 1 };
+    const Color Color::LightGreen = { .3f, 1, .3f, 1 };
+    const Color Color::Grey = { .5f, .5f, .5f, 1 };
+    const Color Color::DarkGrey = { .8f, .8f, .8f, 1 };
+    const Color Color::Magenta = { 1, 0, 1, 1 };
+    const Color Color::Red = { 1, 0, 0, 1 };
+    const Color Color::LightRed = { 1, .3f, .3f, 1 };
+    const Color Color::White = { 1, 1, 1, 1 };
+    const Color Color::Yellow = { 1, .92f, .016f, 1 }; //From Unity: the color is nice to look at!
 
     Color::Color()
         : r(0)

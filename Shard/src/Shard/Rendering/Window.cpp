@@ -2,14 +2,12 @@
 #include "GLEW/glew.h"
 #include "GLFW/glfw3.h"
 #include "Input.h"
-#include <stdio.h>
+#include <cstdio>
 #include "TimeData.h"
 #include "Renderer.h"
 
 namespace Shard::Rendering
 {
-	bool Window::ShowOpenGlDebugMessages = true;
-
 	static void APIENTRY OnDebugMessage(GLenum source, GLenum type, unsigned int id, GLenum severity,
 		GLsizei length, const char* message, const void* userParam)
 	{
@@ -17,50 +15,52 @@ namespace Shard::Rendering
 		printf("OpenGL: %s\n", message);
 	}
 
-	static int CursorModeValue(CursorMode _cursorMode)
+	void FrameBufferSizeCallback(GLFWwindow* window, const int width, const int height)
 	{
-		switch (_cursorMode)
-		{
-		case Shard::Rendering::CursorMode::Normal:
-			return GLFW_CURSOR_NORMAL;
-		case Shard::Rendering::CursorMode::Disabled:
-			return GLFW_CURSOR_DISABLED;
-		case Shard::Rendering::CursorMode::Hidden:
-			return GLFW_CURSOR_HIDDEN;
-		default:
-			return 0;
-		}
+		glViewport(0, 0, width, height);
+		glScissor(0, 0, width, height);
 	}
-
+	
+	const char* Window::DefaultTitle = "Default Shard Window";
+	constexpr int Window::DefaultWidth = 1920;
+	constexpr int Window::DefaultHeight = 1080;
+	const Math::Color Window::DefaultColor = Math::Color::DarkGrey;
+	constexpr CursorMode Window::DefaultCursorMode = CursorMode::Normal;
+	bool Window::ShowOpenGlDebugMessages = true;
+	bool Window::KeepWindowOpened = true;
+	
 	Window::Window()
-		: m_title("Default Shard Window")
-		, m_height(1080)
-		, m_width(1920)
-		, m_color(Math::Color::darkGray)
+		: m_title(DefaultTitle)
+		, m_window(nullptr)
+		, m_width(DefaultWidth)
+		, m_height(DefaultHeight)
+		, m_color(DefaultColor)
+		, m_bufferWidth(0)
+		, m_bufferHeight(0)
+		, m_cursorMode(DefaultCursorMode)
 	{
-		Init();
+		Initialise();
 	}
 
-	Window::Window(int width, int height, const char* _Title, Math::Color color)
-		: m_title(_Title)
-		, m_height(height)
+	Window::Window(const int width, const int height, const char* name, const Math::Color& color)
+		: m_title(name)
+		, m_window(nullptr)
 		, m_width(width)
+		, m_height(height)
 		, m_color(color)
+		, m_bufferWidth(0)
+		, m_bufferHeight(0)
+		, m_cursorMode(CursorMode::Normal)
 	{
-		Init();
+		Initialise();
 	}
 
-	bool Window::Init()
+	void Window::Initialise()
 	{
-		m_window = nullptr;
-		m_bufferWidth = 0;
-		m_bufferHeight = 0;
-		m_cursorMode = CursorMode::Normal;
-
 		if (!glfwInit())
 		{
 			printf("GLFW initialisation failed!\n");
-			return false;
+			return;
 		}
 
 		SetProperties();
@@ -71,19 +71,14 @@ namespace Shard::Rendering
 		{
 			printf("GLFW window creation failed!\n");
 			glfwTerminate();
-			return false;
+			return;
 		}
 
 		glfwGetFramebufferSize(m_window, &m_bufferWidth, &m_bufferHeight);
-
-		//Provides glfwWindow as open gl context.
 		glfwMakeContextCurrent(m_window);
-
-		//INPUT ASSIGNEMENT
+		glfwSetFramebufferSizeCallback(m_window, FrameBufferSizeCallback);
 		Input::Init(m_window);
-
-		//Cursor settings
-		SetCursorMode(CursorMode::Normal);
+		SetCursorMode(m_cursorMode);
 
 		glewExperimental = true;
 
@@ -92,7 +87,7 @@ namespace Shard::Rendering
 			printf("GLEW initialisation failed!\n");
 			glfwDestroyWindow(m_window);
 			glfwTerminate();
-			return false;
+			return;
 		}
 
 		glEnable(GL_DEBUG_OUTPUT);
@@ -105,8 +100,6 @@ namespace Shard::Rendering
 		glfwSetWindowUserPointer(m_window, this);
 
 		Renderer::Init();
-
-		return true;
 	}
 
 	const std::string& Window::GetTitle() const { return m_title; }
@@ -119,22 +112,32 @@ namespace Shard::Rendering
 
 	CursorMode Window::GetCursorMode() const { return m_cursorMode; }
 
-	Math::Vector3 Window::ScreenToWorldPoint(Math::Vector2 _ScreenPoint, glm::mat4 proj, glm::mat4 view)
+	Math::Vector3 Window::ScreenToWorldPoint(const Math::Vector2 screenPoint, const glm::mat4 proj, const glm::mat4 view)
 	{
-		float halfScreenWidth =  static_cast<float>(m_width) / 2;
-		float halfScreenHeight =  static_cast<float>(m_height) / 2;
-		glm::mat4 inverseMV = glm::inverse(proj * view);
-		glm::vec4 near = glm::vec4(((_ScreenPoint.x - halfScreenWidth) / halfScreenWidth),
-			(-1 * (_ScreenPoint.y - halfScreenHeight) / halfScreenHeight), -1, 1.0);
-		glm::vec4 nearResult = inverseMV * near;
+		const float halfScreenWidth =  static_cast<float>(m_width) / 2;
+		const float halfScreenHeight =  static_cast<float>(m_height) / 2;
+		const glm::mat4 inverseMv = glm::inverse(proj * view);
+		const glm::vec4 near = glm::vec4(((screenPoint.x - halfScreenWidth) / halfScreenWidth),(-1 * (screenPoint.y - halfScreenHeight) / halfScreenHeight), -1, 1.0);
+		glm::vec4 nearResult = inverseMv * near;
 		nearResult /= nearResult.w;
-		return Math::Vector3(nearResult.x, nearResult.y, 0);
+		return {nearResult.x, nearResult.y, 0};
 	}
 
-	void Window::SetCursorMode(CursorMode mode)
+	void Window::SetCursorMode(const CursorMode mode)
 	{
 		m_cursorMode = mode;
-		glfwSetInputMode(m_window, GLFW_CURSOR, CursorModeValue(m_cursorMode));
+		
+		switch (m_cursorMode)
+		{
+		case CursorMode::Normal:
+			glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+			return;
+		case CursorMode::Disabled:
+			glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+			return;
+		case CursorMode::Hidden:
+			glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+		}
 	}
 
 	void Window::SetProperties()
@@ -152,7 +155,7 @@ namespace Shard::Rendering
 	{
 		OnRenderReady.Invoke({});
 
-		while (!glfwWindowShouldClose(m_window))
+		while (!glfwWindowShouldClose(m_window) && KeepWindowOpened)
 		{
 			//Input events
 			glfwPollEvents();

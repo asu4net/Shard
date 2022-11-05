@@ -4,26 +4,26 @@
 
 namespace Shard::Math
 {
-    struct Color : public Object
+    struct Color
     {
         float r, g, b, a;
 
-        static const Color black;
-        static const Color blue;
-        static const Color lightBlue;
-        static const Color clear;
-        static const Color cyan;
-        static const Color gray;
-        static const Color darkGray;
-        static const Color green;
-        static const Color lightGreen;
-        static const Color grey;
-        static const Color darkGrey;
-        static const Color magenta;
-        static const Color red;
-        static const Color lightRed;
-        static const Color white;
-        static const Color yellow;
+        static const Color Black;
+        static const Color Blue;
+        static const Color LightBlue;
+        static const Color Clear;
+        static const Color Cyan;
+        static const Color Gray;
+        static const Color DarkGray;
+        static const Color Green;
+        static const Color LightGreen;
+        static const Color Grey;
+        static const Color DarkGrey;
+        static const Color Magenta;
+        static const Color Red;
+        static const Color LightRed;
+        static const Color White;
+        static const Color Yellow;
 
         Color();
         Color(float _r, float _g, float _b, float _a = 1);

@@ -16,10 +16,10 @@ namespace Shard::Rendering
         //Quad data...
         float vertices[] = {
             // x	 y	   u	 v
-            -0.5, -0.5, 4.0f, 0.0f, // 0
+            -0.5, -0.5, 1.0f, 0.0f, // 0
              0.5, -0.5, 0.0f, 0.0f, // 1
-             0.5,  0.5, 0.0f, 4.0f, // 2
-            -0.5,  0.5, 4.0f, 4.0f, // 3 
+             0.5,  0.5, 0.0f, 1.0f, // 2
+            -0.5,  0.5, 1.0f, 1.0f, // 3 
         };
 
         unsigned int indices[] = {
@@ -38,7 +38,7 @@ namespace Shard::Rendering
         textures.emplace(texturePath, texturePath);
     }
 
-    void Renderer::DrawQuad(glm::mat4 model, glm::mat4 view, glm::mat4 projection, Math::Color color, bool useTexture, const std::string& texturePath)
+    void Renderer::DrawQuad(glm::mat4 model, glm::mat4 view, glm::mat4 projection, Math::Color color, bool useTexture, const std::string& texturePath, float uvMultiplier)
     {        
         defaultShader->Bind();
 
@@ -48,6 +48,7 @@ namespace Shard::Rendering
         if (useTexture)
         {
             glEnable(GL_BLEND);
+            defaultShader->SetUniformFloat(UNIFORM_UV_MULTIPLIER, uvMultiplier);
             defaultShader->SetUniformInt(UNIFORM_TEXTURE_NAME, 0);
             textures[texturePath].Bind();
         }

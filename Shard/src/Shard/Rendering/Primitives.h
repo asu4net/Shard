@@ -60,7 +60,6 @@ namespace Shard::Rendering::Primitives
 
 	struct Shape
 	{
-		BlendingMode mode = BlendingMode::Alpha;
 		Vector3 position;
 		Vector3 scale = {1, 1, 1};
 		Vector3 rotation;
@@ -82,15 +81,17 @@ namespace Shard::Rendering::Primitives
 			model = glm::scale(model, scale.ToGlm());
 			transform = model;
 			
-			SetBlendMode(mode);
 			Render();
 		}
 
 		virtual void Render() = 0;
 	};
 	
-	struct Quad : public Shape
+	struct Quad : Shape
 	{
+		BlendingMode mode = BlendingMode::Alpha;
+		float uvMultiplier = 1;
+		
 	private:
 		bool m_useTex = false;
 	
@@ -99,7 +100,7 @@ namespace Shard::Rendering::Primitives
 		
 		using Shape::Shape;
 
-		Quad(Color _color = Color::white, std::string _texturePath = "")
+		Quad(Color _color = Color::White, std::string _texturePath = "")
 			: Shape(_color)
 			, texturePath(_texturePath)
 			, m_useTex(false)
@@ -117,7 +118,8 @@ namespace Shard::Rendering::Primitives
 
 		virtual void Render() override
 		{
-			Renderer::DrawQuad(transform, StaticCamera::view, StaticCamera::projection, color, m_useTex, texturePath);
+			SetBlendMode(mode);
+			Renderer::DrawQuad(transform, StaticCamera::view, StaticCamera::projection, color, m_useTex, texturePath, uvMultiplier);
 		}
 	};
 

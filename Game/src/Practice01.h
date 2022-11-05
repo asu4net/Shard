@@ -25,9 +25,9 @@ namespace Game
 
         void OnRenderReady(ShardEvents::OnRenderReadyEventArgs args) override
         {
-            centerQuad = Quad(Color::lightRed);
-            circle = Circle(Color::lightBlue);
-            mouseQuad = Quad(Color::lightGreen);
+            centerQuad = Quad(Color::LightRed);
+            circle = Circle(Color::LightBlue);
+            mouseQuad = Quad(Color::LightGreen);
             StaticCamera::window = &m_Window;
             StaticCamera::size = cameraSize;
         }

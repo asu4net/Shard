@@ -3,7 +3,6 @@
 #include "ShardEvents/Event.h"
 #include "Math/Math.h"
 #include <string>
-
 #include "gtc/matrix_transform.hpp"
 
 struct GLFWwindow;
@@ -15,26 +14,39 @@ namespace Shard::Rendering
 
     enum class CursorMode
     {
-        Normal, Disabled, Hidden
+          Normal
+        , Disabled
+        , Hidden
     };
-
-    using namespace Shard::ShardEvents;
 
     class Window
     {
     public:
-        Event<OnRenderFrameEventArgs> OnRenderFrame;
-        Event<OnRenderReadyEventArgs> OnRenderReady;
+        static const char* DefaultTitle;
+        static const int DefaultWidth;
+        static const int DefaultHeight;
+        static const Math::Color DefaultColor;
+        static const CursorMode DefaultCursorMode;
         static bool ShowOpenGlDebugMessages;
+        static bool KeepWindowOpened;
+        
+        ShardEvents::Event<ShardEvents::OnRenderFrameEventArgs> OnRenderFrame;
+        ShardEvents::Event<ShardEvents::OnRenderReadyEventArgs> OnRenderReady;
         
         Window();
-        Window(int width, int height, const char* name, Math::Color color);
-
+        Window(const int width, const int height, const char* name = DefaultTitle, const Math::Color& color = DefaultColor);
+        Window(const Window& other) = delete;
+        Window(Window&& other) = delete;
+        ~Window() = default;
+        
+        Window& operator=(Window other) = delete;
+        Window& operator=(Window&& other) = delete;
+        
         const std::string& GetTitle() const;
         void SetTitle(const std::string& title);
 
         CursorMode GetCursorMode() const;
-        void SetCursorMode(CursorMode mode);
+        void SetCursorMode(const CursorMode mode);
 
         float GetAspect() const { return static_cast<float>(m_bufferWidth) / static_cast<float>(m_bufferHeight); }
         void SetBackgroundColor(const Math::Color& color) { m_color = color; }
@@ -52,7 +64,7 @@ namespace Shard::Rendering
         int m_bufferWidth, m_bufferHeight;
         CursorMode m_cursorMode;
 
-        bool Init();
+        void Initialise();
         void SetProperties();
     };
 }
