@@ -42,18 +42,19 @@ namespace Shard::Rendering
         Window& operator=(Window other) = delete;
         Window& operator=(Window&& other) = delete;
         
-        const std::string& GetTitle() const;
+        const std::string& GetTitle() const { return m_title; }
         void SetTitle(const std::string& title);
 
-        CursorMode GetCursorMode() const;
+        CursorMode GetCursorMode() const { return m_cursorMode; }
         void SetCursorMode(const CursorMode mode);
 
-        float GetAspect() const { return static_cast<float>(m_bufferWidth) / static_cast<float>(m_bufferHeight); }
         void SetBackgroundColor(const Math::Color& color) { m_color = color; }
+
+        float Aspect() const { return static_cast<float>(m_bufferWidth) / static_cast<float>(m_bufferHeight); }
+        float CurrentTime() const;
         
         Math::Vector3 ScreenToWorldPoint(Math::Vector2 screenPoint, glm::mat4 proj = glm::mat4(1), glm::mat4 view = glm::mat4(1));
-
-        float CurrentTime() const;
+        
         void StartLoop();
 
     private:
@@ -63,6 +64,7 @@ namespace Shard::Rendering
         Math::Color m_color;
         int m_bufferWidth, m_bufferHeight;
         CursorMode m_cursorMode;
+        bool m_loopStarted;
 
         void Initialise();
         void SetProperties();

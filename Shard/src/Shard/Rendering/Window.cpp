@@ -38,6 +38,7 @@ namespace Shard::Rendering
 		, m_bufferWidth(0)
 		, m_bufferHeight(0)
 		, m_cursorMode(DefaultCursorMode)
+		, m_loopStarted(false)
 	{
 		Initialise();
 	}
@@ -51,6 +52,7 @@ namespace Shard::Rendering
 		, m_bufferWidth(0)
 		, m_bufferHeight(0)
 		, m_cursorMode(CursorMode::Normal)
+		, m_loopStarted(false)
 	{
 		Initialise();
 	}
@@ -102,15 +104,11 @@ namespace Shard::Rendering
 		Renderer::Init();
 	}
 
-	const std::string& Window::GetTitle() const { return m_title; }
-
 	void Window::SetTitle(const std::string& title)
 	{
 		m_title = title;
 		glfwSetWindowTitle(m_window, title.c_str());
 	}
-
-	CursorMode Window::GetCursorMode() const { return m_cursorMode; }
 
 	Math::Vector3 Window::ScreenToWorldPoint(const Math::Vector2 screenPoint, const glm::mat4 proj, const glm::mat4 view)
 	{
@@ -153,6 +151,13 @@ namespace Shard::Rendering
 
 	void Window::StartLoop()
 	{
+		if (m_loopStarted)
+		{
+			assert(true, "Error! Window loop already started");
+			return;
+		}
+
+		m_loopStarted = true;
 		OnRenderReady.Invoke({});
 
 		while (!glfwWindowShouldClose(m_window) && KeepWindowOpened)

@@ -27,7 +27,7 @@ namespace Shard::Rendering::Primitives
 			if (!window) return;
 			projection = glm::mat4(1);
 			view = glm::mat4(1);
-			projection = glm::ortho(-window->GetAspect() * size, window->GetAspect() * size, -1.0f * size, 1.0f * size, -100.f, 100.f);
+			projection = glm::ortho(-window->Aspect() * size, window->Aspect() * size, -1.0f * size, 1.0f * size, -100.f, 100.f);
 			view = glm::lookAt(position.ToGlm(), (position + forward).ToGlm(), up.ToGlm());
 		}
 	};
