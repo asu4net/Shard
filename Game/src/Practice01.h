@@ -1,8 +1,5 @@
-#include "Shard/Core/Application.h"
-#include "Shard/Core/EntryPoint.h"
-#include "Shard/Rendering/Primitives.h"
-#include "TimeData.h"
-#include "Input.h"
+#pragma once
+#ifdef PRACTICE_01
 
 namespace Game
 {
@@ -69,3 +66,5 @@ namespace Game
 }
 
 inline Shard::Application* Shard::CreateApplication() { return new Game::Game(); }
+
+#endif
