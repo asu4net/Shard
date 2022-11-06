@@ -4,7 +4,10 @@ struct GLFWwindow;
 
 namespace Shard::Rendering
 {
-    struct OnRenderReadyEventArgs {};
+    struct OnRenderReadyEventArgs
+    {
+        GLFWwindow* window;
+    };
     struct OnRenderFrameEventArgs {};
     
     constexpr int OpenGlMinorVersion = 3;
@@ -16,7 +19,7 @@ namespace Shard::Rendering
         , Disabled
         , Hidden
     };
-
+    
     class Window
     {
     public:
@@ -54,6 +57,8 @@ namespace Shard::Rendering
         
         void StartLoop();
 
+        
+        
     private:
         std::string m_title;
         GLFWwindow* m_window;

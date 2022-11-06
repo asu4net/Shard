@@ -1,4 +1,5 @@
 #pragma once
+#include "ImGuiImp/ImGuiLayer.h"
 #include "Rendering/Window.h"
 
 namespace Shard
@@ -7,7 +8,8 @@ namespace Shard
     {
     public:
         Rendering::Window window;
-        
+        ImGuiImp::ImGuiLayer imGuiLayer;
+
         Application();
         virtual ~Application();
 

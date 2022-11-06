@@ -74,7 +74,7 @@ namespace Shard::Rendering
 		SetCursorMode(m_cursorMode);
 
 		glewExperimental = true;
-
+		
 		if (glewInit() != GLEW_OK)
 		{
 			printf("GLEW initialisation failed!\n");
@@ -151,21 +151,21 @@ namespace Shard::Rendering
 		}
 
 		m_loopStarted = true;
-		OnRenderReady.Invoke({});
+		OnRenderReady.Invoke({ m_window });
 
 		while (!glfwWindowShouldClose(m_window) && KeepWindowOpened)
 		{
 			//Input events
 			glfwPollEvents();
-
+			
 			glClearColor(m_color.r, m_color.g, m_color.b, m_color.a);
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 			Time::CalculateDeltaTime(CurrentTime());
-
+			
 			//DRAW STUFF
 			OnRenderFrame.Invoke({});
-
+			
 			glfwSwapBuffers(m_window);
 		}
 	}

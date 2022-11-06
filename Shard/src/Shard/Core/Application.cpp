@@ -1,16 +1,18 @@
 #include "shpch.h"
 #include "Application.h"
 
-
 namespace Shard
 {
 	Application::Application()
+		: imGuiLayer(&window)
+
 	{
 		printf("Shard Application created.\n");
 	}
 
 	Application::~Application()
 	{
+		
 		printf("Shard Application destroyed.\n");
 	}
 
