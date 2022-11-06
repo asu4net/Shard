@@ -1,3 +1,4 @@
+#include "shpch.h"
 #include "Object.h"
 
 namespace Shard

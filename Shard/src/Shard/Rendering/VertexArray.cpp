@@ -1,3 +1,4 @@
+#include "shpch.h"
 #include "VertexArray.h"
 #include "GLEW/glew.h"
 

@@ -1,16 +1,15 @@
 #include "Shard/Core/Application.h"
 #include "Shard/Core/EntryPoint.h"
 #include "Shard/Rendering/Primitives.h"
-#include "Shard/Math/Math.h"
 #include "Input.h"
-#include "Conversions.h"
 #include "TimeData.h"
 
 namespace Game
 {
     using namespace Shard;
     using namespace Math;
-    using namespace Rendering::Primitives;
+    using namespace Rendering;
+    using namespace Primitives;
 
     class Game final : public Application
     {
@@ -43,10 +42,10 @@ namespace Game
         Quad lightBorderRight = Quad(Color::Black, Quad::DefaultPosition, Quad::DefaultRotation, {10, 20, 0});
         Quad lightBorderLeft = Quad(Color::Black, Quad::DefaultPosition, Quad::DefaultRotation, {10, 20, 0});
         
-        void OnRenderReady(ShardEvents::OnRenderReadyEventArgs args) override
+        void OnRenderReady(OnRenderReadyEventArgs args) override
         {
-            m_Window.SetTitle("Practice 02 - Alejandro :D");
-            StaticCamera::window = &m_Window;
+            window.SetTitle("Practice 02 - Alejandro :D");
+            StaticCamera::window = &window;
             StaticCamera::size = cameraSize;
             
             fire.scale = Vector3::one * minFireScale;
@@ -56,7 +55,7 @@ namespace Game
             wall.scale = Vector2::one * 8.f;
         }
 
-        void OnRenderFrame(ShardEvents::OnRenderFrameEventArgs args) override
+        void OnRenderFrame(OnRenderFrameEventArgs args) override
         {
             DrawCalls();
             
@@ -110,7 +109,7 @@ namespace Game
         Vector3 MouseWorld()
         {
             const Vector3 mousePos = Input::GetMousePosition();
-            return m_Window.ScreenToWorldPoint(mousePos, StaticCamera::projection, StaticCamera::view);
+            return window.ScreenToWorldPoint(mousePos, StaticCamera::projection, StaticCamera::view);
         }
 
         void DrawCalls()

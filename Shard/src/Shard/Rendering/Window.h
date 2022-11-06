@@ -1,14 +1,12 @@
 #pragma once
-#include "ShardEvents/EventArgs.h"
-#include "ShardEvents/Event.h"
-#include "Math/Math.h"
-#include <string>
-#include "gtc/matrix_transform.hpp"
 
 struct GLFWwindow;
 
 namespace Shard::Rendering
 {
+    struct OnRenderReadyEventArgs {};
+    struct OnRenderFrameEventArgs {};
+    
     constexpr int OpenGlMinorVersion = 3;
     constexpr int OpenGlMajorVersion = 3;
 
@@ -30,8 +28,8 @@ namespace Shard::Rendering
         static bool ShowOpenGlDebugMessages;
         static bool KeepWindowOpened;
         
-        ShardEvents::Event<ShardEvents::OnRenderFrameEventArgs> OnRenderFrame;
-        ShardEvents::Event<ShardEvents::OnRenderReadyEventArgs> OnRenderReady;
+        Event<OnRenderFrameEventArgs> OnRenderFrame;
+        Event<OnRenderReadyEventArgs> OnRenderReady;
         
         explicit Window(const int width = DefaultWidth, const int height = DefaultHeight, const char* name = DefaultTitle, const Math::Color& color = DefaultColor);
         Window(const Window& other) = delete;

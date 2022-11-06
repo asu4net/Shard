@@ -1,6 +1,4 @@
 #pragma once
-#include <string>
-#include "glm.hpp"
 
 namespace Shard::Math
 {

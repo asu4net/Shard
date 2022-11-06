@@ -1,3 +1,4 @@
+#include "shpch.h"
 #include "Texture.h"
 #include "stb_image.h"
 #include <GLEW/glew.h>

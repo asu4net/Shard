@@ -1,3 +1,4 @@
+#include "shpch.h"
 #include "Mesh.h"
 
 namespace Shard::Rendering

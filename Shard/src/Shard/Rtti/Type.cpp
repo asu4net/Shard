@@ -1,3 +1,4 @@
+#include "shpch.h"
 #include "Type.h"
 #include "TypeManager.h"
 

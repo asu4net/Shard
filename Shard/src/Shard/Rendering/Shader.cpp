@@ -1,8 +1,6 @@
+#include "shpch.h"
 #include "Shader.h"
-#include <string>
-#include <fstream>
 #include <GLEW/glew.h>
-#include <gtc/type_ptr.hpp>
 #include "ShaderStrings.h"
 
 namespace Shard::Rendering

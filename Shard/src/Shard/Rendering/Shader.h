@@ -1,7 +1,4 @@
 #pragma once
-#include "glm.hpp"
-#include <string>
-#include "Math/Math.h"
 
 namespace Shard::Rendering
 {

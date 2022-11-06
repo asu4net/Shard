@@ -1,3 +1,4 @@
+#include "shpch.h"
 #include "IndexBuffer.h"
 #include <GLEW/glew.h>
 

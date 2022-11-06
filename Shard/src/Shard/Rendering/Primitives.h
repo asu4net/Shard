@@ -1,10 +1,4 @@
 #pragma once
-#include <memory>
-#include <glm.hpp>
-#include <gtc/matrix_transform.hpp>
-#include <gtc/quaternion.hpp>
-#include <common.hpp>
-#include <gtx/quaternion.hpp>
 #include "Rendering/Renderer.h"
 
 namespace Shard::Rendering::Primitives

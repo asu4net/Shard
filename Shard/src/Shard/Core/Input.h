@@ -1,6 +1,4 @@
 #pragma once
-#include "Math/Math.h"
-#include "KeyCodes.h"
 
 struct GLFWwindow;
 

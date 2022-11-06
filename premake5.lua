@@ -17,7 +17,7 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 IncludeDir = {}
 
 IncludeDir["SHARD_SRC"] = "Shard/src"
-IncludeDir["GLM"] = "Shard/vendor/glm/glm"
+IncludeDir["GLM"] = "Shard/vendor/glm"
 IncludeDir["GLFW"] = "Shard/vendor/glfw/include"
 IncludeDir["GLEW"] = "Shard/vendor/glew/include"
 IncludeDir["SHARD"] = "Shard/src/Shard"
@@ -48,12 +48,19 @@ project "Shard"
     targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 
+	pchheader "shpch.h"
+	pchsource "Shard/src/shpch.cpp"
+
     files
 	{
 		"%{prj.name}/src/**.h",
 		"%{prj.name}/src/**.cpp",
+		"%{prj.name}/vendor/glm/glm/**.hpp",
+		"%{prj.name}/vendor/glm/glm/**.inl",
 		"%{prj.name}/vendor/stb_image/stb_image.h",
-		"%{prj.name}/vendor/stb_image/stb_image.cpp"
+		"%{prj.name}/vendor/stb_image/stb_image.cpp",
+		"%{prj.name}/vendor/stb_truetype/stb_truetype.h",
+		"%{prj.name}/vendor/stb_truetype/stb_truetype.cpp"
 	}
 
     includedirs

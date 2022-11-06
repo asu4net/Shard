@@ -1,19 +1,10 @@
 #pragma once
-#include <memory>
 #include "Shader.h"
-#include "IndexBuffer.h"
-#include "VertexArray.h"
-#include "VertexBuffer.h"
-#include "ShaderStrings.h"
 #include "Mesh.h"
-#include "Math/Color.h"
-#include <string>
-#include <map>
 #include "Texture.h"
 
 namespace Shard::Rendering
 {
-
 	class Window;
 	class Renderer
 	{
@@ -21,8 +12,7 @@ namespace Shard::Rendering
 		static std::shared_ptr<Mesh> quad;
 		static std::shared_ptr<Shader> defaultShader;
 		static std::shared_ptr<Shader> circleShader;
-		
-
+	
 	public:
 		static void Init();
 		

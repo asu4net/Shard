@@ -1,8 +1,8 @@
+#include "shpch.h"
 #include "Window.h"
 #include "GLEW/glew.h"
 #include "GLFW/glfw3.h"
 #include "Input.h"
-#include <cstdio>
 #include "TimeData.h"
 #include "Renderer.h"
 

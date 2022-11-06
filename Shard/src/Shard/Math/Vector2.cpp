@@ -1,7 +1,5 @@
+#include "shpch.h"
 #include "Vector2.h"
-#include <cmath>
-#include "Conversions.h"
-#include "Vector3.h"
 
 namespace Shard::Math
 {

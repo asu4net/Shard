@@ -1,3 +1,4 @@
+#include "shpch.h"
 #include "Color.h"
 
 namespace Shard::Math

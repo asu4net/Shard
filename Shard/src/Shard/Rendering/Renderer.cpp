@@ -1,5 +1,6 @@
+#include "shpch.h"
 #include "Renderer.h"
-#include "Window.h"
+#include "ShaderStrings.h"
 
 namespace Shard::Rendering
 {

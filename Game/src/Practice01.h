@@ -1,16 +1,15 @@
 #include "Shard/Core/Application.h"
 #include "Shard/Core/EntryPoint.h"
 #include "Shard/Rendering/Primitives.h"
-#include "Shard/Math/Math.h"
 #include "TimeData.h"
 #include "Input.h"
-#include "Conversions.h"
 
 namespace Game
 {
     using namespace Shard;
     using namespace Math;
-    using namespace Rendering::Primitives;
+    using namespace Rendering;
+    using namespace Primitives;
 
     class Game final : public Application
     {
@@ -26,13 +25,13 @@ namespace Game
         float circleOffset = 2.f;
         float cameraSize = 7.f;
 
-        void OnRenderReady(ShardEvents::OnRenderReadyEventArgs args) override
+        void OnRenderReady(OnRenderReadyEventArgs args) override
         {
-            StaticCamera::window = &m_Window;
+            StaticCamera::window = &window;
             StaticCamera::size = cameraSize;
         }
 
-        void OnRenderFrame(ShardEvents::OnRenderFrameEventArgs args) override
+        void OnRenderFrame(OnRenderFrameEventArgs args) override
         {
             DrawCalls();
             
@@ -50,13 +49,13 @@ namespace Game
                 + " -- Angle: "
                 + StringFromNumber(displayRadians);
 
-            m_Window.SetTitle(title);
+            window.SetTitle(title);
         }
 
         Vector3 MouseWorld()
         {
             const Vector3 mousePos = Input::GetMousePosition();
-            return m_Window.ScreenToWorldPoint(mousePos, StaticCamera::projection, StaticCamera::view);
+            return window.ScreenToWorldPoint(mousePos, StaticCamera::projection, StaticCamera::view);
         }
 
         void DrawCalls()

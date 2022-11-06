@@ -1,5 +1,4 @@
 #pragma once
-#include "GLEW/glew.h"
 
 namespace Shard::Rendering
 {

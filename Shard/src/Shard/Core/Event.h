@@ -1,9 +1,6 @@
 #pragma once
 
-#include <functional>
-#include <vector>
-
-namespace Shard::ShardEvents
+namespace Shard
 {
 	//Add Listener macro...
 
