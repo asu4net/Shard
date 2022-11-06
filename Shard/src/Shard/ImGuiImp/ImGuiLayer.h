@@ -5,10 +5,10 @@ namespace Shard::ImGuiImp
 {
     class ImGuiLayer
     {
-    private:
-        Rendering::Window* m_window = nullptr;
+        inline static bool showDemo = true;
         
     public:
+        ImGuiLayer() = default;
         explicit ImGuiLayer(Rendering::Window* window);
         
         void OnRenderReady(Rendering::OnRenderReadyEventArgs args);

@@ -30,8 +30,8 @@ namespace Shard::ImGuiImp
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
 
-        static bool show = true;
-        ImGui::ShowDemoWindow(&show);
+        if (showDemo)
+            ImGui::ShowDemoWindow(&showDemo);
         
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

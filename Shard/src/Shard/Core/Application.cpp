@@ -4,25 +4,21 @@
 namespace Shard
 {
 	Application::Application()
-		: imGuiLayer(&window)
-
 	{
+		window.OnRenderReady.ADD_LISTENER(Application, OnRenderReady);
+		window.OnRenderFrame.ADD_LISTENER(Application, OnRenderFrame);
+		imGuiLayer = ImGuiImp::ImGuiLayer(&window);
 		printf("Shard Application created.\n");
 	}
 
 	Application::~Application()
 	{
-		
 		printf("Shard Application destroyed.\n");
 	}
 
 	void Application::Start()
 	{
 		printf("Shard Application started.\n");
-
-		window.OnRenderReady.ADD_LISTENER(Application, OnRenderReady);
-		window.OnRenderFrame.ADD_LISTENER(Application, OnRenderFrame);
-
 		window.StartLoop();
 	}
 	
