@@ -1,6 +1,5 @@
 #pragma once
-#include "ImGuiImp/ImGuiLayer.h"
-#include "Rendering/Window.h"
+#include "ImGui/ImGuiRenderer.h"
 
 namespace Shard
 {
@@ -8,15 +7,17 @@ namespace Shard
     {
     public:
         Rendering::Window window;
-        ImGuiImp::ImGuiLayer imGuiLayer;
+        ImGuiRenderer imGuiRenderer;
 
         Application();
         virtual ~Application();
 
         virtual void Start();
 
-        virtual void OnRenderReady(Rendering::OnRenderReadyEventArgs args);
-        virtual void OnRenderFrame(Rendering::OnRenderFrameEventArgs args);
+        virtual void OnImGuiReady(ImGuiReadyArgs args);
+        virtual void OnImGuiRender(ImGuiRenderArgs args);
+        virtual void OnRenderReady(Rendering::RenderReadyArgs args);
+        virtual void OnRenderFrame(Rendering::RenderFrameArgs args);
     };
 
     //This must be implemented in the user side.

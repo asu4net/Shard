@@ -11,4 +11,9 @@
 #include "Shard/Rendering/Primitives.h"
 #include  "Shard/Rendering/Font.h"
 
+#include "Shard/ImGui/ImGuiRenderer.h"
+#include "imgui.h"
+#include "Shard/ImGui/ImGuiGLFW.h"
+#include "Shard/ImGui/ImGuiOpenGL.h"
+
 

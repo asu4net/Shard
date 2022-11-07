@@ -22,13 +22,13 @@ namespace Game
         float circleOffset = 2.f;
         float cameraSize = 7.f;
 
-        void OnRenderReady(OnRenderReadyEventArgs args) override
+        void OnRenderReady(RenderReadyArgs args) override
         {
             StaticCamera::window = &window;
             StaticCamera::size = cameraSize;
         }
 
-        void OnRenderFrame(OnRenderFrameEventArgs args) override
+        void OnRenderFrame(RenderFrameArgs args) override
         {
             DrawCalls();
             

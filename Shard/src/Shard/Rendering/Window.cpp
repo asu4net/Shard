@@ -151,7 +151,7 @@ namespace Shard::Rendering
 		}
 
 		m_loopStarted = true;
-		OnRenderReady.Invoke({ m_window });
+		OnRenderReady.Invoke({this, m_window});
 
 		while (!glfwWindowShouldClose(m_window) && KeepWindowOpened)
 		{
@@ -164,7 +164,7 @@ namespace Shard::Rendering
 			Time::CalculateDeltaTime(CurrentTime());
 			
 			//DRAW STUFF
-			OnRenderFrame.Invoke({});
+			OnRenderFrame.Invoke({this, m_window});
 			
 			glfwSwapBuffers(m_window);
 		}

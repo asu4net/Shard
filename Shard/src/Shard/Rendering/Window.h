@@ -4,11 +4,18 @@ struct GLFWwindow;
 
 namespace Shard::Rendering
 {
-    struct OnRenderReadyEventArgs
+    class Window;
+    
+    struct RenderReadyArgs
     {
-        GLFWwindow* window;
+        Window* window;
+        GLFWwindow* windowHandler;
     };
-    struct OnRenderFrameEventArgs {};
+    struct RenderFrameArgs
+    {
+        Window* window;
+        GLFWwindow* windowHandler;
+    };
     
     constexpr int OpenGlMinorVersion = 3;
     constexpr int OpenGlMajorVersion = 3;
@@ -31,8 +38,8 @@ namespace Shard::Rendering
         static bool ShowOpenGlDebugMessages;
         static bool KeepWindowOpened;
         
-        Event<OnRenderFrameEventArgs> OnRenderFrame;
-        Event<OnRenderReadyEventArgs> OnRenderReady;
+        Event<RenderFrameArgs> OnRenderFrame;
+        Event<RenderReadyArgs> OnRenderReady;
         
         explicit Window(const int width = DefaultWidth, const int height = DefaultHeight, const char* name = DefaultTitle, const Math::Color& color = DefaultColor);
         Window(const Window& other) = delete;
@@ -50,7 +57,10 @@ namespace Shard::Rendering
 
         void SetBackgroundColor(const Math::Color& color) { m_color = color; }
 
-        float Aspect() const { return static_cast<float>(m_bufferWidth) / static_cast<float>(m_bufferHeight); }
+        float GetWidth() const { return static_cast<float>(m_bufferWidth); }
+        float GetHeight() const { return static_cast<float>(m_bufferHeight); }
+        float Aspect() const { return GetWidth() / GetHeight(); }
+        
         float CurrentTime() const;
         
         Math::Vector3 ScreenToWorldPoint(Math::Vector2 screenPoint, glm::mat4 proj = glm::mat4(1), glm::mat4 view = glm::mat4(1));

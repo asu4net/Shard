@@ -5,9 +5,17 @@ namespace Shard
 {
 	Application::Application()
 	{
+		//Applications listens window
 		window.OnRenderReady.ADD_LISTENER(Application, OnRenderReady);
 		window.OnRenderFrame.ADD_LISTENER(Application, OnRenderFrame);
-		imGuiLayer = ImGuiImp::ImGuiLayer(&window);
+
+		//ImGui listens window
+		imGuiRenderer.ListenWindowEvents(window);
+
+		//Application listens ImGui
+		imGuiRenderer.OnImGuiReady.ADD_LISTENER(Application, OnImGuiReady);
+		imGuiRenderer.OnImGuiRender.ADD_LISTENER(Application, OnImGuiRender);
+		
 		printf("Shard Application created.\n");
 	}
 
@@ -21,7 +29,10 @@ namespace Shard
 		printf("Shard Application started.\n");
 		window.StartLoop();
 	}
-	
-	void Application::OnRenderReady(Rendering::OnRenderReadyEventArgs args) {}
-	void Application::OnRenderFrame(Rendering::OnRenderFrameEventArgs args) {}
+
+	//Event listeners
+	void Application::OnImGuiReady(ImGuiReadyArgs args){}
+	void Application::OnImGuiRender(ImGuiRenderArgs args){}
+	void Application::OnRenderReady(Rendering::RenderReadyArgs args) {}
+	void Application::OnRenderFrame(Rendering::RenderFrameArgs args) {}
 }
