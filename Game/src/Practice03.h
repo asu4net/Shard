@@ -13,24 +13,23 @@ namespace Game
         float cameraSize = 7.f;
         Font font{"res/Fonts/transformers.ttf"};
         Quad fontQuad;
+        Text text = Text(Color::Red);
         
         void OnRenderReady(RenderReadyArgs args) override
         {
+            text = Text(&font, "$", Color::LightBlue);
             StaticCamera::window = &window;
             StaticCamera::size = cameraSize;
             window.SetTitle("Practice 03 - Alejandro :D");
             fontQuad = Quad(font.GetPixelsRgb());
+            fontQuad.position = fontQuad.position + Vector2::right * -6.f;
             fontQuad.color = Color::LightRed;
             fontQuad.scale = Vector2::one * 10.f;
         }
 
         void OnRenderFrame(RenderFrameArgs args) override
         {
-            DrawCalls();
-        }
-        
-        void DrawCalls()
-        {
+            text.Draw();
             fontQuad.Draw();
             StaticCamera::CalculateMatrices();
         }

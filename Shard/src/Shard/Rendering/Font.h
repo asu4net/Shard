@@ -16,11 +16,12 @@ namespace Shard::Rendering
         Font(Font&& other) = delete;
         Font& operator=(Font other) = delete;
         Font& operator=(Font&& other) = delete;
+
+        void SetPixelHeight(const int newHeight) { Construct(newHeight, m_height, m_width); }
         
         const std::string& GetTextureAtlasPath() const { return m_textureAtlasPath; }
         const unsigned char* GetPixelsRgb() const { return m_pixelsRgb; }
-        
-        void SetPixelHeight(const int newHeight) { Construct(newHeight, m_height, m_width); }
+        std::vector<std::shared_ptr<Mesh>> StringToMeshes(const std::string& string);
     
     private:
         int m_height = 0;
@@ -28,7 +29,7 @@ namespace Shard::Rendering
         int m_pixelHeight = 0;
         std::string m_fileLocation;
         std::string m_textureAtlasPath;
-        std::map<char, Mesh> m_charMeshes;
+        std::map<char, std::shared_ptr<Mesh>> m_charMeshes;
         unsigned char* m_pixelsRgb = nullptr;
         unsigned char* m_pixelsAlpha = nullptr;
         void* m_bakedChar = nullptr; 
@@ -39,6 +40,6 @@ namespace Shard::Rendering
         void ClearBuffers();
         
         Math::CharUv GetUvOfChar(const char c);
-        void CreateCharMesh(const char c);
+        std::shared_ptr<Mesh> CreateCharMesh(const char c);
     };
 }

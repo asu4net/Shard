@@ -1,5 +1,6 @@
 #pragma once
 #include "Rendering/Renderer.h"
+#include "Rendering/Font.h"
 
 namespace Shard::Rendering::Primitives
 {
@@ -179,5 +180,39 @@ namespace Shard::Rendering::Primitives
 		{
 			Renderer::DrawCircle(mvp, color, thickness, fade);
 		}
+	};
+
+	struct Text : Shape
+	{
+		Text() = default;
+		using Shape::Shape;
+		
+		Text(Font* font, const std::string& content = "", const Color& textColor = DefaultColor)
+			: Shape(textColor, DefaultPosition, DefaultRotation, DefaultScale)
+			, m_font(font)
+		{
+			SetContent(content);
+		}
+
+		void SetContent(const std::string& content)
+		{
+			if (content.empty()) return;
+			m_meshes = m_font->StringToMeshes(content);
+			m_content = content;
+		}
+		
+		void Render() override
+		{
+			for (int i = 0; i < m_meshes.size(); i++)
+			{
+				//position = position + Vector2::right * 0.5f;
+				Renderer::DrawMesh(m_meshes[0], mvp, Renderer::GetDefaultShader(), color, true, m_font->GetTextureAtlasPath());
+			}
+		}
+		
+	private:
+		Font* m_font = nullptr;
+		std::string m_content;
+		std::vector<std::shared_ptr<Mesh>> m_meshes;
 	};
 }

@@ -19,6 +19,23 @@ namespace Shard::Rendering
         ClearBuffers();
     }
 
+    //TODO: Tiene pinta de que esta función se va a comer toda la performance xd
+    std::vector<std::shared_ptr<Mesh>> Font::StringToMeshes(const std::string& string)
+    {
+        std::vector<std::shared_ptr<Mesh>> meshes;
+        for (const char& c : string)
+        {
+            if (!m_charMeshes.empty() && m_charMeshes.find(c) != m_charMeshes.end())
+            {
+                meshes.push_back(m_charMeshes[c]);
+                continue;
+            }
+
+            meshes.push_back(CreateCharMesh(c));
+        }
+        return meshes;
+    }
+
     void Font::Construct(const int pixelHeight, int width, int height)
     {
         ClearBuffers();
@@ -78,6 +95,8 @@ namespace Shard::Rendering
 
     void Font::ClearBuffers()
     {
+        m_charMeshes.clear();
+        
         delete[] m_pixelsAlpha;
         const auto* bakedCharPtr = static_cast<stbtt_bakedchar*>(m_bakedChar);
         delete[] bakedCharPtr;
@@ -102,24 +121,26 @@ namespace Shard::Rendering
         return uv;
     }
 
-    void Font::CreateCharMesh(const char c)
+    std::shared_ptr<Mesh> Font::CreateCharMesh(const char c)
     {
         const Math::CharUv uv = GetUvOfChar(c);
 
         //Quad data...
         float vertices[] = {
             // x	 y	   u	 v
-            -0.5, -0.5, uv.s0, uv.s1, // 0
-             0.5, -0.5, uv.t0, uv.t1, // 1
-             0.5,  0.5, uv.x0, uv.x1, // 2
-            -0.5,  0.5, uv.y0, uv.y1 // 3 
+           -0.5, -0.5, uv.s1, uv.t1, // 0
+            0.5, -0.5, uv.s0, uv.t1, // 1
+            0.5,  0.5, uv.s0, uv.t0, // 2
+           -0.5,  0.5, uv.s1, uv.t0, // 3
         };
 
         unsigned int indices[] = {
             0, 1, 2, //triangle 1
             2, 3, 0  //triangle 2
         };
-
-        m_charMeshes.try_emplace(c, MESH_2D, true, vertices, indices, 16, 6);
+        
+        std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>(MESH_2D, true, vertices, indices, 16, 6);
+        m_charMeshes.try_emplace(c, mesh);
+        return mesh;
     }
 }

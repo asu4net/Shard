@@ -16,6 +16,7 @@ namespace Shard::Rendering
 		
 	public:
 		static void Init();
+		static std::shared_ptr<Shader> GetDefaultShader() { return defaultShader; }
 		
 		static void AddTexture(const std::string& texturePath);
 		static void AddTexture(const std::string& texturePath, const unsigned char* texturePixels);
