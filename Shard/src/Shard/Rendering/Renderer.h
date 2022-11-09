@@ -8,29 +8,35 @@ namespace Shard::Rendering
 	class Window;
 	class Renderer
 	{
+		static bool m_initialized;
 		static std::map<const std::string, Texture> textures;
-		static std::shared_ptr<Mesh> quad;
+		static std::shared_ptr<Mesh> quadMesh;
 		static std::shared_ptr<Shader> defaultShader;
 		static std::shared_ptr<Shader> circleShader;
-	
+		
 	public:
 		static void Init();
 		
 		static void AddTexture(const std::string& texturePath);
+		static void AddTexture(const std::string& texturePath, const unsigned char* texturePixels);
 
-		static void DrawQuad(glm::mat4 model,
-							 glm::mat4 view,
-							 glm::mat4 projection,
-			                 Math::Color color,
-							 bool useTexture = false,
-							 const std::string& texturePath = "",
-							 float uvMultiplier = 1);
+		static void DrawMesh(const std::shared_ptr<Mesh>& mesh,
+			const Math::MvpData& matrices,
+			const std::shared_ptr<Shader>& shader = defaultShader,
+			const Math::Color& color = Math::Color::White,
+			const bool useTexture = false,
+			const std::string& texturePath = "",
+			const float uvMultiplier = 1.f);
+		
+		static void DrawQuad(const Math::MvpData& matrices,
+			const Math::Color& color = Math::Color::White,
+			const bool useTexture = false,
+			const std::string& texturePath = "",
+			const float uvMultiplier = 1.f);
 
-		static void DrawCircle(glm::mat4 model,
-			                   glm::mat4 view,
-			                   glm::mat4 projection,
-							   Math::Color color,
-							   float thickness,
-							   float fade);
+		static void DrawCircle(const Math::MvpData& matrices,
+			const Math::Color& color = Math::Color::White,
+			const float thickness = 1.f,
+			const float fade = .005f);
 	};
 }

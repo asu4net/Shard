@@ -7,7 +7,6 @@ namespace Shard::Rendering
     {
 		m_vertexArray = std::make_shared<VertexArray>();
 		m_vertexBuffer = std::make_shared<VertexBuffer>(vertices, sizeof(vertices[0]) * verticesCount);
-
 		VertexBufferLayout layout;
 
 		if (mode < MESH_2D || mode > MESH_3D)

@@ -1,5 +1,5 @@
 #pragma once
-#ifdef PRACTICE_03
+#ifdef PRACTICE_02
 
 namespace Game
 {
@@ -39,7 +39,7 @@ namespace Game
         Quad lightBorderRight = Quad(Color::Black, Quad::DefaultPosition, Quad::DefaultRotation, {10, 20, 0});
         Quad lightBorderLeft = Quad(Color::Black, Quad::DefaultPosition, Quad::DefaultRotation, {10, 20, 0});
         
-        void OnRenderReady(OnRenderReadyEventArgs args) override
+        void OnRenderReady(RenderReadyArgs args) override
         {
             window.SetTitle("Practice 02 - Alejandro :D");
             StaticCamera::window = &window;
@@ -52,7 +52,7 @@ namespace Game
             wall.scale = Vector2::one * 8.f;
         }
 
-        void OnRenderFrame(OnRenderFrameEventArgs args) override
+        void OnRenderFrame(RenderFrameArgs args) override
         {
             DrawCalls();
             

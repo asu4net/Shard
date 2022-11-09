@@ -17,7 +17,7 @@ namespace Shard
     private:
         static float s_DeltaTime;
         static float s_LastTime;
-
+        
         static void CalculateDeltaTime(float _currentTime);
         friend class Rendering::Window;
     };

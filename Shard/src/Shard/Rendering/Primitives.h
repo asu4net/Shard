@@ -65,6 +65,7 @@ namespace Shard::Rendering::Primitives
 		
 		Color color = DefaultColor;
 		glm::mat4 transform = glm::mat4(1);
+		MvpData mvp;
     	
 		Shape() = default;
 
@@ -84,6 +85,7 @@ namespace Shard::Rendering::Primitives
 			model *= glm::toMat4(rotation);
 			model = glm::scale(model, scale.ToGlm());
 			transform = model;
+			mvp = { transform, StaticCamera::view, StaticCamera::projection };
 			
 			Render();
 		}
@@ -101,6 +103,8 @@ namespace Shard::Rendering::Primitives
 		
 		using Shape::Shape;
 
+		
+		
 		explicit Quad(const std::string& texturePath = "", const BlendingMode mode = DefaultBlendingMode,
 			const float uvMultiplier = DefaultUvMultiplier, const Color& theColor = DefaultColor,
 			const Vector3& thePosition = DefaultPosition, const glm::quat& theRotation = DefaultRotation, const Vector3& theScale = DefaultScale)
@@ -115,6 +119,25 @@ namespace Shard::Rendering::Primitives
 			AddTexture(texturePath);
 		}
 
+		explicit Quad(const unsigned char* texturePixels, const BlendingMode mode = DefaultBlendingMode,
+			const float uvMultiplier = DefaultUvMultiplier, const Color& theColor = DefaultColor,
+			const Vector3& thePosition = DefaultPosition, const glm::quat& theRotation = DefaultRotation, const Vector3& theScale = DefaultScale)
+		
+			: Shape(theColor, thePosition, theRotation, theScale)
+			, blendingMode(mode)
+			, uvMultiplier(uvMultiplier)
+		{
+
+			std::ostringstream ss;
+			ss << texturePixels;
+			const std::string path = ss.str();
+
+			m_useTex = true;
+			m_texturePath = path;
+			
+			Renderer::AddTexture(m_texturePath, texturePixels);
+		}
+
 		void AddTexture(const std::string& path)
 		{
 			m_useTex = true;
@@ -125,7 +148,7 @@ namespace Shard::Rendering::Primitives
 		void Render() override
 		{
 			SetBlendMode(blendingMode);
-			Renderer::DrawQuad(transform, StaticCamera::view, StaticCamera::projection, color, m_useTex, m_texturePath, uvMultiplier);
+			Renderer::DrawQuad(mvp, color, m_useTex, m_texturePath, uvMultiplier);
 		}
 
 	private:
@@ -154,7 +177,7 @@ namespace Shard::Rendering::Primitives
 
 		void Render() override
 		{
-			Renderer::DrawCircle(transform, StaticCamera::view, StaticCamera::projection, color, thickness, fade);
+			Renderer::DrawCircle(mvp, color, thickness, fade);
 		}
 	};
 }

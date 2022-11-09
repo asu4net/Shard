@@ -7,6 +7,7 @@ namespace Shard::Rendering
 	public:
 		Texture();
 		Texture(const std::string& path);
+		Texture(const unsigned char* rawData);
 		~Texture();
 
 		void Bind(unsigned int slot = 0) const;
