@@ -11,19 +11,17 @@ namespace Game
     class Game final : public Application
     {
         float cameraSize = 7.f;
-        //Font font{"res/Fonts/transformers.ttf"};
-        //Quad fontQuad;
-
-        Quad quad{Color::LightRed};
+        Font font{"res/Fonts/transformers.ttf"};
+        Quad fontQuad;
         
         void OnRenderReady(RenderReadyArgs args) override
         {
             StaticCamera::window = &window;
             StaticCamera::size = cameraSize;
             window.SetTitle("Practice 03 - Alejandro :D");
-            // fontQuad = Quad(font.pixelsRgb);
-            // fontQuad.color = Color::LightRed;
-            // fontQuad.scale = Vector2::one * 10.f;
+            fontQuad = Quad(font.pixelsRgb);
+            fontQuad.color = Color::LightRed;
+            fontQuad.scale = Vector2::one * 10.f;
         }
 
         void OnRenderFrame(RenderFrameArgs args) override
@@ -33,9 +31,8 @@ namespace Game
         
         void DrawCalls()
         {
-            //fontQuad.Draw();
+            fontQuad.Draw();
             StaticCamera::CalculateMatrices();
-            quad.Draw();
         }
     };
 }
