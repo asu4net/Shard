@@ -1,29 +1,44 @@
 ﻿#pragma once
-
+#include "Rendering/Mesh.h"
 #include "Math/SimpleStructs.h"
 
 namespace Shard::Rendering
 {
+    constexpr int CharCount = 256;
+    
     class Font
     {
     public:
-        static const int DefaultHeight;
-        static const int DefaultWidth;
-        static const int DefaultPixelHeight;
-        static const int DefaultCharCount;
+        Font(const std::string& fileLocation, const int pixelHeight = 64, const int height = 1024, const int width = 1024);
+        ~Font();
         
-        int height;
-        int width;
-        int pixelHeight;
-        int charCount;
-
-        unsigned char* pixelsRgb;
-        void* bakedChar;
-        Font(const std::string& fileLocation);
-        Math::CharUv GetUvOfChar(const char c);
+        Font(const Font& other) = delete;
+        Font(Font&& other) = delete;
+        Font& operator=(Font other) = delete;
+        Font& operator=(Font&& other) = delete;
+        
         const std::string& GetTextureAtlasPath() const { return m_textureAtlasPath; }
-
+        const unsigned char* GetPixelsRgb() const { return m_pixelsRgb; }
+        
+        void SetPixelHeight(const int newHeight) { Construct(newHeight, m_height, m_width); }
+    
     private:
+        int m_height = 0;
+        int m_width = 0;
+        int m_pixelHeight = 0;
+        std::string m_fileLocation;
         std::string m_textureAtlasPath;
+        std::map<char, Mesh> m_charMeshes;
+        unsigned char* m_pixelsRgb = nullptr;
+        unsigned char* m_pixelsAlpha = nullptr;
+        void* m_bakedChar = nullptr; 
+
+        void Construct(const int pixelHeight, int width, int height);
+        bool GetFontBuffer(const std::string& ttfFileLoc, const unsigned char*& outBuffer);
+        void BakeFontBuffer(const unsigned char* buffer);
+        void ClearBuffers();
+        
+        Math::CharUv GetUvOfChar(const char c);
+        void CreateCharMesh(const char c);
     };
 }

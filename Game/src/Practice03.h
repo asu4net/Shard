@@ -19,7 +19,7 @@ namespace Game
             StaticCamera::window = &window;
             StaticCamera::size = cameraSize;
             window.SetTitle("Practice 03 - Alejandro :D");
-            fontQuad = Quad(font.pixelsRgb);
+            fontQuad = Quad(font.GetPixelsRgb());
             fontQuad.color = Color::LightRed;
             fontQuad.scale = Vector2::one * 10.f;
         }
