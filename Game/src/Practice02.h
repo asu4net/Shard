@@ -34,10 +34,10 @@ namespace Game
         Quad light = Quad("res/Textures/light.png", BlendingMode::Multiply);
         Quad wall = Quad("res/Textures/wall.jpg", BlendingMode::Solid, 4.f);
         
-        Quad lightBorderDown = Quad(Color::Black, Quad::DefaultPosition, Quad::DefaultRotation, {20, 3, 0});
-        Quad lightBorderTop = Quad(Color::Black, Quad::DefaultPosition, Quad::DefaultRotation, {20, 3, 0});
-        Quad lightBorderRight = Quad(Color::Black, Quad::DefaultPosition, Quad::DefaultRotation, {10, 20, 0});
-        Quad lightBorderLeft = Quad(Color::Black, Quad::DefaultPosition, Quad::DefaultRotation, {10, 20, 0});
+        Quad lightBorderDown = Quad(Color::Black, Vector3::zero, IdentityQuat, {20, 3, 0});
+        Quad lightBorderTop = Quad(Color::Black, Vector3::zero, IdentityQuat, {20, 3, 0});
+        Quad lightBorderRight = Quad(Color::Black, Vector3::zero, IdentityQuat, {10, 20, 0});
+        Quad lightBorderLeft = Quad(Color::Black, Vector3::zero, IdentityQuat, {10, 20, 0});
         
         void OnRenderReady(RenderReadyArgs args) override
         {
@@ -60,7 +60,7 @@ namespace Game
             AnimateVector(fire.scale, fireScaleSpeed, minFireScale, maxFireScale);
             
             AnimateFloat(fireCurrentDegrees, fireDegreesPerSecond, minFireDegrees, maxFireDegrees);
-            fire.rotation = Quad::DefaultRotation * glm::angleAxis(glm::radians(fireCurrentDegrees), Vector3::forward.ToGlm());
+            fire.rotation = IdentityQuat * glm::angleAxis(glm::radians(fireCurrentDegrees), Vector3::forward.ToGlm());
             
             light.position = MouseWorld();
             lightBorderDown.position = light.position + Vector3::down * 3.5f;

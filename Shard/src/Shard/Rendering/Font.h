@@ -29,7 +29,7 @@ namespace Shard::Rendering
         int m_pixelHeight = 0;
         std::string m_fileLocation;
         std::string m_textureAtlasPath;
-        std::map<char, std::shared_ptr<Mesh>> m_charMeshes;
+        std::unordered_map<char, std::shared_ptr<Mesh>> m_charMeshes;
         unsigned char* m_pixelsRgb = nullptr;
         unsigned char* m_pixelsAlpha = nullptr;
         void* m_bakedChar = nullptr; 

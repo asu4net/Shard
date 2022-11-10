@@ -13,7 +13,7 @@ namespace Game
         float cameraSize = 7.f;
         Font font{"res/Fonts/transformers.ttf"};
         Quad fontQuad;
-        Text text = Text(Color::Red);
+        Text text;
         
         void OnRenderReady(RenderReadyArgs args) override
         {
@@ -21,7 +21,8 @@ namespace Game
             StaticCamera::window = &window;
             StaticCamera::size = cameraSize;
             window.SetTitle("Practice 03 - Alejandro :D");
-            fontQuad = Quad(font.GetPixelsRgb());
+            
+            fontQuad.AddTexture(font.GetPixelsRgb());
             fontQuad.position = fontQuad.position + Vector2::right * -6.f;
             fontQuad.color = Color::LightRed;
             fontQuad.scale = Vector2::one * 10.f;

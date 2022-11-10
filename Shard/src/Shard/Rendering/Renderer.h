@@ -9,7 +9,7 @@ namespace Shard::Rendering
 	class Renderer
 	{
 		static bool m_initialized;
-		static std::map<const std::string, Texture> textures;
+		static std::unordered_map<std::string, Texture> textures;
 		static std::shared_ptr<Mesh> quadMesh;
 		static std::shared_ptr<Shader> defaultShader;
 		static std::shared_ptr<Shader> circleShader;

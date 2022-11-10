@@ -5,7 +5,7 @@
 namespace Shard::Rendering
 {
     bool Renderer::m_initialized = false;
-    std::map<const std::string, Texture> Renderer::textures;
+    std::unordered_map<std::string, Texture> Renderer::textures;
     std::shared_ptr<Mesh> Renderer::quadMesh;
     std::shared_ptr<Shader> Renderer::defaultShader;
     std::shared_ptr<Shader> Renderer::circleShader;

@@ -24,6 +24,8 @@
 #include "glm/gtx/quaternion.hpp"
 #include "glm/gtc/type_ptr.hpp"
 
+const glm::quat IdentityQuat = {1, 0, 0, 0};
+
 #include "Math/Color.h"
 #include "Math/Vector2.h"
 #include "Math/Vector3.h"
