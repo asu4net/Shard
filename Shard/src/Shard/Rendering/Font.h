@@ -39,7 +39,7 @@ namespace Shard::Rendering
         void BakeFontBuffer(const unsigned char* buffer);
         void ClearBuffers();
         
-        Math::CharUv GetUvOfChar(const char c);
+        Math::UvCoords GetUvOfChar(const char c);
         std::shared_ptr<Mesh> CreateCharMesh(const char c);
     };
 }

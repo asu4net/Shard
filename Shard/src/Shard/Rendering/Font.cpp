@@ -107,7 +107,7 @@ namespace Shard::Rendering
         m_pixelsRgb = nullptr;
     }
 
-    Math::CharUv Font::GetUvOfChar(const char c)
+    Math::UvCoords Font::GetUvOfChar(const char c)
     {
         if (!m_bakedChar) return{};
 
@@ -116,14 +116,14 @@ namespace Shard::Rendering
         float xPos{0}, yPos{0};
         auto* q = new stbtt_aligned_quad();
         stbtt_GetBakedQuad(bakedCharPtr, m_width, m_height, c, &xPos, &yPos, q, true);
-        const Math::CharUv uv{xPos, yPos, q->s0, q->s1, q->t0, q->t1, q->x0, q->x1, q->y0, q->y1};
+        const Math::UvCoords uv{xPos, yPos, q->s0, q->s1, q->t0, q->t1, q->x0, q->x1, q->y0, q->y1};
         delete q;
         return uv;
     }
 
     std::shared_ptr<Mesh> Font::CreateCharMesh(const char c)
     {
-        const Math::CharUv uv = GetUvOfChar(c);
+        const Math::UvCoords uv = GetUvOfChar(c);
 
         //Quad data...
         float vertices[] = {

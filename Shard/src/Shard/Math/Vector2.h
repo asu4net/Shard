@@ -19,6 +19,7 @@ namespace Shard::Math
         Vector2(float _x, float _y);
         Vector2(const glm::vec2& _other);
         Vector2(const Vector3& _other);
+        bool operator==(const Vector2& other);
         Vector2 operator+(const Vector2& _other) const;
         Vector2 operator-(const Vector2& _other) const;
         Vector2 operator*(float _float) const;

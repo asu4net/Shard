@@ -30,6 +30,11 @@ namespace Shard::Math
         , y(_other.y)
     {}
 
+    bool Vector2::operator==(const Vector2& other)
+    {
+        return x == other.x && y == other.y;
+    }
+
     Vector2 Vector2::operator+(const Vector2& _other) const
     {
         return { x + _other.x, y + _other.y };

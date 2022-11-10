@@ -2,10 +2,10 @@
 
 namespace Shard::Math
 {
-    struct CharUv
+    struct UvCoords
     {
-        float xPos, yPos;
-        float s0, s1, t0, t1, x0, x1, y0, y1;
+        float xPos{0}, yPos{0};
+        float s0{0}, s1{0}, t0{0}, t1{0}, x0{0}, x1{0}, y0{0}, y1{0};
     };
     
     struct MvpData

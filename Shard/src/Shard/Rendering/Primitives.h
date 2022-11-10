@@ -90,6 +90,7 @@ namespace Shard::Rendering::Primitives
 	{
 		BlendingMode blendingMode = BlendingMode::Alpha;
 		float uvMultiplier = 1;
+		int currentSubMesh = 0;
 
 		Quad(const Color& theColor,
 			const Vector3& thePosition = Vector3::zero,
@@ -111,6 +112,45 @@ namespace Shard::Rendering::Primitives
 			if (!m_useTex) return;
 			AddTexture(texturePath);
 		}
+
+		void LoadSheet(const Vector2& subTexSize, const Vector2& subTexAmount)
+		{
+			if (!m_subMeshes.empty()) return;
+			
+			m_subTexSize = subTexSize;
+			m_subTexAmount = subTexAmount;
+
+			const int iCount = static_cast<int>(m_subTexAmount.x);
+			const int jCount = static_cast<int>(m_subTexAmount.y);
+
+			const Texture& texture = Renderer::GetTexture(m_texturePath);
+			
+			for (int i = 0; i < iCount; i++)
+			{
+				for (int j = 0; i < jCount; i++)
+				{
+					const Vector2 pos{static_cast<float>(i), static_cast<float>(j)};
+					const std::vector<Vector2> uv = texture.GetSubTexUvCoords(pos, subTexSize);
+					
+					//Quad data...
+					float vertices[] = {
+						// x	 y	   u	 v
+						-0.5, -0.5, uv[0].x, uv[0].y, // 0
+						 0.5, -0.5, uv[1].x, uv[1].y, // 1
+						 0.5,  0.5, uv[2].x, uv[2].y, // 2
+						-0.5,  0.5, uv[3].x, uv[3].y, // 3 
+					};
+					
+					unsigned int indices[] = {
+						0, 1, 2, //triangle 1
+						2, 3, 0  //triangle 2
+					};
+
+					m_subMeshes.emplace_back(std::make_shared<Mesh>(MESH_2D, true, vertices, indices, 16, 6));
+				}
+			}
+		}
+		
 		void AddTexture(const unsigned char* texturePixels)
 		{
 			std::ostringstream ss;
@@ -131,12 +171,24 @@ namespace Shard::Rendering::Primitives
 		void Render() override
 		{
 			SetBlendMode(blendingMode);
-			Renderer::DrawQuad(mvp, color, m_useTex, m_texturePath, uvMultiplier);
+
+			if (m_subTexAmount == Vector2::zero)
+			{
+				Renderer::DrawQuad(mvp, color, m_useTex, m_texturePath, uvMultiplier);
+				return;
+			}
+
+			if (currentSubMesh < 0 || currentSubMesh >= m_subMeshes.size())
+				currentSubMesh = 0;
+			Renderer::DrawMesh(m_subMeshes[currentSubMesh], mvp, Renderer::GetDefaultShader(), color, m_useTex, m_texturePath, uvMultiplier);
 		}
 
 	private:
 		bool m_useTex = false;
 		std::string m_texturePath;
+		Vector2 m_subTexSize;
+		Vector2 m_subTexAmount;
+		std::vector<std::shared_ptr<Mesh>> m_subMeshes;
 	};
 
 	struct Circle : Shape
