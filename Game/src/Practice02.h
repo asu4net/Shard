@@ -34,10 +34,10 @@ namespace Game
         Quad light = Quad("res/Textures/light.png", BlendingMode::Multiply);
         Quad wall = Quad("res/Textures/wall.jpg", BlendingMode::Solid, 4.f);
         
-        Quad lightBorderDown = Quad(Color::Black, Vector3::zero, IdentityQuat, {20, 3, 0});
-        Quad lightBorderTop = Quad(Color::Black, Vector3::zero, IdentityQuat, {20, 3, 0});
-        Quad lightBorderRight = Quad(Color::Black, Vector3::zero, IdentityQuat, {10, 20, 0});
-        Quad lightBorderLeft = Quad(Color::Black, Vector3::zero, IdentityQuat, {10, 20, 0});
+        Quad lightBorderDown = Quad(Color::Black, Vector3::zero, IdentityQuat, {22, 4, 0});
+        Quad lightBorderTop = Quad(Color::Black, Vector3::zero, IdentityQuat, {22, 4, 0});
+        Quad lightBorderRight = Quad(Color::Black, Vector3::zero, IdentityQuat, {12, 22, 0});
+        Quad lightBorderLeft = Quad(Color::Black, Vector3::zero, IdentityQuat, {12, 22, 0});
         
         void OnRenderReady(RenderReadyArgs args) override
         {
@@ -48,8 +48,8 @@ namespace Game
             fire.scale = Vector3::one * minFireScale;
             light.scale = Vector3::one * minLightScale;
             
-            grille.scale = Vector2::one * 8.f;
-            wall.scale = Vector2::one * 8.f;
+            grille.scale = Vector2::one * 10.f;
+            wall.scale = Vector2::one * 10.f;
         }
 
         void OnRenderFrame(RenderFrameArgs args) override

@@ -66,16 +66,16 @@ namespace Shard::Rendering
 		glDeleteTextures(1, &m_textureId);
 	}
 
-	std::vector<Math::Vector2> Texture::GetSubTexUvCoords(const Math::Vector2& pos, const Math::Vector2& size) const
+	std::array<Math::Vector2, 4> Texture::GetSubTexUvCoords(const Math::Vector2& pos, const Math::Vector2& size) const
 	{
 		const float width = static_cast<float>(m_width);
 		const float height = static_cast<float>(m_height);
 		
-		std::vector<Math::Vector2> uvCoords = {
-			{((pos.x + 1) * size.x) / width, ((pos.y + 1) * size.y) / height},
-			{(pos.x * size.x) / width, ((pos.y + 1) * size.y) / height},
-			{(pos.x * size.x) / width, (pos.y * size.y) / height},
-			{((pos.x + 1) * size.x) / width, (pos.y * size.y) / height},
+		const std::array<Math::Vector2, 4> uvCoords = {
+			Math::Vector2{((pos.x + 1) * size.x) / width, ((pos.y + 1) * size.y) / height},
+			Math::Vector2{(pos.x * size.x) / width, ((pos.y + 1) * size.y) / height},
+			Math::Vector2{(pos.x * size.x) / width, (pos.y * size.y) / height},
+			Math::Vector2{((pos.x + 1) * size.x) / width, (pos.y * size.y) / height},
 		};
 		
 		return uvCoords;

@@ -11,6 +11,7 @@ namespace Shard::Rendering
     std::unordered_map<std::string, Texture> Renderer::m_textures;
     std::unordered_map<std::string, Mesh> Renderer::m_quadMeshes;
     std::string Renderer::m_defaultQuadKey;
+    BlendingMode Renderer::m_blendingMode = BlendingMode::Alpha;
     
     void Renderer::Init()
     {
@@ -31,6 +32,25 @@ namespace Shard::Rendering
         m_defaultQuadKey = AddQuad(genDefaultQuad());
         defaultShader = std::make_shared<Shader>();
         circleShader = std::make_shared<Shader>(CIRCLE_VERTEX_PATH, CIRCLE_FRAGMENT_PATH);
+    }
+
+    void Renderer::SetBlendMode(const BlendingMode mode)
+    {
+        m_blendingMode = mode;
+        switch (mode) {
+        case BlendingMode::Solid:
+            glBlendFunc(GL_ONE, GL_ZERO);
+            break;
+        case BlendingMode::Alpha:
+            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+            break;
+        case BlendingMode::Add:
+            glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+            break;
+        case BlendingMode::Multiply:
+            glBlendFunc(GL_DST_COLOR, GL_ZERO);
+            break;
+        }
     }
 
     void Renderer::AddTexture(const std::string& texturePath)
@@ -98,10 +118,10 @@ namespace Shard::Rendering
 
     void Renderer::DrawQuad(const std::string& meshKey, const Math::MvpData& matrices,
                             const std::shared_ptr<Shader>& shader, const Math::Color& color, const bool useTexture,
-                            const std::string& texturePath, const float uvMultiplier)
+                            const std::string& texturePath, const float uvMultiplier, const BlendingMode blendingMode)
     {
         if (!m_initialized) return;
-
+        
         const Mesh& mesh = m_quadMeshes[meshKey];
         
         shader->Bind();
@@ -111,6 +131,7 @@ namespace Shard::Rendering
         if (useTexture)
         {
             glEnable(GL_BLEND);
+            SetBlendMode(blendingMode);
             shader->SetUniformFloat(UNIFORM_UV_MULTIPLIER, uvMultiplier);
             shader->SetUniformInt(UNIFORM_TEXTURE_NAME, 0);
             m_textures[texturePath].Bind();
@@ -135,6 +156,7 @@ namespace Shard::Rendering
         }
         
         shader->Unbind();
+        SetBlendMode(BlendingMode::Alpha);
     }
     
     void Renderer::DrawCircle(const Math::MvpData& matrices, const Math::Color& color, const float thickness, const float fade)

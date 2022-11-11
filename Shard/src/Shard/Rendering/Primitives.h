@@ -1,6 +1,7 @@
 #pragma once
 #include "Rendering/Renderer.h"
 #include "Rendering/Font.h"
+#include "Rendering/Sprite.h"
 
 namespace Shard::Rendering::Primitives
 {
@@ -60,88 +61,35 @@ namespace Shard::Rendering::Primitives
 
 		virtual void Render() = 0;
 	};
-
-	enum class BlendingMode
-	{
-		Solid,
-		Alpha,
-		Add,
-		Multiply
-	};
-	inline void SetBlendMode(const BlendingMode mode)
-	{
-		switch (mode) {
-		case BlendingMode::Solid:
-			glBlendFunc(GL_ONE, GL_ZERO);
-			break;
-		case BlendingMode::Alpha:
-			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-			break;
-		case BlendingMode::Add:
-			glBlendFunc(GL_SRC_ALPHA, GL_ONE);
-			break;
-		case BlendingMode::Multiply:
-			glBlendFunc(GL_DST_COLOR, GL_ZERO);
-			break;
-		}
-	}
 	
 	struct Quad : Shape
 	{
-		BlendingMode blendingMode = BlendingMode::Alpha;
-		float uvMultiplier = 1;
-		int currentSubMesh = 0;
-
 		Quad(const Color& theColor,
 			const Vector3& thePosition = Vector3::zero,
 			const glm::quat& theRotation = IdentityQuat,
 			const Vector3& theScale = Vector3::one)
 			:Shape(theColor, thePosition, theRotation, theScale)
-		{}
+		{
+			m_sprite = Sprite("");
+		}
 		
 		Quad(const std::string& texturePath = "", const BlendingMode mode = BlendingMode::Alpha,
 			const float uvMultiplier = 1, const Color& theColor = Color::White,
 			const Vector3& thePosition = Vector3::zero, const glm::quat& theRotation = IdentityQuat, const Vector3& theScale = Vector3::one)
 		
 			: Shape(theColor, thePosition, theRotation, theScale)
-			, blendingMode(mode)
-			, uvMultiplier(uvMultiplier)
 			, m_texturePath(texturePath)
 		{
-			m_useTex = !texturePath.empty();
-			if (!m_useTex) return;
-			AddTexture(texturePath);
+			m_sprite = Sprite(texturePath);
+			m_sprite.blendingMode = mode;
+			m_sprite.uvMultiplier = uvMultiplier;
 		}
+
+		Sprite& GetSprite() { return m_sprite; }
 
 		void SpriteSheetLayout(const Vector2& subTexSize, const Vector2& subTexAmount)
 		{
-			if (!m_meshAtlas.empty()) return;
-			
-			m_subTexSize = subTexSize;
-			m_subTexAmount = subTexAmount;
-
-			const int iCount = static_cast<int>(m_subTexAmount.x);
-			const int jCount = static_cast<int>(m_subTexAmount.y);
-
-			const Texture& texture = Renderer::GetTexture(m_texturePath);
-			
-			for (int i = 0; i < iCount; i++)
-			{
-				for (int j = 0; i < jCount; i++)
-				{
-					const Vector2 pos{static_cast<float>(i), static_cast<float>(j)};
-					const std::vector<Vector2> uv = texture.GetSubTexUvCoords(pos, subTexSize);
-					
-					QuadLayout l;
-					l.size[0] = {-0.5, -0.5}; l.uv[0] = {uv[0].x, uv[0].y};
-					l.size[1] = { 0.5, -0.5}; l.uv[1] = {uv[1].x, uv[1].y};
-					l.size[2] = { 0.5,  0.5}; l.uv[2] = {uv[2].x, uv[2].y};
-					l.size[3] = {-0.5,  0.5}; l.uv[3] = {uv[3].x, uv[3].y};
-
-					std::string quad = Renderer::AddQuad(l);
-					m_meshAtlas.push_back(quad);
-				}
-			}
+			m_sprite.SetMultipleLayout(subTexSize, subTexAmount);
 		}
 		
 		void AddTexture(const unsigned char* texturePixels)
@@ -149,39 +97,21 @@ namespace Shard::Rendering::Primitives
 			std::ostringstream ss;
 			ss << texturePixels;
 			const std::string path = ss.str();
-
-			m_useTex = true;
-			m_texturePath = path;
+			m_sprite.AddTexture(path);
 			
-			Renderer::AddTexture(m_texturePath, texturePixels);
 		}
 		void AddTexture(const std::string& path)
 		{
-			m_useTex = true;
-			m_texturePath = path;
-			Renderer::AddTexture(m_texturePath);
+			m_sprite.AddTexture(path);
 		}
 		void Render() override
 		{
-			SetBlendMode(blendingMode);
-
-			if (m_subTexAmount == Vector2::zero)
-			{
-				Renderer::DrawQuad( Renderer::GetDefaultQuad(), mvp, Renderer::GetDefaultShader(), color, m_useTex, m_texturePath, uvMultiplier);
-				return;
-			}
-
-			if (currentSubMesh < 0 || currentSubMesh >= m_meshAtlas.size())
-				currentSubMesh = 0;
-			Renderer::DrawQuad(m_meshAtlas[currentSubMesh], mvp, Renderer::GetDefaultShader(), color, m_useTex, m_texturePath, uvMultiplier);
+			m_sprite.Draw(mvp, color);
 		}
 
 	private:
-		bool m_useTex = false;
 		std::string m_texturePath;
-		Vector2 m_subTexSize;
-		Vector2 m_subTexAmount;
-		std::vector<std::string> m_meshAtlas;
+		Sprite m_sprite;
 	};
 
 	struct Circle : Shape

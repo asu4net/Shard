@@ -124,6 +124,10 @@ namespace Shard::Rendering
     std::string Font::CreateCharQuad(const char c)
     {
         const Math::UvCoords uv = GetUvOfChar(c);
+        
+        //(s1 - s0) * screenWidth = pixelWidth
+        //(t1 - t0) * screenHeight = pixelHeight
+        
         QuadLayout l;
         l.size[0] = {-0.5, -0.5}; l.uv[0] = {uv.s1, uv.t1};
         l.size[1] = { 0.5, -0.5}; l.uv[1] = {uv.s0, uv.t1};

@@ -19,14 +19,14 @@ namespace Game
             StaticCamera::size = cameraSize;
             window.SetTitle("Practice 03 - Alejandro :D");
             window.SetBackgroundColor(Color::DarkGray);
-
             bee.scale = Vector2::one * 1.5f;
             bee.SpriteSheetLayout({80, 80}, {1, 8});
+            bee.GetSprite().mode = SpriteMode::Multiple;
         }
 
         void OnRenderFrame(RenderFrameArgs args) override
         {
-            bee.currentSubMesh = 1;
+            bee.GetSprite().currentSubMesh = 1;
             bee.Draw();
             StaticCamera::CalculateMatrices();
         }
