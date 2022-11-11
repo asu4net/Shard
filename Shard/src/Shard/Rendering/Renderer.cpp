@@ -116,7 +116,7 @@ namespace Shard::Rendering
         return ss.str();
     }
 
-    void Renderer::DrawQuad(const std::string& meshKey, const Math::MvpData& matrices,
+    void Renderer::DrawQuad(const std::string&   meshKey, const Math::MvpData& matrices,
                             const std::shared_ptr<Shader>& shader, const Math::Color& color, const bool useTexture,
                             const std::string& texturePath, const float uvMultiplier, const BlendingMode blendingMode)
     {

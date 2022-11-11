@@ -18,6 +18,7 @@ namespace Shard::Rendering
         void Draw(const Math::MvpData& mvp, const Math::Color& color);
         
         void AddTexture(const std::string& texturePath);
+        void AddTexture(const unsigned char* texturePixels);
         void SetMultipleLayout(const Math::Vector2& subTexSize, const Math::Vector2& subTexAmount);
         
     private:
@@ -30,6 +31,7 @@ namespace Shard::Rendering
         std::vector<std::string> m_meshAtlas;
 
         QuadLayout CreateSpriteMesh(const Math::Vector2& pixelSize, const std::array<Math::Vector2, 4>& uv);
+        void PushTexture(const std::string& texturePath, const unsigned char* texturePixels = nullptr);
         
         friend class Renderer;
     };

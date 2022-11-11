@@ -35,21 +35,15 @@ namespace Shard::Rendering
 
     void Sprite::AddTexture(const std::string& texturePath)
     {
-        m_texturePath = texturePath;
-        Renderer::AddTexture(m_texturePath);
-        
-        //Default uv layout
-        const std::array<Vector2, 4> uv = {
-            Vector2{1.0f, 1.0f},
-            Vector2{0.0f, 1.0f},
-            Vector2{0.0f, 0.0f},
-            Vector2{1.0f, 0.0f}
-        };
-        
-        const Texture& tex = Renderer::GetTexture(m_texturePath);
-        float w = static_cast<float>(tex.Width());
-        float h = static_cast<float>(tex.Height());
-        m_mesh = Renderer::AddQuad(CreateSpriteMesh({w, h}, uv));
+        PushTexture(texturePath);
+    }
+
+    void Sprite::AddTexture(const unsigned char* texturePixels)
+    {
+        std::ostringstream ss;
+        ss << texturePixels;
+        const std::string path = ss.str();
+        PushTexture(path, texturePixels);
     }
 
     void Sprite::SetMultipleLayout(const Vector2& subTexSize, const Vector2& subTexAmount)
@@ -87,5 +81,27 @@ namespace Shard::Rendering
         l.size[2] = { s.x, s.y}; l.uv[2] = {uv[2].x, uv[2].y};
         l.size[3] = {-s.x, s.y}; l.uv[3] = {uv[3].x, uv[3].y};
         return l;
+    }
+
+    void Sprite::PushTexture(const std::string& texturePath, const unsigned char* texturePixels)
+    {
+        useTexture = true;
+        m_texturePath = texturePath;
+
+        if (texturePixels) Renderer::AddTexture(m_texturePath, texturePixels);
+        else  Renderer::AddTexture(m_texturePath);
+        
+        //Default uv layout
+        const std::array<Vector2, 4> uv = {
+            Vector2{1.0f, 1.0f},
+            Vector2{0.0f, 1.0f},
+            Vector2{0.0f, 0.0f},
+            Vector2{1.0f, 0.0f}
+        };
+        
+        const Texture& tex = Renderer::GetTexture(m_texturePath);
+        float w = static_cast<float>(tex.Width());
+        float h = static_cast<float>(tex.Height());
+        m_mesh = Renderer::AddQuad(CreateSpriteMesh({w, h}, uv));
     }
 }

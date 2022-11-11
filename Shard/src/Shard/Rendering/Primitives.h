@@ -94,11 +94,7 @@ namespace Shard::Rendering::Primitives
 		
 		void AddTexture(const unsigned char* texturePixels)
 		{
-			std::ostringstream ss;
-			ss << texturePixels;
-			const std::string path = ss.str();
-			m_sprite.AddTexture(path);
-			
+			m_sprite.AddTexture(texturePixels);
 		}
 		void AddTexture(const std::string& path)
 		{

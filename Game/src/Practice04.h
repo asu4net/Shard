@@ -26,7 +26,7 @@ namespace Game
 
         void OnRenderFrame(RenderFrameArgs args) override
         {
-            bee.GetSprite().currentSubMesh = 1;
+            bee.GetSprite().currentSubMesh = 4;
             bee.Draw();
             StaticCamera::CalculateMatrices();
         }
