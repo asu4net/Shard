@@ -21,7 +21,7 @@ namespace Shard::Rendering
         
         const std::string& GetTextureAtlasPath() const { return m_textureAtlasPath; }
         const unsigned char* GetPixelsRgb() const { return m_pixelsRgb; }
-        std::vector<std::shared_ptr<Mesh>> StringToMeshes(const std::string& string);
+        std::vector<std::string> StringToQuads(const std::string& string);
     
     private:
         int m_height = 0;
@@ -29,7 +29,7 @@ namespace Shard::Rendering
         int m_pixelHeight = 0;
         std::string m_fileLocation;
         std::string m_textureAtlasPath;
-        std::unordered_map<char, std::shared_ptr<Mesh>> m_charMeshes;
+        std::unordered_map<char, std::string> m_charQuads;
         unsigned char* m_pixelsRgb = nullptr;
         unsigned char* m_pixelsAlpha = nullptr;
         void* m_bakedChar = nullptr; 
@@ -40,6 +40,6 @@ namespace Shard::Rendering
         void ClearBuffers();
         
         Math::UvCoords GetUvOfChar(const char c);
-        std::shared_ptr<Mesh> CreateCharMesh(const char c);
+        std::string CreateCharQuad(const char c);
     };
 }

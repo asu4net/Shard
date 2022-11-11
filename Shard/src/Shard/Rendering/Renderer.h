@@ -14,7 +14,6 @@ namespace Shard::Rendering
 	class Window;
 	class Renderer
 	{
-		static std::shared_ptr<Mesh> quadMesh;
 		static std::shared_ptr<Shader> defaultShader;
 		static std::shared_ptr<Shader> circleShader;
 		
@@ -28,18 +27,11 @@ namespace Shard::Rendering
 		
 		static std::string AddQuad(const QuadLayout& layout);
 		static std::string GenerateQuadKey(const QuadLayout& layout);
-		static const Mesh& GetQuad(const std::string& quadKey) { return m_quadMeshes[quadKey]; }
-		static const Mesh& GetDefaultQuad() { return GetQuad(m_defaultQuadKey); }
+		static std::string GetDefaultQuad() { return m_defaultQuadKey; }
 		
-		static void DrawMesh(const std::shared_ptr<Mesh>& mesh,
+		static void DrawQuad(const std::string& meshKey,
 			const Math::MvpData& matrices,
 			const std::shared_ptr<Shader>& shader = defaultShader,
-			const Math::Color& color = Math::Color::White,
-			const bool useTexture = false,
-			const std::string& texturePath = "",
-			const float uvMultiplier = 1.f);
-		
-		static void DrawQuad(const Math::MvpData& matrices,
 			const Math::Color& color = Math::Color::White,
 			const bool useTexture = false,
 			const std::string& texturePath = "",

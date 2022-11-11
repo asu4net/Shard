@@ -20,18 +20,18 @@ namespace Shard::Rendering
     }
 
     //TODO: Tiene pinta de que esta función se va a comer toda la performance xd
-    std::vector<std::shared_ptr<Mesh>> Font::StringToMeshes(const std::string& string)
+    std::vector<std::string> Font::StringToQuads(const std::string& string)
     {
-        std::vector<std::shared_ptr<Mesh>> meshes;
+        std::vector<std::string> meshes;
         for (const char& c : string)
         {
-            if (!m_charMeshes.empty() && m_charMeshes.find(c) != m_charMeshes.end())
+            if (!m_charQuads.empty() && m_charQuads.find(c) != m_charQuads.end())
             {
-                meshes.push_back(m_charMeshes[c]);
+                meshes.push_back(m_charQuads[c]);
                 continue;
             }
 
-            meshes.push_back(CreateCharMesh(c));
+            meshes.push_back(CreateCharQuad(c));
         }
         return meshes;
     }
@@ -95,7 +95,7 @@ namespace Shard::Rendering
 
     void Font::ClearBuffers()
     {
-        m_charMeshes.clear();
+        m_charQuads.clear();
         
         delete[] m_pixelsAlpha;
         const auto* bakedCharPtr = static_cast<stbtt_bakedchar*>(m_bakedChar);
@@ -121,26 +121,17 @@ namespace Shard::Rendering
         return uv;
     }
 
-    std::shared_ptr<Mesh> Font::CreateCharMesh(const char c)
+    std::string Font::CreateCharQuad(const char c)
     {
         const Math::UvCoords uv = GetUvOfChar(c);
+        QuadLayout l;
+        l.size[0] = {-0.5, -0.5}; l.uv[0] = {uv.s1, uv.t1};
+        l.size[1] = { 0.5, -0.5}; l.uv[1] = {uv.s0, uv.t1};
+        l.size[2] = { 0.5,  0.5}; l.uv[2] = {uv.s0, uv.t0};
+        l.size[3] = {-0.5,  0.5}; l.uv[3] = {uv.s1, uv.t0};
 
-        //Quad data...
-        float vertices[] = {
-            // x	 y	   u	 v
-           -0.5, -0.5, uv.s1, uv.t1, // 0
-            0.5, -0.5, uv.s0, uv.t1, // 1
-            0.5,  0.5, uv.s0, uv.t0, // 2
-           -0.5,  0.5, uv.s1, uv.t0, // 3
-        };
-
-        unsigned int indices[] = {
-            0, 1, 2, //triangle 1
-            2, 3, 0  //triangle 2
-        };
-        
-        std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>(MESH_2D, true, vertices, indices, 16, 6);
-        m_charMeshes.try_emplace(c, mesh);
-        return mesh;
+        std::string quad = Renderer::AddQuad(l);
+        m_charQuads.emplace(c, quad);
+        return quad;
     }
 }

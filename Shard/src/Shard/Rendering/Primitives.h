@@ -115,7 +115,7 @@ namespace Shard::Rendering::Primitives
 
 		void SpriteSheetLayout(const Vector2& subTexSize, const Vector2& subTexAmount)
 		{
-			if (!m_subMeshes.empty()) return;
+			if (!m_meshAtlas.empty()) return;
 			
 			m_subTexSize = subTexSize;
 			m_subTexAmount = subTexAmount;
@@ -132,21 +132,14 @@ namespace Shard::Rendering::Primitives
 					const Vector2 pos{static_cast<float>(i), static_cast<float>(j)};
 					const std::vector<Vector2> uv = texture.GetSubTexUvCoords(pos, subTexSize);
 					
-					//Quad data...
-					float vertices[] = {
-						// x	 y	   u	 v
-						-0.5, -0.5, uv[0].x, uv[0].y, // 0
-						 0.5, -0.5, uv[1].x, uv[1].y, // 1
-						 0.5,  0.5, uv[2].x, uv[2].y, // 2
-						-0.5,  0.5, uv[3].x, uv[3].y, // 3 
-					};
-					
-					unsigned int indices[] = {
-						0, 1, 2, //triangle 1
-						2, 3, 0  //triangle 2
-					};
+					QuadLayout l;
+					l.size[0] = {-0.5, -0.5}; l.uv[0] = {uv[0].x, uv[0].y};
+					l.size[1] = { 0.5, -0.5}; l.uv[1] = {uv[1].x, uv[1].y};
+					l.size[2] = { 0.5,  0.5}; l.uv[2] = {uv[2].x, uv[2].y};
+					l.size[3] = {-0.5,  0.5}; l.uv[3] = {uv[3].x, uv[3].y};
 
-					m_subMeshes.emplace_back(std::make_shared<Mesh>(MESH_2D, true, vertices, indices, 16, 6));
+					std::string quad = Renderer::AddQuad(l);
+					m_meshAtlas.push_back(quad);
 				}
 			}
 		}
@@ -174,13 +167,13 @@ namespace Shard::Rendering::Primitives
 
 			if (m_subTexAmount == Vector2::zero)
 			{
-				Renderer::DrawQuad(mvp, color, m_useTex, m_texturePath, uvMultiplier);
+				Renderer::DrawQuad( Renderer::GetDefaultQuad(), mvp, Renderer::GetDefaultShader(), color, m_useTex, m_texturePath, uvMultiplier);
 				return;
 			}
 
-			if (currentSubMesh < 0 || currentSubMesh >= m_subMeshes.size())
+			if (currentSubMesh < 0 || currentSubMesh >= m_meshAtlas.size())
 				currentSubMesh = 0;
-			Renderer::DrawMesh(m_subMeshes[currentSubMesh], mvp, Renderer::GetDefaultShader(), color, m_useTex, m_texturePath, uvMultiplier);
+			Renderer::DrawQuad(m_meshAtlas[currentSubMesh], mvp, Renderer::GetDefaultShader(), color, m_useTex, m_texturePath, uvMultiplier);
 		}
 
 	private:
@@ -188,7 +181,7 @@ namespace Shard::Rendering::Primitives
 		std::string m_texturePath;
 		Vector2 m_subTexSize;
 		Vector2 m_subTexAmount;
-		std::vector<std::shared_ptr<Mesh>> m_subMeshes;
+		std::vector<std::string> m_meshAtlas;
 	};
 
 	struct Circle : Shape
@@ -228,20 +221,20 @@ namespace Shard::Rendering::Primitives
 		void SetContent(const std::string& content)
 		{
 			if (content.empty()) return;
-			m_meshes = m_font->StringToMeshes(content);
+			m_quads = m_font->StringToQuads(content);
 			m_content = content;
 		}
 		void Render() override
 		{
-			for (size_t i = 0; i < m_meshes.size(); i++)
+			for (size_t i = 0; i < m_quads.size(); i++)
 			{
-				Renderer::DrawMesh(m_meshes[0], mvp, Renderer::GetDefaultShader(), color, true, m_font->GetTextureAtlasPath());
+				Renderer::DrawQuad(m_quads[0], mvp, Renderer::GetDefaultShader(), color, true, m_font->GetTextureAtlasPath());
 			}
 		}
 		
 	private:
 		Font* m_font = nullptr;
 		std::string m_content;
-		std::vector<std::shared_ptr<Mesh>> m_meshes;
+		std::vector<std::string> m_quads;
 	};
 }
