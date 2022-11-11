@@ -113,7 +113,7 @@ namespace Shard::Rendering::Primitives
 			AddTexture(texturePath);
 		}
 
-		void LoadSheet(const Vector2& subTexSize, const Vector2& subTexAmount)
+		void SpriteSheetLayout(const Vector2& subTexSize, const Vector2& subTexAmount)
 		{
 			if (!m_subMeshes.empty()) return;
 			

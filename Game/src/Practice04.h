@@ -21,12 +21,12 @@ namespace Game
             window.SetBackgroundColor(Color::DarkGray);
 
             bee.scale = Vector2::one * 1.5f;
-            bee.LoadSheet({90, 90}, {1, 8});
+            bee.SpriteSheetLayout({80, 80}, {1, 8});
         }
 
         void OnRenderFrame(RenderFrameArgs args) override
         {
-            bee.currentSubMesh = 7;
+            bee.currentSubMesh = 1;
             bee.Draw();
             StaticCamera::CalculateMatrices();
         }

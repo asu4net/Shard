@@ -14,6 +14,7 @@ namespace Shard::Rendering
 	{
 
 	public:
+		Mesh() = default;
 		Mesh(unsigned int mode, bool uvLayout, float* vertices, unsigned int* indices, unsigned int numOfVertices, unsigned int numOfIndices);
 
 		std::shared_ptr<VertexArray> m_vertexArray;
