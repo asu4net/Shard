@@ -5,8 +5,9 @@
 
 namespace Shard::Rendering
 {
-    Font::Font(const std::string& fileLocation, const int pixelHeight, const int height, const int width)
-        : m_height(height)
+    Font::Font(const Window* window, const std::string& fileLocation, const int pixelHeight, const int height, const int width)
+        : m_window(window)
+        , m_height(height)
         , m_width(width)
         , m_pixelHeight(pixelHeight)
         , m_fileLocation(fileLocation)
@@ -124,15 +125,17 @@ namespace Shard::Rendering
     std::string Font::CreateCharQuad(const char c)
     {
         const Math::UvCoords uv = GetUvOfChar(c);
-        
-        //(s1 - s0) * screenWidth = pixelWidth
-        //(t1 - t0) * screenHeight = pixelHeight
-        
+
+        Math::Vector2 s;
+        s.x = (uv.s1 - uv.s0);
+        s.y = (uv.t1 - uv.t0);
+        //s = s.Normalized() / 2;
+        s = s * 7;
         QuadLayout l;
-        l.size[0] = {-0.5, -0.5}; l.uv[0] = {uv.s1, uv.t1};
-        l.size[1] = { 0.5, -0.5}; l.uv[1] = {uv.s0, uv.t1};
-        l.size[2] = { 0.5,  0.5}; l.uv[2] = {uv.s0, uv.t0};
-        l.size[3] = {-0.5,  0.5}; l.uv[3] = {uv.s1, uv.t0};
+        l.size[0] = {-s.x, -s.y}; l.uv[0] = {uv.s1, uv.t1};
+        l.size[1] = { s.x, -s.y}; l.uv[1] = {uv.s0, uv.t1};
+        l.size[2] = { s.x,  s.y}; l.uv[2] = {uv.s0, uv.t0};
+        l.size[3] = {-s.x,  s.y}; l.uv[3] = {uv.s1, uv.t0};
 
         std::string quad = Renderer::AddQuad(l);
         m_charQuads.emplace(c, quad);

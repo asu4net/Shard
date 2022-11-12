@@ -11,13 +11,14 @@ namespace Game
     class Game final : public Application
     {
         float cameraSize = 7.f;
-        Font font{"res/Fonts/transformers.ttf"};
+        Font font{&window, "res/Fonts/transformers.ttf"};
         Quad fontQuad;
         Text text;
         
         void OnRenderReady(RenderReadyArgs args) override
         {
-            text = Text(&font, "$", Color::LightBlue);
+            text = Text(&font, "pito", Color::LightBlue);
+            text.SetContent("pito");
             StaticCamera::window = &window;
             StaticCamera::size = cameraSize;
             window.SetTitle("Practice 03 - Alejandro :D");
@@ -26,6 +27,7 @@ namespace Game
             fontQuad.position = fontQuad.position + Vector2::right * -6.f;
             fontQuad.color = Color::LightRed;
             fontQuad.scale = Vector2::one * 10.f;
+            text.position = Vector2::right * 3.f;
         }
 
         void OnRenderFrame(RenderFrameArgs args) override
