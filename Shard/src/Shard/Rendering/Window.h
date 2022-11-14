@@ -33,6 +33,8 @@ namespace Shard::Rendering
         static const char* DefaultTitle;
         static const int DefaultWidth;
         static const int DefaultHeight;
+        static int CurrentWindowWidth;
+        static int CurrentWindowHeight;
         static const Math::Color DefaultColor;
         static const CursorMode DefaultCursorMode;
         static bool ShowOpenGlDebugMessages;

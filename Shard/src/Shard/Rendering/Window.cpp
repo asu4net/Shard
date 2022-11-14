@@ -17,14 +17,18 @@ namespace Shard::Rendering
 
 	void FrameBufferSizeCallback(GLFWwindow* window, const int width, const int height)
 	{
+		Window::CurrentWindowWidth = width;
+		Window::CurrentWindowHeight = height;
 		glViewport(0, 0, width, height);
 		glScissor(0, 0, width, height);
 	}
-
+	
 	//Default parameters
 	const char* Window::DefaultTitle = "Default Shard Window";
 	constexpr int Window::DefaultWidth = 1920;
 	constexpr int Window::DefaultHeight = 1080;
+	int Window::CurrentWindowWidth = DefaultWidth;
+	int Window::CurrentWindowHeight = DefaultHeight;
 	const Math::Color Window::DefaultColor = Math::Color::DarkGrey;
 	constexpr CursorMode Window::DefaultCursorMode = CursorMode::Normal;
 
@@ -104,8 +108,8 @@ namespace Shard::Rendering
 
 	Math::Vector3 Window::ScreenToWorldPoint(const Math::Vector2 screenPoint, const glm::mat4 proj, const glm::mat4 view)
 	{
-		const float halfScreenWidth =  static_cast<float>(m_width) / 2;
-		const float halfScreenHeight =  static_cast<float>(m_height) / 2;
+		const float halfScreenWidth =  static_cast<float>(CurrentWindowWidth) / 2;
+		const float halfScreenHeight =  static_cast<float>(CurrentWindowHeight) / 2;
 		const glm::mat4 inverseMv = glm::inverse(proj * view);
 		const glm::vec4 near = glm::vec4(((screenPoint.x - halfScreenWidth) / halfScreenWidth),(-1 * (screenPoint.y - halfScreenHeight) / halfScreenHeight), -1, 1.0);
 		glm::vec4 nearResult = inverseMv * near;
