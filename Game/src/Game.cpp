@@ -5,11 +5,11 @@
 // #define PRACTICE_01
 // #include "Practice01.h"
 
-#define PRACTICE_02
-#include "Practice02.h"
+// #define PRACTICE_02
+// #include "Practice02.h"
 
 // #define PRACTICE_03
 // #include "Practice03.h"
 
-// #define PRACTICE_04
-// #include "Practice04.h"
+#define PRACTICE_04
+#include "Practice04.h"

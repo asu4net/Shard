@@ -36,6 +36,22 @@ namespace Shard::Math
         , z(_z)
     {}
 
+    Vector3& Vector3::operator+=(const Vector3& other)
+    {
+        x += other.x;
+        y += other.y;
+        z += other.z;
+        return *this;
+    }
+
+    Vector3& Vector3::operator-=(const Vector3& other)
+    {
+        x -= other.x;
+        y -= other.y;
+        z -= other.z;
+        return *this;
+    }
+
     Vector3 Vector3::operator+(const Vector3& _other) const
     {
         return { x + _other.x, y + _other.y, z + _other.z };
@@ -54,6 +70,13 @@ namespace Shard::Math
     Vector3 Vector3::operator/(float _float) const
     {
         return { x / _float, y / _float, z / _float };
+    }
+
+    Vector3 Vector3::LookAt(const glm::quat& rot, const Vector3& axis)
+    {
+        const glm::mat4 matRot = glm::toMat4(rot);
+        const glm::vec4 dir = glm::vec4(axis.ToGlm(), 1);
+        return {matRot * dir};
     }
 
     Vector3 Vector3::Abs() const

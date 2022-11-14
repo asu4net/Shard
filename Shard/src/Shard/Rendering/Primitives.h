@@ -15,7 +15,7 @@ namespace Shard::Rendering::Primitives
 		inline static glm::mat4 view = glm::mat4(1);
 
 		inline static Vector3 position = {0, 0, 0};
-		inline static Vector3 forward = {0, 0, 1.f};
+		inline static Vector3 forward = {0, 0, -1.f};
 		inline static Vector3 up = {0, 1.f, 0};
 
 		static void CalculateMatrices()
@@ -210,7 +210,7 @@ namespace Shard::Rendering::Primitives
 	inline void Char::SetPosition()
 	{
 		const Vector3 prevPos = m_prevChar ? m_prevChar->position : m_text->position;
-		position = prevPos + Vector2::right * -m_text->spacing;
+		position = prevPos + Vector2::right * m_text->spacing;
 	}
 	
 	inline void Char::Render()

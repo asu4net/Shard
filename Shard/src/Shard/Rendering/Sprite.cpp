@@ -49,7 +49,7 @@ namespace Shard::Rendering
     void Sprite::SetMultipleLayout(const Vector2& subTexSize, const Vector2& subTexAmount)
     {
         if (!m_meshAtlas.empty()) return;
-        
+        mode = SpriteMode::Multiple;
         m_subTexSize = subTexSize;
         m_subTexAmount = subTexAmount;
 
@@ -93,10 +93,10 @@ namespace Shard::Rendering
         
         //Default uv layout
         const std::array<Vector2, 4> uv = {
-            Vector2{1.0f, 1.0f},
             Vector2{0.0f, 1.0f},
-            Vector2{0.0f, 0.0f},
-            Vector2{1.0f, 0.0f}
+            Vector2{1.0f, 1.0f},
+            Vector2{1.0f, 0.0f},
+            Vector2{0.0f, 0.0f}
         };
         
         const Texture& tex = Renderer::GetTexture(m_texturePath);

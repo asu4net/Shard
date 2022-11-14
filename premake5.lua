@@ -25,6 +25,7 @@ IncludeDir["SHARD_CORE"] = "Shard/src/Shard/Core"
 IncludeDir["STB_IMAGE"] = "Shard/vendor/stb_image"
 IncludeDir["STB_TRUETYPE"] = "Shard/vendor/stb_truetype"
 IncludeDir["IMGUI"] = "Shard/vendor/imgui"
+IncludeDir["ENTT"] = "Shard/vendor/entt"
 
 -- Library files
 LibFile = {}
@@ -62,7 +63,8 @@ project "Shard"
 		"%{prj.name}/vendor/stb_image/stb_image.h",
 		"%{prj.name}/vendor/stb_image/stb_image.cpp",
 		"%{prj.name}/vendor/stb_truetype/stb_truetype.h",
-		"%{prj.name}/vendor/stb_truetype/stb_truetype.cpp"
+		"%{prj.name}/vendor/stb_truetype/stb_truetype.cpp",
+		"%{prj.name}/vendor/entt/entt.hpp"
 	}
 
     includedirs
@@ -75,7 +77,8 @@ project "Shard"
         "%{IncludeDir.GLEW}",
 		"%{IncludeDir.STB_IMAGE}",
 		"%{IncludeDir.STB_TRUETYPE}",
-		"%{IncludeDir.IMGUI}"
+		"%{IncludeDir.IMGUI}",
+		"%{IncludeDir.ENTT}"
     }
 
     libdirs
@@ -140,7 +143,8 @@ project "Game"
         "%{IncludeDir.GLFW}",
 		"%{IncludeDir.GLM}",
 		"%{IncludeDir.GLEW}",
-		"%{IncludeDir.IMGUI}"
+		"%{IncludeDir.IMGUI}",
+		"%{IncludeDir.ENTT}"
     }
 
     libdirs

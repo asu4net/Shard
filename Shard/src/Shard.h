@@ -16,4 +16,6 @@
 #include "Shard/ImGui/ImGuiGLFW.h"
 #include "Shard/ImGui/ImGuiOpenGL.h"
 
-
+#include "Shard/Ecs/Components.h"
+#include "Shard/Ecs/Entity.h"
+#include "Shard/Ecs/Scene.h"

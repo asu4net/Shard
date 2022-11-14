@@ -132,10 +132,11 @@ namespace Shard::Rendering
         //s = s.Normalized() / 2;
         s = s * 7;
         QuadLayout l;
-        l.size[0] = {-s.x, -s.y}; l.uv[0] = {uv.s1, uv.t1};
-        l.size[1] = { s.x, -s.y}; l.uv[1] = {uv.s0, uv.t1};
-        l.size[2] = { s.x,  s.y}; l.uv[2] = {uv.s0, uv.t0};
-        l.size[3] = {-s.x,  s.y}; l.uv[3] = {uv.s1, uv.t0};
+
+        l.size[0] = {-s.x, -s.y}; l.uv[0] = {uv.s0, uv.t1};
+        l.size[1] = { s.x, -s.y}; l.uv[1] = {uv.s1, uv.t1};
+        l.size[2] = { s.x, s.y}; l.uv[2] = {uv.s1, uv.t0};
+        l.size[3] = {-s.x,  s.y}; l.uv[3] = {uv.s0, uv.t0};
 
         std::string quad = Renderer::AddQuad(l);
         m_charQuads.emplace(c, quad);

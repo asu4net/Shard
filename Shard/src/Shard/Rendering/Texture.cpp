@@ -72,10 +72,10 @@ namespace Shard::Rendering
 		const float height = static_cast<float>(m_height);
 		
 		const std::array<Math::Vector2, 4> uvCoords = {
-			Math::Vector2{((pos.x + 1) * size.x) / width, ((pos.y + 1) * size.y) / height},
 			Math::Vector2{(pos.x * size.x) / width, ((pos.y + 1) * size.y) / height},
-			Math::Vector2{(pos.x * size.x) / width, (pos.y * size.y) / height},
+			Math::Vector2{((pos.x + 1) * size.x) / width, ((pos.y + 1) * size.y) / height},
 			Math::Vector2{((pos.x + 1) * size.x) / width, (pos.y * size.y) / height},
+			Math::Vector2{(pos.x * size.x) / width, (pos.y * size.y) / height}
 		};
 		
 		return uvCoords;

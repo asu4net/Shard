@@ -21,6 +21,8 @@ namespace Shard::Math
         Vector3(float _x, float _y, float _z);
         Vector3(const glm::vec3& _other);
         Vector3(const Vector2& _other, float _z = 0);
+        Vector3& operator+=(const Vector3& other);
+        Vector3& operator-=(const Vector3& other);
         Vector3 operator+(const Vector3& _other) const;
         Vector3 operator-(const Vector3& _other) const;
         Vector3 operator*(float _float) const;
@@ -31,6 +33,7 @@ namespace Shard::Math
         void Normalize();
         glm::vec3 ToGlm() const;
 
+        static Vector3 LookAt(const glm::quat& rot, const Vector3& axis);
         static float Dot(const Vector3& _a, const Vector3& _b);
         static float Distance(const Vector3& _a, const Vector3& _b);
     };
