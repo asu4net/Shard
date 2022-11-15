@@ -8,8 +8,9 @@ namespace Shard::Ecs
     {
     public:
         Entity() = default;
-        Entity(const entt::entity entityHandler)
-            : m_entityHandler(entityHandler)
+        Entity(Scene* scene, const entt::entity entityHandler)
+            : m_scene(scene)
+            , m_entityHandler(entityHandler)
         {}
         Entity(const Entity& other) = default;
         
@@ -22,6 +23,7 @@ namespace Shard::Ecs
 
         bool IsValid() const
         {
+            if (!m_scene) return false;
             return m_scene->m_registry.valid(m_entityHandler);
         }
         

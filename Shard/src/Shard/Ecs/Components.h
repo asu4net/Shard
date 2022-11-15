@@ -1,36 +1,70 @@
 ﻿#pragma once
 #include "Entity.h"
+#include "Rendering/Sprite.h"
 
 namespace Shard::Ecs
 {
-    struct Tag
+    struct String
     {
+        std::string name;
         std::string tag;
-
-        Tag() = default;
-        Tag(const Tag&) = default;
-        Tag(std::string tag) : tag(std::move(tag)) {}
+        
+        String(std::string name, std::string tag)
+            : name(std::move(name))
+            , tag(std::move(tag))
+        {}
     };
     
     struct Transform
     {
         Math::Vector3 position;
-        glm::quat rotation;
-        Math::Vector3 scale;
-        
+        glm::quat rotation = IdentityQuat;
+        Math::Vector3 scale = Math::Vector3::one;
         Entity parent;
         
-        Transform()
-            : position(Math::Vector3::zero)
-            , rotation(IdentityQuat)
-            , scale(Math::Vector3::zero)
-        {}
+        Math::Vector3 Right() const { return m_right; }
+        Math::Vector3 Up() const { return m_up; }
+        Math::Vector3 Forward() const { return m_forward; }
+        glm::mat4 Model() const { return m_model; }
+
+    private:
+        Math::Vector3 m_worldPosition;
+        glm::quat m_worldRotation = IdentityQuat;
+        Math::Vector3 m_worldScale = Math::Vector3::one;
+        Math::Vector3 m_right, m_up, m_forward;
+        glm::mat4 m_model{1};
         
-        Transform(const Transform&) = default;
+        friend class TransformSystem;
     };
 
     struct Camera
     {
+        enum class Mode { Perspective, Orthographic };
         
+        Mode mode = Mode::Orthographic;
+        float size = 3.f;
+        float fov = 45.f;
+        float nearPlane = -100.f;
+        float farPlane = 100.f;
+        int priority = 0;
+        
+        glm::mat4 Projection() const { return m_projection; }
+        glm::mat4 View() const { return m_view; }
+
+    private:
+        glm::mat4 m_projection{1}, m_view{1};
+        friend class CameraSystem;
+    };
+
+    struct Quad
+    {
+        Math::Color color = Math::Color::White;
+    };
+    
+    struct Circle
+    {
+        Math::Color color = Math::Color::White;
+        float thickness = 1.f;
+        float fade = 0.005f;
     };
 }

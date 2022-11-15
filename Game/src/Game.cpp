@@ -11,5 +11,8 @@
 // #define PRACTICE_03
 // #include "Practice03.h"
 
-#define PRACTICE_04
-#include "Practice04.h"
+// #define PRACTICE_04
+// #include "Practice04.h"
+
+#define TEST
+#include "Test.h"

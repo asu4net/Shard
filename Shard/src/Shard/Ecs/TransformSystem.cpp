@@ -5,49 +5,40 @@
 
 namespace Shard::Ecs
 {
-    glm::mat4 TransformSystem::GetMatrix(const Transform& transform)
+    void TransformSystem::CalculateTransforms(entt::registry& registry)
     {
-        glm::mat4 model = glm::mat4(1);
-        model = glm::translate(model, transform.position.ToGlm());
-        model *= glm::toMat4(transform.rotation);
-        model = glm::scale(model, transform.scale.ToGlm());
-        return model;
-    }
-
-    glm::mat4 TransformSystem::GetMatrix(const Entity entity)
-    {
-        if (!entity.Has<Transform>())
-        {
-            assert(false);
-            return glm::mat4(1);
-        }
-        return GetMatrix(entity.Get<Transform>());
-    }
-
-    bool TransformSystem::TryApplyParentTransform(Transform& transform)
-    {
-        if (!transform.parent.IsValid()) return false;
+        const auto view = registry.view<Transform>();
         
-        const auto& parentTransform = transform.parent.Get<Transform>();
-        transform.position += parentTransform.position;
-        transform.rotation += parentTransform.rotation;
-        transform.scale += transform.scale;
-        return true;
+        for (const entt::entity entity : view)
+        {
+            Transform& t = view.get<Transform>(entity);
+            HandleTransform(t);
+        }
     }
 
-    Math::Vector3 TransformSystem::Right(const Transform& transform)
+    void TransformSystem::HandleTransform(Transform& t)
     {
-        return Math::Vector3::LookAt(transform.rotation, Math::Vector3::right);
-    }
+        t.m_worldPosition = t.position;
+        t.m_worldRotation = t.rotation;
+        t.m_worldScale = t.scale;
+        
+        if (t.parent.IsValid())
+        {
+            const auto& tParent = t.parent.Get<Transform>();
+            t.m_worldPosition += tParent.m_worldPosition;
+            t.m_worldRotation += tParent.m_worldRotation;
+            t.m_worldScale += t.m_worldScale;
+        }
+        
+        glm::mat4 model = glm::mat4(1);
+        model = glm::translate(model, t.m_worldPosition.ToGlm());
+        model *= glm::toMat4(t.m_worldRotation);
+        model = glm::scale(model, t.m_worldScale.ToGlm());
+        t.m_model = model;
 
-    Math::Vector3 TransformSystem::Up(const Transform& transform)
-    {
-        return Math::Vector3::LookAt(transform.rotation, Math::Vector3::up);
-    }
-
-    Math::Vector3 TransformSystem::Forward(const Transform& transform)
-    {
-        return Math::Vector3::LookAt(transform.rotation, Math::Vector3::forward);
+        t.m_right = Math::Vector3::LookAt(t.rotation, Math::Vector3::right);
+        t.m_up = Math::Vector3::LookAt(t.rotation, Math::Vector3::up);
+        t.m_forward = Math::Vector3::LookAt(t.rotation, Math::Vector3::forward);
     }
 
     void TransformSystem::Rotate(Transform& transform, const float degrees, const Math::Vector3& axis)

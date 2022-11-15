@@ -1,4 +1,5 @@
 #pragma once
+#include "Ecs/Scene.h"
 #include "ImGui/ImGuiRenderer.h"
 
 namespace Shard
@@ -8,7 +9,8 @@ namespace Shard
     public:
         Rendering::Window window;
         ImGuiRenderer imGuiRenderer;
-
+        Ecs::Scene scene;
+        
         Application();
         virtual ~Application();
 

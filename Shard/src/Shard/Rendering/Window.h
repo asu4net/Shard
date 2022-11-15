@@ -8,12 +8,12 @@ namespace Shard::Rendering
     
     struct RenderReadyArgs
     {
-        Window* window;
+        const Window* window;
         GLFWwindow* windowHandler;
     };
     struct RenderFrameArgs
     {
-        Window* window;
+        const Window* window;
         GLFWwindow* windowHandler;
     };
     
