@@ -10,7 +10,7 @@ namespace Shard::Rendering
     class Font
     {
     public:
-        Font(const Window* window, const std::string& fileLocation, const int pixelHeight = 64, const int height = 1024, const int width = 1024);
+        Font(const std::string& fileLocation, const int pixelHeight = 32, const int height = 1024, const int width = 1024);
         ~Font();
         
         Font(const Font& other) = delete;
@@ -25,7 +25,6 @@ namespace Shard::Rendering
         std::vector<std::string> StringToQuads(const std::string& string);
     
     private:
-        const Window* m_window;
         int m_height = 0;
         int m_width = 0;
         int m_pixelHeight = 0;

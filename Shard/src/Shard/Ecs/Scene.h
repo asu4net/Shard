@@ -4,6 +4,7 @@
 #include "TransformSystem.h"
 #include "BasicShapesSystem.h"
 #include "SpriteSystem.h"
+#include "TextSystem.h"
 #include "Rendering/Window.h"
 
 namespace Shard::Ecs
@@ -33,9 +34,11 @@ namespace Shard::Ecs
         TransformSystem m_transformSystem;
         BasicShapesSystem m_basicShapesSystem;
         SpriteSystem m_spriteSystem;
+        TextSystem m_textSystem;
         
         void OnRenderReady(Rendering::RenderReadyArgs args);
         void OnRenderFrame(Rendering::RenderFrameArgs args);
+        void OnComponentAddedListener(EntityArgs args);
         
         friend class Entity;
     };

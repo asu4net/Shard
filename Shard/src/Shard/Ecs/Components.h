@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "Entity.h"
+#include "Rendering/Font.h"
 #include "Rendering/Sprite.h"
 
 namespace Shard::Ecs
@@ -94,5 +95,26 @@ namespace Shard::Ecs
 
             sprite = std::make_shared<Rendering::Sprite>(texturePath, shader);
         }
+    };
+    
+    struct TextRenderer
+    {
+        std::shared_ptr<Rendering::Font> font;
+        float spacing = .3f;
+        Math::Color color;
+        
+        TextRenderer(std::string text = "", const Math::Color& color = Math::Color::Black, const std::string& fontPath = "res/Fonts/Orange.ttf")
+            : font(std::make_shared<Rendering::Font>(fontPath))
+            , color(color)
+            , m_text(std::move(text))
+        {}
+        
+        std::string Text() const { return m_text; }
+        
+    private:
+        std::string m_text;
+        std::vector<std::string> m_charMeshes;
+
+        friend class TextSystem;
     };
 }

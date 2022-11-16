@@ -11,6 +11,7 @@ namespace Shard::Ecs
     {
         window.OnRenderReady.ADD_LISTENER(Scene, OnRenderReady);
         window.OnRenderFrame.ADD_LISTENER(Scene, OnRenderFrame);
+        OnComponentAdded.ADD_LISTENER(Scene, OnComponentAddedListener);
     }
     
     Entity Scene::CreateEntity(const std::string& name, const std::string& tag)
@@ -55,5 +56,16 @@ namespace Shard::Ecs
         m_cameraSystem.CalculateCameraMatrices(m_registry, args.window->Aspect());
         m_spriteSystem.DrawSprites(m_registry);
         m_basicShapesSystem.DrawBasicShapes(m_registry);
+        m_textSystem.RenderTexts(m_registry);
+    }
+
+    void Scene::OnComponentAddedListener(EntityArgs args)
+    {
+        if (m_registry.try_get<TextRenderer>(args.entityHandler))
+        {
+            TextRenderer& textRenderer = m_registry.get<TextRenderer>(args.entityHandler);
+            TextSystem::SetText(textRenderer, textRenderer.Text());
+            return;
+        }
     }
 }

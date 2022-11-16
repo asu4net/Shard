@@ -5,9 +5,8 @@
 
 namespace Shard::Rendering
 {
-    Font::Font(const Window* window, const std::string& fileLocation, const int pixelHeight, const int height, const int width)
-        : m_window(window)
-        , m_height(height)
+    Font::Font(const std::string& fileLocation, const int pixelHeight, const int height, const int width)
+        : m_height(height)
         , m_width(width)
         , m_pixelHeight(pixelHeight)
         , m_fileLocation(fileLocation)

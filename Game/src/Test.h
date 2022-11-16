@@ -9,11 +9,15 @@ class Game final : public Application
         circle.Add<CircleRenderer>(Color::LightRed);
         circle.Get<Transform>().position += Vector3::right * 3;
         
-        auto& a = scene.CreateEntity("A").Add<SpriteRenderer>("res/Textures/fire.png");
-        auto& b = scene.CreateEntity("B").Add<SpriteRenderer>("res/Textures/wall.jpg");
-
-        a.orderInLayer = 1;
-        b.orderInLayer = 0;
+        // auto& a = scene.CreateEntity("A").Add<SpriteRenderer>("res/Textures/fire.png");
+        // auto& b = scene.CreateEntity("B").Add<SpriteRenderer>("res/Textures/wall.jpg");
+        //
+        // a.orderInLayer = 0;
+        // b.orderInLayer = 1;
+        
+        const Entity textEntity = scene.CreateEntity("Test Text");
+        auto& textRenderer = textEntity.Add<TextRenderer>("Hello world", Color::LightBlue, "res/Fonts/transformers.ttf");
+        textEntity.Get<Transform>().position += Vector3::left * 2.f;
     }
 };
 
