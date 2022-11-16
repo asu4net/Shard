@@ -9,6 +9,11 @@ namespace Shard::Ecs
         const auto view = registry.view<SpriteRenderer, Transform>();
 
         const Camera& mainCamera = registry.get<Camera>(CameraSystem::MainCameraEntityHandler());
+
+        registry.sort<SpriteRenderer>([](const SpriteRenderer& a, const SpriteRenderer& b)
+        {
+            return a.orderInLayer > b.orderInLayer;
+        });
         
         for (const entt::entity entity : view)
         {
