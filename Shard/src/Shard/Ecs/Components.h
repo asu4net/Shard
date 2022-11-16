@@ -56,15 +56,23 @@ namespace Shard::Ecs
         friend class CameraSystem;
     };
 
-    struct Quad
+    struct QuadRenderer
     {
-        Math::Color color = Math::Color::White;
+        Math::Color color;
+        
+        QuadRenderer(const Math::Color& theColor = Math::Color::White)
+            : color(theColor) {}
     };
     
-    struct Circle
+    struct CircleRenderer
     {
-        Math::Color color = Math::Color::White;
-        float thickness = 1.f;
-        float fade = 0.005f;
+        Math::Color color;
+        float thickness;
+        float fade;
+        
+        CircleRenderer(const Math::Color& theColor = Math::Color::White
+            , const float theThickness = 1.f
+            , const float theFade = 0.005f)
+            : color(theColor), thickness(theThickness), fade(theFade) {}
     };
 }

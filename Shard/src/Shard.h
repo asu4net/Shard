@@ -1,5 +1,4 @@
 ﻿#pragma once
-
 #include "Shard/Core/Application.h"
 #include "Shard/Core/Event.h"
 #include "Shard/Core/Input.h"
@@ -20,8 +19,11 @@
 #include "Shard/Ecs/Entity.h"
 #include "Shard/Ecs/Scene.h"
 
+// ReSharper disable CppClangTidyClangDiagnosticHeaderHygiene
 #ifdef USE_SHARD_NAMESPACES
 using namespace Shard;
 using namespace Math;
 using namespace Rendering;
+using namespace Primitives;
+using namespace Ecs;
 #endif
