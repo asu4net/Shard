@@ -10,8 +10,7 @@ namespace Shard::Ecs
     void BasicShapesSystem::DrawBasicShapes(entt::registry& registry)
     {
         const auto circleView = registry.view<CircleRenderer, Transform>();
-
-        //TODO: Refactor
+        
         const Camera& mainCamera = registry.get<Camera>(CameraSystem::MainCameraEntityHandler());
         
         for(const entt::entity entity : circleView)

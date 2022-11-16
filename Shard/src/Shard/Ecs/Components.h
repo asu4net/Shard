@@ -75,4 +75,24 @@ namespace Shard::Ecs
             , const float theFade = 0.005f)
             : color(theColor), thickness(theThickness), fade(theFade) {}
     };
+
+    struct SpriteRenderer
+    {
+        std::shared_ptr<Rendering::Sprite> sprite;
+        std::shared_ptr<Rendering::Shader> shader;
+        int orderInLayer = 0;
+        Math::Color color = Math::Color::White;
+        
+        SpriteRenderer(const std::string& texturePath = "",
+            const std::string& vertexLoc = "",
+            const std::string& fragmentLoc = "")
+        {
+            if (vertexLoc.empty() || fragmentLoc.empty())
+                shader = std::make_shared<Rendering::Shader>();
+            else
+                shader = std::make_shared<Rendering::Shader>(vertexLoc.c_str(), fragmentLoc.c_str());
+
+            sprite = std::make_shared<Rendering::Sprite>(texturePath, shader);
+        }
+    };
 }

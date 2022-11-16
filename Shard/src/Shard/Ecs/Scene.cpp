@@ -53,6 +53,7 @@ namespace Shard::Ecs
     {
         m_transformSystem.CalculateTransforms(m_registry);
         m_cameraSystem.CalculateCameraMatrices(m_registry, args.window->Aspect());
+        m_spriteSystem.DrawSprites(m_registry);
         m_basicShapesSystem.DrawBasicShapes(m_registry);
     }
 }
