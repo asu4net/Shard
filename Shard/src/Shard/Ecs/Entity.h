@@ -55,5 +55,8 @@ namespace Shard::Ecs
     private:
         Scene* m_scene = nullptr;
         entt::entity m_entityHandler{0};
+        static std::map<entt::entity, Entity> m_entities;
+        
+        friend class Scene;
     };
 }

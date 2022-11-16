@@ -16,6 +16,8 @@ namespace Shard::Ecs
         Scene(Rendering::Window& window);
         Entity CreateEntity(const std::string& name = "Entity", const std::string& tag = "Default");
         void DestroyEntity(const Entity& entity);
+        Entity GetEntityByHandler(const entt::entity handler);
+        Entity GetMainCameraEntity();
         
     private:
         entt::registry m_registry;

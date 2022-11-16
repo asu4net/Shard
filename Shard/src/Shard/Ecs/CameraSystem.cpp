@@ -7,7 +7,7 @@ namespace Shard::Ecs
 {
     entt::entity CameraSystem::m_mainCamera;
 
-    entt::entity CameraSystem::MainCameraEntity()
+    entt::entity CameraSystem::MainCameraEntityHandler()
     {
         return m_mainCamera;
     }
@@ -23,7 +23,6 @@ namespace Shard::Ecs
             
             if (camera.priority < m_minPriority || m_mainCamera == entt::entity{0})
             {
-                //TODO: Convert entt entity in Entity and assign to m_mainCamera
                 m_mainCamera = entity;
                 m_minPriority = camera.priority;
             }

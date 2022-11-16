@@ -12,7 +12,7 @@ namespace Shard::Ecs
         const auto circleView = registry.view<Circle, Transform>();
 
         //TODO: Refactor
-        const Camera& mainCamera = registry.get<Camera>(CameraSystem::MainCameraEntity());
+        const Camera& mainCamera = registry.get<Camera>(CameraSystem::MainCameraEntityHandler());
         
         for(const entt::entity entity : circleView)
         {

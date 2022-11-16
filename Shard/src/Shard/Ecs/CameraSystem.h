@@ -11,7 +11,7 @@ namespace Shard::Ecs
     {
     public:
         CameraSystem() = default;
-        static entt::entity MainCameraEntity();
+        static entt::entity MainCameraEntityHandler();
         
     private:
         static entt::entity m_mainCamera;
