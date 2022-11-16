@@ -19,3 +19,9 @@
 #include "Shard/Ecs/Components.h"
 #include "Shard/Ecs/Entity.h"
 #include "Shard/Ecs/Scene.h"
+
+#ifdef USE_SHARD_NAMESPACES
+using namespace Shard;
+using namespace Math;
+using namespace Rendering;
+#endif

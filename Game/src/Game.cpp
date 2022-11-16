@@ -1,4 +1,5 @@
 #include "shpch.h"
+#define USE_SHARD_NAMESPACES
 #include "Shard.h"
 #include "Shard/Core/EntryPoint.h"
 

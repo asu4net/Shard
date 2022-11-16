@@ -17,7 +17,7 @@ namespace Shard
 		imGuiRenderer.OnImGuiReady.ADD_LISTENER(Application, OnImGuiReady);
 		imGuiRenderer.OnImGuiRender.ADD_LISTENER(Application, OnImGuiRender);
 		
-		printf("Shard Application created.\n");
+		printf("Shard Application constructed.\n");
 	}
 
 	Application::~Application()
@@ -25,9 +25,9 @@ namespace Shard
 		printf("Shard Application destroyed.\n");
 	}
 
-	void Application::Start()
+	void Application::OnCreate()
 	{
-		printf("Shard Application started.\n");
+		printf("Shard Application created.\n");
 		window.StartLoop();
 	}
 

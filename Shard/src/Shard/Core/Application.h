@@ -2,6 +2,8 @@
 #include "Ecs/Scene.h"
 #include "ImGui/ImGuiRenderer.h"
 
+#define SHARD_APPLICATION(_CLASS_NAME) inline Shard::Application* Shard::CreateApplication() { return new _CLASS_NAME(); }
+
 namespace Shard
 {
     class Application
@@ -14,7 +16,7 @@ namespace Shard
         Application();
         virtual ~Application();
 
-        virtual void Start();
+        virtual void OnCreate();
 
         virtual void OnImGuiReady(ImGuiReadyArgs args);
         virtual void OnImGuiRender(ImGuiRenderArgs args);
