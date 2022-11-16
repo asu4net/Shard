@@ -3,30 +3,32 @@
 
 class Game final : public Application
 {
-    float cameraSize = 7.f;
-    Font font{&window, "res/Fonts/transformers.ttf"};
-    Quad fontQuad;
-    Text text;
-        
     void OnRenderReady(RenderReadyArgs args) override
     {
-        text = Text(&font, "[Buenas] paco", Color::LightBlue);
-        text.SetContent("[Buenas] paco");
-        StaticCamera::window = &window;
-        StaticCamera::size = cameraSize;
         window.SetTitle("Practice 03 - Alejandro :D");
-            
-        fontQuad.AddTexture(font.GetPixelsRgb());
-        fontQuad.position = fontQuad.position + Vector2::right * -6.f;
-        fontQuad.color = Color::LightRed;
-        fontQuad.scale = Vector2::one * 10.f;
-    }
+        scene.GetMainCameraEntity().Get<Camera>().size = 5.f;
+        
+        //Text rendering
+        {
+            const Entity textEntity = scene.CreateEntity("Test Text");
+            auto& textRenderer = textEntity.Add<TextRenderer>("Hello world", Color::LightBlue, "res/Fonts/transformers.ttf");
+            textEntity.Get<Transform>().position += Vector3::left * 2.f;
+        }
+        
+        //Font sprite
+        {
+            const Entity fontEntity = scene.CreateEntity();
 
-    void OnRenderFrame(RenderFrameArgs args) override
-    {
-        text.Draw();
-        fontQuad.Draw();
-        StaticCamera::CalculateMatrices();
+            auto& spriteRend = fontEntity.Add<SpriteRenderer>();
+            spriteRend.color = Color::LightRed;
+
+            auto& transform = fontEntity.Get<Transform>();
+            const Font font{"res/Fonts/transformers.ttf"};
+            spriteRend.sprite->AddTexture(font.GetPixelsRgb());
+            transform.position += {-1, -1, 0};
+            transform.scale = Vector2::one * 10.f;
+        }
+        
     }
 };
 SHARD_CREATE(Game)

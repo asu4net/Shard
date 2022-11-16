@@ -1,6 +1,5 @@
 #pragma once
 #include "Rendering/Renderer.h"
-#include "Rendering/Font.h"
 #include "Rendering/Sprite.h"
 
 namespace Shard::Rendering::Primitives
@@ -134,88 +133,4 @@ namespace Shard::Rendering::Primitives
 			Renderer::DrawCircle(mvp, color, thickness, fade);
 		}
 	};
-	
-	//Char declaration
-	struct Text;
-	struct Char : Shape
-	{
-		Char(const std::string& mesh, Text* text, Char* prevChar);
-		void SetPosition();
-	private:
-		std::string m_mesh;
-		Text* m_text = nullptr;
-		Char* m_prevChar = nullptr;
-		
-		void Render() override;
-	};
-
-	struct Text : Shape
-	{
-		float spacing = .7f;
-		
-		Text(Font* font = nullptr, const std::string& content = "", const Color& textColor = Color::White)
-			: Shape(textColor, Vector3::zero, IdentityQuat, Vector3::one)
-			, m_font(font)
-		{
-			//SetContent(content);
-		}
-		
-		void SetContent(const std::string& content)
-		{
-			if (content.empty()) return;
-			const auto charMeshes = m_font->StringToQuads(content);
-			
-			m_chars.clear();
-			for (auto& mesh: charMeshes)
-			{
-				Char* theChar = new Char(mesh, this, prevChar);
-				m_chars.push_back(theChar);
-				prevChar = theChar;
-			}
-			m_content = content;
-		}
-
-		~Text() override
-		{
-			for (int i = 0; i < m_chars.size(); i++)
-				delete m_chars[i];
-			m_chars.clear();
-		}
-
-		const Font& GetFont() const { return *m_font; }
-		
-		void Render() override
-		{
-			for (auto* theChar : m_chars)
-			{
-				theChar->SetPosition();
-				theChar->Draw();
-			}
-		}
-		
-	private:
-		Font* m_font = nullptr;
-		std::string m_content;
-		std::vector<Char*> m_chars;
-		Char* prevChar = nullptr;
-	};
-
-	//Char definition
-	inline Char::Char(const std::string& mesh, Text* text, Char* prevChar)
-			: m_mesh(mesh)
-			, m_text(text)
-			, m_prevChar(prevChar)
-	{}
-
-	inline void Char::SetPosition()
-	{
-		const Vector3 prevPos = m_prevChar ? m_prevChar->position : m_text->position;
-		position = prevPos + Vector2::right * m_text->spacing;
-	}
-	
-	inline void Char::Render()
-	{
-		Renderer::DrawQuad(m_mesh, mvp, Renderer::GetDefaultShader(), m_text->color, true, m_text->GetFont().GetTextureAtlasPath());
-	}
-
 }
