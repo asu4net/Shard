@@ -17,5 +17,5 @@ class Game final : public Application
     }
 };
 
-SHARD_APPLICATION(Game)
+SHARD_CREATE(Game)
 #endif

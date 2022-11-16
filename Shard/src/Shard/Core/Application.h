@@ -2,7 +2,7 @@
 #include "Ecs/Scene.h"
 #include "ImGui/ImGuiRenderer.h"
 
-#define SHARD_APPLICATION(_CLASS_NAME) inline Shard::Application* Shard::CreateApplication() { return new _CLASS_NAME(); }
+#define SHARD_CREATE(_CLASS_NAME) inline Shard::Application* Shard::CreateApplication() { return new _CLASS_NAME(); }
 
 namespace Shard
 {
