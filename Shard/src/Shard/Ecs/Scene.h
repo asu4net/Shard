@@ -8,10 +8,17 @@
 namespace Shard::Ecs
 {
     class Entity;
+
+    struct EntityArgs { entt::entity entityHandler; };
     
     class Scene
     {
     public:
+        Event<EntityArgs> OnEntityCreated;
+        Event<EntityArgs> OnEntityDestroyed;
+        Event<EntityArgs> OnComponentAdded;
+        Event<EntityArgs> OnComponentRemoved;
+        
         Scene() = default;
         Scene(Rendering::Window& window);
         Entity CreateEntity(const std::string& name = "Entity", const std::string& tag = "Default");
@@ -21,9 +28,9 @@ namespace Shard::Ecs
         
     private:
         entt::registry m_registry;
-        std::shared_ptr<CameraSystem> m_cameraSystem;
-        std::shared_ptr<TransformSystem> m_transformSystem;
-        std::shared_ptr<BasicShapesSystem> m_basicShapesSystem;
+        CameraSystem m_cameraSystem;
+        TransformSystem m_transformSystem;
+        BasicShapesSystem m_basicShapesSystem;
         
         void OnRenderReady(Rendering::RenderReadyArgs args);
         void OnRenderFrame(Rendering::RenderFrameArgs args);
