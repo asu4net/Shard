@@ -122,16 +122,23 @@ namespace Shard::Ecs
         friend class TextSystem;
     };
 
-    //Requires SpriteRenderer
+    //Requires SpriteRenderer component attached with multiple layout.
     struct SimpleSpriteAnimation
     {
         float framesPerSecond = 8.f;
+        bool paused = false;
         
         SimpleSpriteAnimation(std::vector<int> layout = {})
             : m_layout(std::move(layout))
         {}
+
+        int CurrentIndex() const { return m_currentLayoutIndex; }
         
     private:
         std::vector<int> m_layout;
+        int m_currentLayoutIndex = 0;
+        float m_currentTime = 0;
+
+        friend class SimpleSpriteAnimationSystem;
     };
 }

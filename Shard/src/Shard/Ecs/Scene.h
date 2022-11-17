@@ -3,6 +3,7 @@
 #include "entt.hpp"
 #include "TransformSystem.h"
 #include "BasicShapesSystem.h"
+#include "SimpleSpriteAnimationSystem.h"
 #include "SpriteSystem.h"
 #include "TextSystem.h"
 #include "Rendering/Window.h"
@@ -35,6 +36,7 @@ namespace Shard::Ecs
         BasicShapesSystem m_basicShapesSystem;
         SpriteSystem m_spriteSystem;
         TextSystem m_textSystem;
+        SimpleSpriteAnimationSystem m_spriteAnimationSystem;
         
         void OnRenderReady(Rendering::RenderReadyArgs args);
         void OnRenderFrame(Rendering::RenderFrameArgs args);

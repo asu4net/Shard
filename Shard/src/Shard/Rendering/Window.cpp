@@ -33,7 +33,7 @@ namespace Shard::Rendering
 	constexpr CursorMode Window::DefaultCursorMode = CursorMode::Normal;
 
 	//Static parameters
-	bool Window::ShowOpenGlDebugMessages = true;
+	bool Window::ShowOpenGlDebugMessages = false;
 	bool Window::KeepWindowOpened = true;
 	
 	Window::Window(const int width, const int height, const char* name, const Math::Color& color)
