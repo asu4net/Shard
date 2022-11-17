@@ -60,6 +60,7 @@ namespace Shard::Ecs
     struct QuadRenderer
     {
         Math::Color color;
+        bool enabled = true;
         
         QuadRenderer(const Math::Color& theColor = Math::Color::White)
             : color(theColor) {}
@@ -70,6 +71,7 @@ namespace Shard::Ecs
         Math::Color color;
         float thickness;
         float fade;
+        bool enabled = true;
         
         CircleRenderer(const Math::Color& theColor = Math::Color::White
             , const float theThickness = 1.f
@@ -83,6 +85,7 @@ namespace Shard::Ecs
         std::shared_ptr<Rendering::Shader> shader;
         int orderInLayer = 0;
         Math::Color color = Math::Color::White;
+        bool enabled = true;
         
         SpriteRenderer(const std::string& texturePath = "",
             const std::string& vertexLoc = "",
@@ -102,6 +105,7 @@ namespace Shard::Ecs
         std::shared_ptr<Rendering::Font> font;
         float spacing = .3f;
         Math::Color color;
+        bool enabled = true;
         
         TextRenderer(std::string text = "", const Math::Color& color = Math::Color::Black, const std::string& fontPath = "res/Fonts/Orange.ttf")
             : font(std::make_shared<Rendering::Font>(fontPath))

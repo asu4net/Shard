@@ -18,6 +18,7 @@ namespace Shard::Ecs
         for (const entt::entity entity : view)
         {
             const auto& [spriteRenderer, transform] = view.get<SpriteRenderer, Transform>(entity);
+            if (!spriteRenderer.enabled) return;
             Math::MvpData mvp{transform.Model(), mainCamera.View(), mainCamera.Projection()};
             spriteRenderer.sprite->Draw(mvp, spriteRenderer.color);
         }

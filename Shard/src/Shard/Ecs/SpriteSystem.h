@@ -7,6 +7,7 @@ namespace Shard::Ecs
     {
     public:
         SpriteSystem() = default;
+        
     private:
         void DrawSprites(entt::registry& registry);
 

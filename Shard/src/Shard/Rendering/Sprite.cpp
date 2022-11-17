@@ -33,6 +33,17 @@ namespace Shard::Rendering
         Renderer::DrawQuad(m_meshAtlas[currentSubMesh], mvp, m_shader, color, useTexture, m_texturePath, uvMultiplier);
     }
 
+    void Sprite::Next()
+    {
+        if (mode != SpriteMode::Multiple) return;
+        if (currentSubMesh == Count() - 1)
+        {
+            currentSubMesh = 0;
+            return;
+        }
+        currentSubMesh++;
+    }
+
     void Sprite::AddTexture(const std::string& texturePath)
     {
         PushTexture(texturePath);

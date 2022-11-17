@@ -16,6 +16,7 @@ namespace Shard::Ecs
         for(const entt::entity entity : circleView)
         {
             const auto& [circle, circleTransform] = circleView.get<CircleRenderer, Transform>(entity);
+            if (!circle.enabled) return;
             
             Math::MvpData mvp{circleTransform.Model(), mainCamera.View(), mainCamera.Projection()};
             Rendering::Renderer::DrawCircle(mvp, circle.color, circle.thickness, circle.fade);
@@ -26,6 +27,7 @@ namespace Shard::Ecs
         for(const entt::entity entity : quadView)
         {
             const auto& [quad, quadTransform] = quadView.get<QuadRenderer, Transform>(entity);
+            if (!quad.enabled) return;
             
             Math::MvpData mvp{quadTransform.Model(), mainCamera.View(), mainCamera.Projection()};
             Rendering::Renderer::DrawQuad(Rendering::Renderer::GetDefaultQuad(), mvp,

@@ -15,6 +15,7 @@ namespace Shard::Ecs
         for (const entt::entity entity : view)
         {
             const auto& [text, transform] = view.get<TextRenderer, Transform>(entity);
+            if (!text.enabled) return;
             RenderText(text, transform, mainCamera);
         }
     }

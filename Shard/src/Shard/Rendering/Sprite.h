@@ -16,7 +16,9 @@ namespace Shard::Rendering
         
         Sprite(const std::string& texturePath = "", const std::shared_ptr<Shader>& shader = Renderer::GetDefaultShader());
         void Draw(const Math::MvpData& mvp, const Math::Color& color);
-        
+
+        int Count() const { return static_cast<int>(m_subTexAmount.x) * static_cast<int>(m_subTexAmount.y); }
+        void Next();
         void AddTexture(const std::string& texturePath);
         void AddTexture(const unsigned char* texturePixels);
         void SetMultipleLayout(const Math::Vector2& subTexSize, const Math::Vector2& subTexAmount);
