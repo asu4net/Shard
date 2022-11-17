@@ -121,4 +121,17 @@ namespace Shard::Ecs
 
         friend class TextSystem;
     };
+
+    //Requires SpriteRenderer
+    struct SimpleSpriteAnimation
+    {
+        float framesPerSecond = 8.f;
+        
+        SimpleSpriteAnimation(std::vector<int> layout = {})
+            : m_layout(std::move(layout))
+        {}
+        
+    private:
+        std::vector<int> m_layout;
+    };
 }

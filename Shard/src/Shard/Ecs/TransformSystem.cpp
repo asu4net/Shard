@@ -41,6 +41,15 @@ namespace Shard::Ecs
         t.m_forward = Math::Vector3::LookAt(t.rotation, Math::Vector3::forward);
     }
 
+    void TransformSystem::SmoothTranslation(Transform& transform, const Math::Vector3& destination, const float deltaSpeed, const float offset)
+    {
+        const Math::Vector3 moveDir = (destination - transform.position).Normalized();
+        const Math::Vector3 newPos = transform.position + moveDir * deltaSpeed;
+        if (Math::Vector3::Distance(destination, newPos) <= offset)
+            return;
+        transform.position = newPos;
+    }
+
     void TransformSystem::Rotate(Transform& transform, const float degrees, const Math::Vector3& axis)
     {
         transform.rotation = transform.rotation * glm::normalize(glm::angleAxis(glm::radians(degrees), axis.ToGlm()));
