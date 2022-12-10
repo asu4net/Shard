@@ -3,17 +3,21 @@
 
 class Game final : public Application
 {
+    std::string linesKey;
+
     void OnRenderReady(RenderReadyArgs args) override
     {
-        const Entity circle = scene.CreateEntity();
-        circle.Add<CircleRenderer>(Color::LightRed);
-        circle.Get<Transform>().position += Vector3::right * 3;
-        
-        auto& a = scene.CreateEntity("A").Add<SpriteRenderer>("res/Textures/fire.png");
-        auto& b = scene.CreateEntity("B").Add<SpriteRenderer>("res/Textures/wall.jpg");
-        
-        a.orderInLayer = 0;
-        b.orderInLayer = 1;
+        Line lineA{ Vector3::zero, Vector3::right };
+        Line lineB{ Vector3::right, Vector3::up };
+        linesKey = Renderer::AddLineGroup({ lineA, lineB });
+    }
+
+    void OnRenderFrame(RenderFrameArgs args) override
+    {
+        Camera& camera = scene.GetMainCameraEntity().Get<Camera>();
+        MvpData mvp{ glm::mat4(1), camera.View(), camera.Projection() };
+
+        Renderer::DrawLines(linesKey, mvp);
     }
 };
 

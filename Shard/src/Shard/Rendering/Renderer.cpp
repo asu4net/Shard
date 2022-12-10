@@ -10,6 +10,7 @@ namespace Shard::Rendering
     bool Renderer::m_initialized = false;
     std::unordered_map<std::string, Texture> Renderer::m_textures;
     std::unordered_map<std::string, Mesh> Renderer::m_quadMeshes;
+    std::unordered_map<std::string, Lines> Renderer::m_lines;
     std::string Renderer::m_defaultQuadKey;
     BlendingMode Renderer::m_blendingMode = BlendingMode::Alpha;
     
@@ -73,6 +74,32 @@ namespace Shard::Rendering
         m_textures.emplace(texturePath, texturePixels);
     }
     
+    std::string Renderer::AddLineGroup(const std::vector<Line>& lines)
+    {
+        if (!m_initialized) return "";
+
+        std::string linesKey = GenerateLinesKey(lines);
+
+        if (m_lines.find(linesKey) != m_lines.end())
+            return "";
+
+        m_lines.emplace(linesKey, lines);
+        return linesKey;
+    }
+
+    std::string Renderer::GenerateLinesKey(const std::vector<Line>& lines)
+    {
+        std::stringstream ss;
+
+        for (const Line& line : lines)
+        {
+            ss << line.start.x << line.start.y << line.start.z
+                << line.end.x << line.end.y << line.end.z;
+        }
+
+        return ss.str();
+    }
+
     std::string Renderer::AddQuad(const QuadLayout& layout)
     {
         if (!m_initialized) return "";
@@ -171,5 +198,23 @@ namespace Shard::Rendering
         circleShader->Unbind();
         
         DrawQuad(m_defaultQuadKey, matrices, circleShader, color);
+    }
+    void Renderer::DrawLines(const std::string& linesKey, const Math::MvpData& matrices, const Math::Color& color)
+    {
+        if (!m_initialized) return;
+
+        const Lines& lines = m_lines[linesKey];
+
+        defaultShader->Bind();
+
+        defaultShader->SetUniformVec4(UNIFORM_DEFAULT_COLOR_NAME, color.ToGlm());
+        defaultShader->SetUniformMat4(UNIFORM_MODEL_MATRIX_NAME, matrices.model);
+        defaultShader->SetUniformMat4(UNIFORM_PROJECTION_MATRIX_NAME, matrices.projection);
+        defaultShader->SetUniformMat4(UNIFORM_VIEW_MATRIX_NAME, matrices.view);
+
+        lines.m_vertexArray->Bind();
+        glDrawArrays(GL_LINES, 0, lines.GetPointsCount());
+        lines.m_vertexArray->Unbind();
+        defaultShader->Unbind();
     }
 }

@@ -6,6 +6,7 @@
 #include "SimpleSpriteAnimationSystem.h"
 #include "SpriteSystem.h"
 #include "TextSystem.h"
+#include "CollisionSystem.h"
 #include "Rendering/Window.h"
 
 namespace Shard::Ecs
@@ -37,6 +38,7 @@ namespace Shard::Ecs
         SpriteSystem m_spriteSystem;
         TextSystem m_textSystem;
         SimpleSpriteAnimationSystem m_spriteAnimationSystem;
+        CollisionSystem m_collisionSystem;
         
         void OnRenderReady(Rendering::RenderReadyArgs args);
         void OnRenderFrame(Rendering::RenderFrameArgs args);

@@ -36,6 +36,7 @@ namespace Shard::Ecs
         glm::mat4 m_model{1};
         
         friend class TransformSystem;
+        friend class CollisionSystem;
     };
 
     struct Camera
@@ -140,5 +141,26 @@ namespace Shard::Ecs
         float m_currentTime = 0;
 
         friend class SimpleSpriteAnimationSystem;
+    };
+
+    struct CircleCollider
+    {
+        float radius = 1;
+        Math::Vector2 center;
+
+        CircleCollider() = default;
+        CircleCollider(float radius, Math::Vector2 center = Math::Vector3::zero)
+            : radius(radius),  center(center)
+        {}
+    };
+
+    struct BoxCollider2D
+    {
+        Math::Vector2 size{1, 1};
+        Math::Vector2 center;
+
+        BoxCollider2D(Math::Vector2 size, Math::Vector2 center = Math::Vector3::zero)
+            : size(size), center(center)
+        {}
     };
 }

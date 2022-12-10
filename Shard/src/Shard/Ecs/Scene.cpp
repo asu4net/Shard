@@ -58,6 +58,7 @@ namespace Shard::Ecs
         m_basicShapesSystem.DrawBasicShapes(m_registry);
         m_textSystem.RenderTexts(m_registry);
         m_spriteAnimationSystem.HandleSpriteAnimations(m_registry);
+        m_collisionSystem.CheckCollisions(m_registry);
     }
 
     void Scene::OnComponentAddedListener(EntityArgs args)

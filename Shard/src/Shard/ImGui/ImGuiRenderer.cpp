@@ -19,6 +19,7 @@ namespace Shard
         IMGUI_CHECKVERSION();
         ImGui::CreateContext();
         ImGuiIO& io = ImGui::GetIO();
+        io.Fonts->AddFontFromFileTTF("res/Fonts/AlbertSans-VariableFont_wght.ttf", 25);
         io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
         //io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
         ImGui_ImplGlfw_InitForOpenGL(args.windowHandler, true);
