@@ -159,6 +159,7 @@ namespace Shard::Ecs
         Math::Vector2 size{1, 1};
         Math::Vector2 center;
 
+        BoxCollider2D() = default;
         BoxCollider2D(Math::Vector2 size, Math::Vector2 center = Math::Vector3::zero)
             : size(size), center(center)
         {}

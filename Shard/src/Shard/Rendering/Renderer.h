@@ -38,6 +38,7 @@ namespace Shard::Rendering
 
 		static std::string AddLineGroup(const std::vector<Line>& lines);
 		static std::string GenerateLinesKey(const std::vector<Line>& lines);
+		static std::string GetDefaultLineBox2D() { return m_defaultLineBox2D; }
 
 		static std::string AddQuad(const QuadLayout& layout);
 		static std::string GenerateQuadKey(const QuadLayout& layout);
@@ -67,6 +68,7 @@ namespace Shard::Rendering
 		static std::unordered_map<std::string, Mesh> m_quadMeshes;
 		static std::unordered_map<std::string, Lines> m_lines;
 		static std::string m_defaultQuadKey;
+		static std::string m_defaultLineBox2D;
 		static BlendingMode m_blendingMode;
 	};
 }

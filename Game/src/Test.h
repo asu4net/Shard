@@ -3,21 +3,15 @@
 
 class Game final : public Application
 {
-    std::string linesKey;
-
     void OnRenderReady(RenderReadyArgs args) override
     {
-        Line lineA{ Vector3::zero, Vector3::right };
-        Line lineB{ Vector3::right, Vector3::up };
-        linesKey = Renderer::AddLineGroup({ lineA, lineB });
-    }
+        Entity entity = scene.CreateEntity();
+        auto& collider = entity.Add<BoxCollider2D>();
+        collider.center = { 0, 1 };
+        collider.size = { 3, 1 };
 
-    void OnRenderFrame(RenderFrameArgs args) override
-    {
-        Camera& camera = scene.GetMainCameraEntity().Get<Camera>();
-        MvpData mvp{ glm::mat4(1), camera.View(), camera.Projection() };
-
-        Renderer::DrawLines(linesKey, mvp);
+        auto& transform = entity.Get<Transform>();
+        TransformSystem::Rotate(transform, 10, { 0, 0, 1 });
     }
 };
 

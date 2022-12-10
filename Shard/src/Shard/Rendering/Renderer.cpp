@@ -12,6 +12,7 @@ namespace Shard::Rendering
     std::unordered_map<std::string, Mesh> Renderer::m_quadMeshes;
     std::unordered_map<std::string, Lines> Renderer::m_lines;
     std::string Renderer::m_defaultQuadKey;
+    std::string Renderer::m_defaultLineBox2D;
     BlendingMode Renderer::m_blendingMode = BlendingMode::Alpha;
     
     void Renderer::Init()
@@ -29,8 +30,20 @@ namespace Shard::Rendering
             l.size[3] = {-0.5,  0.5}; l.uv[3] = {0.0f, 0.0f};
             return l;
         };
+
+        const std::function genDefaultLineBox2D = []
+        {
+            Line a{ Math::Vector3(-0.5, -0.5, 0), Math::Vector3(0.5, -0.5, 0) };
+            Line b{ Math::Vector3(0.5, -0.5, 0), Math::Vector3(0.5, 0.5, 0) };
+            Line c{ Math::Vector3(0.5, 0.5, 0), Math::Vector3(-0.5, 0.5, 0) };
+            Line d{ Math::Vector3(-0.5, 0.5, 0), Math::Vector3(-0.5, -0.5, 0) };
+            std::vector<Line> lines = { a, b, c, d };
+            return lines;
+        };
         
         m_defaultQuadKey = AddQuad(genDefaultQuad());
+        m_defaultLineBox2D = AddLineGroup(genDefaultLineBox2D());
+
         defaultShader = std::make_shared<Shader>();
         circleShader = std::make_shared<Shader>(CIRCLE_VERTEX_PATH, CIRCLE_FRAGMENT_PATH);
     }
@@ -213,7 +226,12 @@ namespace Shard::Rendering
         defaultShader->SetUniformMat4(UNIFORM_VIEW_MATRIX_NAME, matrices.view);
 
         lines.m_vertexArray->Bind();
+        glEnable(GL_LINE_SMOOTH);
+        //float lineWidth[2];
+        //glGetFloatv(GL_LINE_WIDTH_RANGE, lineWidth);
+        //glLineWidth(1.0f);
         glDrawArrays(GL_LINES, 0, lines.GetPointsCount());
+        glDisable(GL_LINE_SMOOTH);
         lines.m_vertexArray->Unbind();
         defaultShader->Unbind();
     }
