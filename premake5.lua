@@ -26,6 +26,7 @@ IncludeDir["STB_IMAGE"] = "Shard/vendor/stb_image"
 IncludeDir["STB_TRUETYPE"] = "Shard/vendor/stb_truetype"
 IncludeDir["IMGUI"] = "Shard/vendor/imgui"
 IncludeDir["ENTT"] = "Shard/vendor/entt"
+IncludeDir["BOX2D"] = "Shard/vendor/box2d/include"
 
 -- Library files
 LibFile = {}
@@ -40,6 +41,7 @@ LibDir["GLEW"] = "Shard/vendor/glew/lib"
 
 include "Shard/vendor/glfw/premake5.lua"
 include "Shard/vendor/imgui/premake5.lua"
+include "Shard/vendor/box2d/premake5.lua"
 
 project "Shard"
     location "Shard"
@@ -78,7 +80,8 @@ project "Shard"
 		"%{IncludeDir.STB_IMAGE}",
 		"%{IncludeDir.STB_TRUETYPE}",
 		"%{IncludeDir.IMGUI}",
-		"%{IncludeDir.ENTT}"
+		"%{IncludeDir.ENTT}",
+		"%{IncludeDir.BOX2D}"
     }
 
     libdirs
@@ -91,7 +94,8 @@ project "Shard"
         "GLFW",
         "%{LibFile.GLEW}",
         "%{LibFile.OPENGL}",
-		"ImGui"
+		"ImGui",
+		"box2d"
     }
 
     filter "system:windows"
@@ -144,7 +148,8 @@ project "Game"
 		"%{IncludeDir.GLM}",
 		"%{IncludeDir.GLEW}",
 		"%{IncludeDir.IMGUI}",
-		"%{IncludeDir.ENTT}"
+		"%{IncludeDir.ENTT}",
+		"%{IncludeDir.BOX2D}"
     }
 
     libdirs
@@ -159,7 +164,8 @@ project "Game"
 		"GLFW",
 		"%{LibFile.GLEW}",
 		"%{LibFile.OPENGL}",
-		"ImGui"
+		"ImGui",
+		"Box2D"
 	}
 
 	filter "system:windows"

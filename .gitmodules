@@ -7,3 +7,6 @@
 [submodule "Shard/vendor/imgui"]
 	path = Shard/vendor/imgui
 	url = https://github.com/asu4net/imgui.git
+[submodule "Shard/vendor/box2d"]
+	path = Shard/vendor/box2d
+	url = https://github.com/asu4net/box2d.git
