@@ -63,24 +63,25 @@ namespace Shard::Ecs
 
     void CollisionSystem::DrawCircleGizmos(Color& color, Camera& mainCamera, Transform& transform, CircleCollider& circleCollider)
     {
-        MvpData mvp{ transform.Model(), mainCamera.View(), mainCamera.Projection() };
+        glm::mat4 gizmosTransform = glm::mat4(1.f);
 
         float size = circleCollider.radius * 2;
-        glm::mat4 t = glm::translate(transform.Model(), (transform.m_worldPosition + circleCollider.center).ToGlm());
-        glm::mat4 s = glm::scale(transform.Model(), { size, size, 1.f });
-        mvp.model = t * s;
+        gizmosTransform = glm::translate(gizmosTransform, (transform.m_worldPosition + circleCollider.center).ToGlm());
+        gizmosTransform *= glm::toMat4(transform.m_worldRotation);
+        gizmosTransform = glm::scale(gizmosTransform, { size, size, 1.f });
 
+        MvpData mvp{ gizmosTransform, mainCamera.View(), mainCamera.Projection() };
         Renderer::DrawCircle(mvp, color, circleCollidersThickness, circleCollidersFade);
     }
 
     void CollisionSystem::DrawBox2DGizmos(Color& color, Camera& mainCamera, Transform& transform, BoxCollider2D& boxCollider2D)
     {
-        MvpData mvp{ transform.Model(), mainCamera.View(), mainCamera.Projection() };
+        glm::mat4 gizmosTransform = glm::mat4(1.f);
+        gizmosTransform = glm::translate(gizmosTransform, (transform.m_worldPosition + boxCollider2D.center).ToGlm());
+        gizmosTransform *= glm::toMat4(transform.m_worldRotation);
+        gizmosTransform = glm::scale(gizmosTransform, { boxCollider2D.size.x, boxCollider2D.size.y, 1.f });
 
-        glm::mat4 t = glm::translate(transform.Model(), (transform.m_worldPosition + boxCollider2D.center).ToGlm());
-        glm::mat4 s = glm::scale(transform.Model(), { boxCollider2D.size.x, boxCollider2D.size.y, 1.f });
-        mvp.model = t * s;
-        
+        MvpData mvp{ gizmosTransform, mainCamera.View(), mainCamera.Projection() };
         Renderer::DrawLines(Renderer::GetDefaultLineBox2D(), mvp, color);
     }
 
