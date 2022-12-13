@@ -6,20 +6,30 @@
 namespace Shard::Ecs
 {
     using namespace Rendering;
-    
-    void TextSystem::RenderTexts(entt::registry& registry)
-    {
-        const auto view = registry.view<TextRenderer, Transform>();
-        const Camera& mainCamera = registry.get<Camera>(CameraSystem::MainCameraEntityHandler());
         
+    void TextSystem::OnSceneUpdate()
+    {
+        const auto view = Registry().view<TextRenderer, Transform>();
+
         for (const entt::entity entity : view)
         {
             const auto& [text, transform] = view.get<TextRenderer, Transform>(entity);
             if (!text.enabled) return;
-            RenderText(text, transform, mainCamera);
+            RenderText(text, transform, GetCamera());
         }
     }
-    
+
+    void TextSystem::OnComponentAdded(EntityArgs args)
+    {
+        Entity entity = GetEntityByHandler(args.entityHandler);
+
+        if (entity.Has<TextRenderer>())
+        {
+            TextRenderer& textRenderer = entity.Get<TextRenderer>();
+            TextSystem::SetText(textRenderer, textRenderer.Text());
+        }
+    }
+
     void TextSystem::SetText(TextRenderer& textRenderer, const std::string& newText)
     {
         textRenderer.m_charMeshes.clear();

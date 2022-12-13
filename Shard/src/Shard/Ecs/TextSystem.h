@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "entt.hpp"
+#include "System.h"
 
 namespace Shard::Ecs
 {
@@ -7,11 +7,10 @@ namespace Shard::Ecs
     struct Transform;
     struct Camera;
     
-    class TextSystem
+    class TextSystem : public System
     {
-    public:
-        TextSystem() = default;
-        void RenderTexts(entt::registry& registry);
+        void OnSceneUpdate() override;
+        void OnComponentAdded(EntityArgs args) override;
         
         static void SetText(TextRenderer& textRenderer, const std::string& newText);
         

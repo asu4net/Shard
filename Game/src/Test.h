@@ -7,6 +7,8 @@ class Game final : public Application
 
     void OnRenderReady(RenderReadyArgs args) override
     {
+        window.SetTitle("Test - Alejandro :D");
+
         entity = scene.CreateEntity();
         auto& collider = entity.Add<BoxCollider2D>();
         collider.center = { 0, 1 };
