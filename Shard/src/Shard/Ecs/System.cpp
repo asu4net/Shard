@@ -2,11 +2,13 @@
 #include "System.h"
 #include "Scene.h"
 #include "Entity.h"
+#include "Components.h"
 
 namespace Shard::Ecs
 {
-    System::System(Scene* scene)
+    void System::Initialize(Scene* scene)
     {
+        m_scene = scene;
         if (!m_scene) assert(false);
 
         scene->OnEntityCreated.ADD_LISTENER(System, OnEntityCreated);
@@ -21,10 +23,15 @@ namespace Shard::Ecs
         return m_scene->m_registry;
     }
 
-    Entity System::Camera()
+    Entity System::GetCameraEntity()
     {
         if (!m_scene) assert(false);
         return m_scene->GetMainCameraEntity();
+    }
+
+    Camera& System::GetCamera()
+    {
+        return GetCameraEntity().Get<Camera>();
     }
 
     void System::OnEntityCreated(EntityArgs args)

@@ -2,6 +2,7 @@
 #include "Scene.h"
 #include "Entity.h"
 #include "Ecs/Components.h"
+#include "Ecs/System.h"
 
 namespace Shard::Ecs
 {
@@ -12,6 +13,19 @@ namespace Shard::Ecs
         window.OnRenderReady.ADD_LISTENER(Scene, OnRenderReady);
         window.OnRenderFrame.ADD_LISTENER(Scene, OnRenderFrame);
         OnComponentAdded.ADD_LISTENER(Scene, OnComponentAddedListener);
+
+        AddSystem<CollisionSystem>();
+    }
+
+    Scene::~Scene()
+    {
+        for (System* system : m_systems)
+        {
+            delete system;
+            system = nullptr;
+        }
+
+        m_systems.clear();
     }
     
     Entity Scene::CreateEntity(const std::string& name, const std::string& tag)
@@ -47,7 +61,9 @@ namespace Shard::Ecs
     void Scene::OnRenderReady(Rendering::RenderReadyArgs args)
     {
         const Entity mainCamera = CreateEntity("Main Camera");
-        mainCamera.Add<Camera>();
+        mainCamera.Add<Camera>();       
+
+        for (System* system : m_systems) system->OnEngineStart();
     }
 
     void Scene::OnRenderFrame(Rendering::RenderFrameArgs args)
@@ -58,8 +74,9 @@ namespace Shard::Ecs
         m_basicShapesSystem.DrawBasicShapes(m_registry);
         m_textSystem.RenderTexts(m_registry);
         m_spriteAnimationSystem.HandleSpriteAnimations(m_registry);
-        m_collisionSystem.CheckCollisions(m_registry);
         m_physics2DSystem.HandlePhysics(m_registry);
+
+        for (System* system : m_systems) system->OnEngineUpdate();
     }
 
     void Scene::OnComponentAddedListener(EntityArgs args)

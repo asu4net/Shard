@@ -12,16 +12,15 @@ namespace Shard::Ecs
     const Color CollisionSystem::defaultColor = Color::LightGreen;
     const Color CollisionSystem::collidingColor = Color::LightRed;
 
-    void CollisionSystem::CheckCollisions(entt::registry& registry)
+    void CollisionSystem::OnEngineUpdate()
     {
-        CheckCircleCircleCollisions(registry);
-        CheckRectangleRectangleCollisions(registry);
+        CheckCircleCircleCollisions();
+        CheckRectangleRectangleCollisions();
     }
 
-    void CollisionSystem::CheckCircleCircleCollisions(entt::registry& registry)
+    void CollisionSystem::CheckCircleCircleCollisions()
     {
-        const auto view = registry.view<Transform, CircleCollider>();
-        Camera& mainCamera = registry.get<Camera>(CameraSystem::MainCameraEntityHandler());
+        const auto view = Registry().view<Transform, CircleCollider>();
 
         for (entt::entity entity : view)
         {
@@ -44,24 +43,23 @@ namespace Shard::Ecs
                 }
             }
 
-            DrawCircleGizmos(finalColor, mainCamera, transform, circleCollider);
+            DrawCircleGizmos(finalColor, transform, circleCollider);
         }
     }
 
-    void CollisionSystem::CheckRectangleRectangleCollisions(entt::registry& registry)
+    void CollisionSystem::CheckRectangleRectangleCollisions()
     {
-        const auto view = registry.view<Transform, BoxCollider2D>();
-        Camera& mainCamera = registry.get<Camera>(CameraSystem::MainCameraEntityHandler());
+        const auto view = Registry().view<Transform, BoxCollider2D>();
 
         for (entt::entity entity : view)
         {
             auto& [transform, boxCollider2D] = view.get<Transform, BoxCollider2D>(entity);
             Color color = defaultColor;
-            DrawBox2DGizmos(color, mainCamera, transform, boxCollider2D);
+            DrawBox2DGizmos(color, transform, boxCollider2D);
         }      
     }
 
-    void CollisionSystem::DrawCircleGizmos(Color& color, Camera& mainCamera, Transform& transform, CircleCollider& circleCollider)
+    void CollisionSystem::DrawCircleGizmos(Color& color, Transform& transform, CircleCollider& circleCollider)
     {
         glm::mat4 gizmosTransform = glm::mat4(1.f);
 
@@ -70,18 +68,18 @@ namespace Shard::Ecs
         gizmosTransform *= glm::toMat4(transform.m_worldRotation);
         gizmosTransform = glm::scale(gizmosTransform, { size, size, 1.f });
 
-        MvpData mvp{ gizmosTransform, mainCamera.View(), mainCamera.Projection() };
+        MvpData mvp{ gizmosTransform, GetCamera().View(), GetCamera().Projection() };
         Renderer::DrawCircle(mvp, color, circleCollidersThickness, circleCollidersFade);
     }
 
-    void CollisionSystem::DrawBox2DGizmos(Color& color, Camera& mainCamera, Transform& transform, BoxCollider2D& boxCollider2D)
+    void CollisionSystem::DrawBox2DGizmos(Color& color, Transform& transform, BoxCollider2D& boxCollider2D)
     {
         glm::mat4 gizmosTransform = glm::mat4(1.f);
         gizmosTransform = glm::translate(gizmosTransform, (transform.m_worldPosition + boxCollider2D.center).ToGlm());
         gizmosTransform *= glm::toMat4(transform.m_worldRotation);
         gizmosTransform = glm::scale(gizmosTransform, { boxCollider2D.size.x, boxCollider2D.size.y, 1.f });
 
-        MvpData mvp{ gizmosTransform, mainCamera.View(), mainCamera.Projection() };
+        MvpData mvp{ gizmosTransform, GetCamera().View(), GetCamera().Projection() };
         Renderer::DrawLines(Renderer::GetDefaultLineBox2D(), mvp, color);
     }
 

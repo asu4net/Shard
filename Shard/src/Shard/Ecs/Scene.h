@@ -13,6 +13,7 @@
 namespace Shard::Ecs
 {
     class Entity;
+    class System;
 
     struct EntityArgs { entt::entity entityHandler; };
     
@@ -26,6 +27,8 @@ namespace Shard::Ecs
         
         Scene() = default;
         Scene(Rendering::Window& window);
+        ~Scene();
+
         Entity CreateEntity(const std::string& name = "Entity", const std::string& tag = "Default");
         void DestroyEntity(const Entity& entity);
         Entity GetEntityByHandler(const entt::entity handler);
@@ -41,6 +44,16 @@ namespace Shard::Ecs
         SimpleSpriteAnimationSystem m_spriteAnimationSystem;
         CollisionSystem m_collisionSystem;
         Physics2DSystem m_physics2DSystem;
+
+        std::vector<System*> m_systems;
+
+        template<class T>
+        void AddSystem()
+        {
+            T* system = new T();
+            system->Initialize(this);
+            m_systems.push_back(system);
+        }
         
         void OnRenderReady(Rendering::RenderReadyArgs args);
         void OnRenderFrame(Rendering::RenderFrameArgs args);

@@ -1,7 +1,5 @@
 #pragma once
-#include "entt.hpp"
-
-class Scene;
+#include "System.h"
 
 namespace Shard::Ecs
 {
@@ -10,19 +8,19 @@ namespace Shard::Ecs
     struct CircleCollider;
     struct BoxCollider2D;
 
-    class CollisionSystem
+    class CollisionSystem : public System
     {
         static const float circleCollidersThickness;
         static const float circleCollidersFade;
         static const Math::Color collidingColor;
         static const Math::Color defaultColor;
 
-        CollisionSystem() = default;
-        void CheckCollisions(entt::registry& registry);
-        void CheckCircleCircleCollisions(entt::registry& registry);
-        void CheckRectangleRectangleCollisions(entt::registry& registry);
-        void DrawCircleGizmos(Math::Color& color, Camera& mainCamera, Transform& transform, CircleCollider& circleCollider);
-        void DrawBox2DGizmos(Math::Color& color, Camera& mainCamera, Transform& transform, BoxCollider2D& boxCollider2D);
+        void OnEngineUpdate() override;
+
+        void CheckCircleCircleCollisions();
+        void CheckRectangleRectangleCollisions();
+        void DrawCircleGizmos(Math::Color& color, Transform& transform, CircleCollider& circleCollider);
+        void DrawBox2DGizmos(Math::Color& color, Transform& transform, BoxCollider2D& boxCollider2D);
         friend class Scene;
     };
 }

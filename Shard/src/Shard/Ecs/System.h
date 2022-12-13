@@ -6,18 +6,21 @@ namespace Shard::Ecs
     class Scene;
     class Entity;
     struct EntityArgs;
+    struct Camera;
 
     class System
     {
     public:
-        System(Scene* scene);
+        System() = default;
+        void Initialize(Scene* scene);
 
     private:
         Scene* m_scene = nullptr;
 
     protected:
         entt::registry& Registry();
-        Entity Camera();
+        Entity GetCameraEntity();
+        Camera& GetCamera();
 
         virtual void OnEngineStart() {};
         virtual void OnEngineUpdate() {};
