@@ -3,6 +3,7 @@
 #include "Entity.h"
 #include "Ecs/Components.h"
 #include "Ecs/System.h"
+#include "CollisionSystem.h"
 
 namespace Shard::Ecs
 {
