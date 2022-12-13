@@ -3,7 +3,6 @@
 #include "entt.hpp"
 #include "TransformSystem.h"
 #include "BasicShapesSystem.h"
-#include "SimpleSpriteAnimationSystem.h"
 #include "SpriteSystem.h"
 #include "Rendering/Window.h"
 
@@ -37,7 +36,6 @@ namespace Shard::Ecs
         TransformSystem m_transformSystem;
         BasicShapesSystem m_basicShapesSystem;
         SpriteSystem m_spriteSystem;
-        SimpleSpriteAnimationSystem m_spriteAnimationSystem;
 
         std::vector<System*> m_systems;
 

@@ -1,12 +1,11 @@
 ﻿#pragma once
-#include "entt.hpp"
+#include "System.h"
 
 namespace Shard::Ecs
 {
-    class SimpleSpriteAnimationSystem
+    class SimpleSpriteAnimationSystem : public System
     {
     public:
-        SimpleSpriteAnimationSystem() = default;
-        void HandleSpriteAnimations(entt::registry& registry);
+        void OnSceneUpdate() override;
     };
 }
