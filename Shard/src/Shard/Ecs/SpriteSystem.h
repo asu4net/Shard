@@ -1,16 +1,11 @@
 ﻿#pragma once
-#include "entt.hpp"
+#include "System.h"
 
 namespace Shard::Ecs
 {
-    class SpriteSystem
+    class SpriteSystem : public System
     {
-    public:
-        SpriteSystem() = default;
-        
     private:
-        void DrawSprites(entt::registry& registry);
-
-        friend class Scene;
+        void OnSceneUpdate() override;
     };
 }

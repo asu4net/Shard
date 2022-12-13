@@ -4,22 +4,20 @@
 
 namespace Shard::Ecs
 {
-    void SpriteSystem::DrawSprites(entt::registry& registry)
+    void SpriteSystem::OnSceneUpdate()
     {
-        const auto view = registry.view<SpriteRenderer, Transform>();
+        const auto view = Registry().view<SpriteRenderer, Transform>();
 
-        const Camera& mainCamera = registry.get<Camera>(CameraSystem::MainCameraEntityHandler());
+        Registry().sort<SpriteRenderer>([](const SpriteRenderer& a, const SpriteRenderer& b)
+            {
+                return a.orderInLayer > b.orderInLayer;
+            });
 
-        registry.sort<SpriteRenderer>([](const SpriteRenderer& a, const SpriteRenderer& b)
-        {
-            return a.orderInLayer > b.orderInLayer;
-        });
-        
         for (const entt::entity entity : view)
         {
             const auto& [spriteRenderer, transform] = view.get<SpriteRenderer, Transform>(entity);
             if (!spriteRenderer.enabled) return;
-            Math::MvpData mvp{transform.Model(), mainCamera.View(), mainCamera.Projection()};
+            Math::MvpData mvp{ transform.Model(), GetCamera().View(), GetCamera().Projection()};
             spriteRenderer.sprite->Draw(mvp, spriteRenderer.color);
         }
     }
