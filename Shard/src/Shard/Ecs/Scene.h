@@ -2,7 +2,6 @@
 #include "CameraSystem.h"
 #include "entt.hpp"
 #include "TransformSystem.h"
-#include "BasicShapesSystem.h"
 #include "SpriteSystem.h"
 #include "Rendering/Window.h"
 
@@ -34,7 +33,6 @@ namespace Shard::Ecs
         entt::registry m_registry;
         CameraSystem m_cameraSystem;
         TransformSystem m_transformSystem;
-        BasicShapesSystem m_basicShapesSystem;
         SpriteSystem m_spriteSystem;
 
         std::vector<System*> m_systems;

@@ -7,6 +7,7 @@
 #include "Ecs/Physics2DSystem.h"
 #include "TextSystem.h"
 #include "SimpleSpriteAnimationSystem.h"
+#include "BasicShapesSystem.h"
 
 namespace Shard::Ecs
 {
@@ -17,6 +18,7 @@ namespace Shard::Ecs
         window.OnRenderReady.ADD_LISTENER(Scene, OnRenderReady);
         window.OnRenderFrame.ADD_LISTENER(Scene, OnRenderFrame);
 
+        AddSystem<BasicShapesSystem>();
         AddSystem<SimpleSpriteAnimationSystem>();
         AddSystem<CollisionSystem>();
         AddSystem<Physics2DSystem>();
@@ -78,7 +80,6 @@ namespace Shard::Ecs
         m_transformSystem.CalculateTransforms(m_registry);
         m_cameraSystem.CalculateCameraMatrices(m_registry, args.window->Aspect());
         m_spriteSystem.DrawSprites(m_registry);
-        m_basicShapesSystem.DrawBasicShapes(m_registry);
 
         for (System* system : m_systems) system->OnSceneUpdate();
     }

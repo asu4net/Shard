@@ -1,16 +1,13 @@
 ﻿#pragma once
-#include "entt.hpp"
+#include "System.h"
 
 namespace Shard::Ecs
 {
     class Scene;
-    class BasicShapesSystem
+
+    class BasicShapesSystem : public System
     {
-    public:
-        BasicShapesSystem() = default;
-        
     private:
-        void DrawBasicShapes(entt::registry& registry);
-        friend class Scene;
+        void OnSceneUpdate() override;
     };
 }
