@@ -1,6 +1,5 @@
 ﻿#pragma once
 #include "entt.hpp"
-#include "TransformSystem.h"
 #include "Rendering/Window.h"
 
 namespace Shard::Rendering { class Window; }
@@ -31,9 +30,7 @@ namespace Shard::Ecs
         
     private:
         entt::registry m_registry;
-        TransformSystem m_transformSystem;
         Rendering::Window* m_window = nullptr;
-
         std::vector<System*> m_systems;
 
         template<class T>

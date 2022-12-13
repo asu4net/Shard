@@ -4,6 +4,7 @@
 #include "box2d/b2_body.h"
 #include "box2d/b2_fixture.h"
 #include "Components.h"
+#include "TransformSystem.h"
 
 using namespace Shard::Math;
 

@@ -5,10 +5,10 @@
 
 namespace Shard::Ecs
 {
-    void TransformSystem::CalculateTransforms(entt::registry& registry)
+    void TransformSystem::OnSceneUpdate()
     {
-        const auto view = registry.view<Transform>();
-        
+        const auto view = Registry().view<Transform>();
+
         for (const entt::entity entity : view)
         {
             Transform& t = view.get<Transform>(entity);

@@ -1,15 +1,16 @@
 ﻿#include "shpch.h"
 #include "Scene.h"
 #include "Entity.h"
-#include "Ecs/Components.h"
-#include "Ecs/System.h"
+#include "Components.h"
+#include "System.h"
+#include "Physics2DSystem.h"
 #include "CollisionSystem.h"
-#include "Ecs/Physics2DSystem.h"
 #include "TextSystem.h"
 #include "SimpleSpriteAnimationSystem.h"
 #include "BasicShapesSystem.h"
 #include "SpriteSystem.h"
 #include "CameraSystem.h"
+#include "TransformSystem.h"
 
 namespace Shard::Ecs
 {
@@ -21,6 +22,7 @@ namespace Shard::Ecs
         window->OnRenderReady.ADD_LISTENER(Scene, OnRenderReady);
         window->OnRenderFrame.ADD_LISTENER(Scene, OnRenderFrame);
 
+        AddSystem<TransformSystem>();
         AddSystem<CameraSystem>();
         AddSystem<SpriteSystem>();
         AddSystem<BasicShapesSystem>();
@@ -82,8 +84,6 @@ namespace Shard::Ecs
 
     void Scene::OnRenderFrame(Rendering::RenderFrameArgs args)
     {
-        m_transformSystem.CalculateTransforms(m_registry);
-
         for (System* system : m_systems) system->OnSceneUpdate();
     }
 }

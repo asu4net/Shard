@@ -19,6 +19,15 @@
 #include "Shard/Ecs/Entity.h"
 #include "Shard/Ecs/Scene.h"
 
+#include "Shard/Ecs/Physics2DSystem.h"
+#include "Shard/Ecs/CollisionSystem.h"
+#include "Shard/Ecs/TextSystem.h"
+#include "Shard/Ecs/SimpleSpriteAnimationSystem.h"
+#include "Shard/Ecs/BasicShapesSystem.h"
+#include "Shard/Ecs/SpriteSystem.h"
+#include "Shard/Ecs/CameraSystem.h"
+#include "Shard/Ecs/TransformSystem.h"
+
 // ReSharper disable CppClangTidyClangDiagnosticHeaderHygiene
 #ifdef USE_SHARD_NAMESPACES
 using namespace Shard;

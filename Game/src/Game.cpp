@@ -12,11 +12,11 @@
 //#define PRACTICE_03
 //#include "Practice03.h"
 
-#define PRACTICE_04
-#include "Practice04.h"
+//#define PRACTICE_04
+//#include "Practice04.h"
 
 //#define PRACTICE_05
 //#include "Practice05.h"
 
-//#define TEST
-//#include "Test.h"
+#define TEST
+#include "Test.h"

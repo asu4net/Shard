@@ -3,25 +3,25 @@
 
 class Game final : public Application
 {
-    Entity entity;
-
     void OnRenderReady(RenderReadyArgs args) override
     {
         window.SetTitle("Test - Alejandro :D");
 
-        entity = scene.CreateEntity();
-        auto& collider = entity.Add<BoxCollider2D>();
-        collider.center = { 0, 1 };
-        collider.size = { 3, 1 };
+        Entity entityA = scene.CreateEntity();
+        {
+            auto& collider = entityA.Add<BoxCollider2D>();
+            entityA.Add<Physicbody2D>();
+        }
 
-        entity.Add<Physicbody2D>();
-    }
-
-    void OnRenderFrame(RenderFrameArgs args) override
-    {
-        auto& camera = scene.GetMainCameraEntity().Get<Camera>();
-        /*entity.Get<Transform>().position =
-            window.ScreenToWorldPoint(Input::GetMousePosition(), camera.Projection(), camera.View());*/
+        Entity entityB = scene.CreateEntity();
+        {
+            entityB.Get<Transform>().position += Vector3::down * 4.f;
+            
+            auto& collider = entityB.Add<BoxCollider2D>();
+            auto& pb = entityB.Add<Physicbody2D>();
+            collider.center = { 0, 1 };
+            collider.size = { 3, 1 };
+        }
     }
 };
 
