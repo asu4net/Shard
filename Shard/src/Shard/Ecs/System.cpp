@@ -40,6 +40,11 @@ namespace Shard::Ecs
         return m_scene->GetEntityByHandler(entityHandler);
     }
 
+    float System::GetWindowAspect() const
+    {
+        return m_scene->m_window->Aspect();
+    }
+
     void System::OnEntityCreated(EntityArgs args)
     {
     }

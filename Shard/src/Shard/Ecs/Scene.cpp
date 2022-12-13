@@ -9,16 +9,19 @@
 #include "SimpleSpriteAnimationSystem.h"
 #include "BasicShapesSystem.h"
 #include "SpriteSystem.h"
+#include "CameraSystem.h"
 
 namespace Shard::Ecs
 {
     std::map<entt::entity, Entity> Entity::m_entities;
     
-    Scene::Scene(Rendering::Window& window)
+    Scene::Scene(Rendering::Window* window)
+        : m_window(window)
     {
-        window.OnRenderReady.ADD_LISTENER(Scene, OnRenderReady);
-        window.OnRenderFrame.ADD_LISTENER(Scene, OnRenderFrame);
+        window->OnRenderReady.ADD_LISTENER(Scene, OnRenderReady);
+        window->OnRenderFrame.ADD_LISTENER(Scene, OnRenderFrame);
 
+        AddSystem<CameraSystem>();
         AddSystem<SpriteSystem>();
         AddSystem<BasicShapesSystem>();
         AddSystem<SimpleSpriteAnimationSystem>();
@@ -80,7 +83,6 @@ namespace Shard::Ecs
     void Scene::OnRenderFrame(Rendering::RenderFrameArgs args)
     {
         m_transformSystem.CalculateTransforms(m_registry);
-        m_cameraSystem.CalculateCameraMatrices(m_registry, args.window->Aspect());
 
         for (System* system : m_systems) system->OnSceneUpdate();
     }

@@ -12,23 +12,23 @@ namespace Shard::Ecs
         return m_mainCamera;
     }
     
-    void CameraSystem::CalculateCameraMatrices(entt::registry& registry, const float windowAspectRatio)
+    void CameraSystem::OnSceneUpdate()
     {
-        const auto view = registry.view<Camera, Transform>();
-        
-        for(const entt::entity entity : view)
+        const auto view = Registry().view<Camera, Transform>();
+
+        for (const entt::entity entity : view)
         {
             const auto& [camera, camTransform] = view.get<Camera, Transform>(entity);
-            HandleCamera(camera, camTransform, windowAspectRatio);
-            
-            if (camera.priority < m_minPriority || m_mainCamera == entt::entity{0})
+            HandleCamera(camera, camTransform, GetWindowAspect());
+
+            if (camera.priority < m_minPriority || m_mainCamera == entt::entity{ 0 })
             {
                 m_mainCamera = entity;
                 m_minPriority = camera.priority;
             }
         }
     }
-    
+
     void CameraSystem::HandleCamera(Camera& camera, const Transform& camTransform, const float windowAspectRatio)
     {
         //View calculation

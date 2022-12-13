@@ -22,6 +22,7 @@ namespace Shard::Ecs
         Entity GetCameraEntity();
         Camera& GetCamera();
         Entity GetEntityByHandler(entt::entity entityHandler);
+        float GetWindowAspect() const;
 
         virtual void OnSceneStart() {};
         virtual void OnSceneUpdate() {};

@@ -4,7 +4,7 @@
 namespace Shard
 {
 	Application::Application()
-		:scene(window)
+		:scene(&window)
 	{
 		//Applications listens window
 		window.OnRenderReady.ADD_LISTENER(Application, OnRenderReady);

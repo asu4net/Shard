@@ -1,8 +1,9 @@
 ﻿#pragma once
-#include "CameraSystem.h"
 #include "entt.hpp"
 #include "TransformSystem.h"
 #include "Rendering/Window.h"
+
+namespace Shard::Rendering { class Window; }
 
 namespace Shard::Ecs
 {
@@ -20,7 +21,7 @@ namespace Shard::Ecs
         Event<EntityArgs> OnComponentRemoved;
         
         Scene() = default;
-        Scene(Rendering::Window& window);
+        Scene(Rendering::Window* window);
         ~Scene();
 
         Entity CreateEntity(const std::string& name = "Entity", const std::string& tag = "Default");
@@ -30,8 +31,8 @@ namespace Shard::Ecs
         
     private:
         entt::registry m_registry;
-        CameraSystem m_cameraSystem;
         TransformSystem m_transformSystem;
+        Rendering::Window* m_window = nullptr;
 
         std::vector<System*> m_systems;
 

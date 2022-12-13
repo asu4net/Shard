@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "entt.hpp"
+#include "System.h"
 
 namespace Shard::Ecs
 {
@@ -7,19 +7,16 @@ namespace Shard::Ecs
     struct Camera;
     class Scene;
     
-    class CameraSystem
+    class CameraSystem : public System
     {
     public:
-        CameraSystem() = default;
         static entt::entity MainCameraEntityHandler();
         
     private:
         static entt::entity m_mainCamera;
         int m_minPriority = 0;
         
-        void CalculateCameraMatrices(entt::registry& registry, float windowAspectRatio);
+        void OnSceneUpdate() override;
         void HandleCamera(Camera& camera, const Transform& camTransform, const float windowAspectRatio);
-
-        friend class Scene;
     };
 }
