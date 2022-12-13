@@ -59,6 +59,7 @@ namespace Shard::Ecs
         m_textSystem.RenderTexts(m_registry);
         m_spriteAnimationSystem.HandleSpriteAnimations(m_registry);
         m_collisionSystem.CheckCollisions(m_registry);
+        m_physics2DSystem.HandlePhysics(m_registry);
     }
 
     void Scene::OnComponentAddedListener(EntityArgs args)
@@ -67,7 +68,11 @@ namespace Shard::Ecs
         {
             TextRenderer& textRenderer = m_registry.get<TextRenderer>(args.entityHandler);
             TextSystem::SetText(textRenderer, textRenderer.Text());
-            return;
+        }
+
+        if (m_registry.try_get<Physicbody2D>(args.entityHandler))
+        {
+            m_physics2DSystem.Physicbody2DAdded(GetEntityByHandler(args.entityHandler));
         }
     }
 }

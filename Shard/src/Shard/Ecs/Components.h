@@ -2,6 +2,8 @@
 #include "Entity.h"
 #include "Rendering/Font.h"
 #include "Rendering/Sprite.h"
+#include "box2d/b2_polygon_shape.h"
+#include "box2d/b2_body.h"
 
 namespace Shard::Ecs
 {
@@ -37,6 +39,7 @@ namespace Shard::Ecs
         
         friend class TransformSystem;
         friend class CollisionSystem;
+        friend class Physics2DSystem;
     };
 
     struct Camera
@@ -158,10 +161,31 @@ namespace Shard::Ecs
     {
         Math::Vector2 size{1, 1};
         Math::Vector2 center;
+        
+        float density = 1.0f;
+        float friction = 0.5f;
+        float bounciness = 0.0f;
+        float bouncinessThreshold = 0.5f; //velocity to stop calculating bouncing 
 
         BoxCollider2D() = default;
         BoxCollider2D(Math::Vector2 size, Math::Vector2 center = Math::Vector3::zero)
             : size(size), center(center)
         {}
+
+    private:
+        b2PolygonShape* m_shape;
+    };
+
+    struct Physicbody2D
+    {
+        enum class BodyType { Static, Kinematic, Dynamic };
+        BodyType bodyType = BodyType::Dynamic;
+
+        Physicbody2D() = default;
+
+    private:
+        b2Body* m_body;
+
+        friend class Physics2DSystem;
     };
 }

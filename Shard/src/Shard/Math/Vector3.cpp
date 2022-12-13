@@ -1,5 +1,6 @@
 #include "shpch.h"
 #include "Vector3.h"
+#include "box2d/b2_math.h"
 
 namespace Shard::Math
 {
@@ -28,6 +29,12 @@ namespace Shard::Math
         : x(_other.x)
         , y(_other.y)
         , z(_other.z)
+    {}
+
+    Vector3::Vector3(const b2Vec2& other, float z)
+        : x(other.x)
+        , y(other.y)
+        , z(z)
     {}
 
     Vector3::Vector3(const Vector2& _other, float _z)
@@ -103,6 +110,11 @@ namespace Shard::Math
     glm::vec3 Vector3::ToGlm() const
     {
         return glm::vec3(x, y, z);
+    }
+
+    b2Vec2 Vector3::ToBox2D() const
+    {
+        return b2Vec2(x, y);
     }
 
     float Vector3::Dot(const Vector3& _a, const Vector3& _b)

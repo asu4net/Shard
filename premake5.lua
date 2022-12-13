@@ -165,7 +165,7 @@ project "Game"
 		"%{LibFile.GLEW}",
 		"%{LibFile.OPENGL}",
 		"ImGui",
-		"Box2D"
+		"box2d"
 	}
 
 	filter "system:windows"

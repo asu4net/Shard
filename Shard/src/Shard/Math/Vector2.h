@@ -1,9 +1,10 @@
 #pragma once
 
+struct b2Vec2;
+
 namespace Shard::Math
 {
     struct Vector3;
-
     struct Vector2
     {
         float x, y;
@@ -29,6 +30,7 @@ namespace Shard::Math
         Vector2 Normalized() const;
         void Normalize();
         glm::vec2 ToGlm() const;
+        b2Vec2 ToBox2D() const;
 
         static Vector2 RotateAround(const Vector2& _Center, const Vector2& _Point, float _Angle);
         static float Dot(const Vector2& _a, const Vector2& _b);

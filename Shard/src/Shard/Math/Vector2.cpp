@@ -1,5 +1,6 @@
 #include "shpch.h"
 #include "Vector2.h"
+#include "box2d/b2_math.h"
 
 namespace Shard::Math
 {
@@ -79,6 +80,11 @@ namespace Shard::Math
     glm::vec2 Vector2::ToGlm() const
     {
         return glm::vec2(x, y);
+    }
+
+    b2Vec2 Vector2::ToBox2D() const
+    {
+        return b2Vec2(x, y);
     }
 
     float Vector2::Dot(const Vector2& _a, const Vector2& _b)

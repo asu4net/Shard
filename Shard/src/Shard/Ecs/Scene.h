@@ -8,6 +8,7 @@
 #include "TextSystem.h"
 #include "CollisionSystem.h"
 #include "Rendering/Window.h"
+#include "Ecs/Physics2DSystem.h"
 
 namespace Shard::Ecs
 {
@@ -39,6 +40,7 @@ namespace Shard::Ecs
         TextSystem m_textSystem;
         SimpleSpriteAnimationSystem m_spriteAnimationSystem;
         CollisionSystem m_collisionSystem;
+        Physics2DSystem m_physics2DSystem;
         
         void OnRenderReady(Rendering::RenderReadyArgs args);
         void OnRenderFrame(Rendering::RenderFrameArgs args);
