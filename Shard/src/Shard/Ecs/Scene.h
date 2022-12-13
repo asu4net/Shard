@@ -47,5 +47,6 @@ namespace Shard::Ecs
         void OnComponentAddedListener(EntityArgs args);
         
         friend class Entity;
+        friend class System;
     };
 }

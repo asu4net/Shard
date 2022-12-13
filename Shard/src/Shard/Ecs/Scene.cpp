@@ -64,15 +64,17 @@ namespace Shard::Ecs
 
     void Scene::OnComponentAddedListener(EntityArgs args)
     {
-        if (m_registry.try_get<TextRenderer>(args.entityHandler))
+        Entity entity = GetEntityByHandler(args.entityHandler);
+
+        if (entity.Has<TextRenderer>())
         {
-            TextRenderer& textRenderer = m_registry.get<TextRenderer>(args.entityHandler);
+            TextRenderer& textRenderer = entity.Get<TextRenderer>();
             TextSystem::SetText(textRenderer, textRenderer.Text());
         }
 
-        if (m_registry.try_get<Physicbody2D>(args.entityHandler))
+        if (entity.Has<Physicbody2D>())
         {
-            m_physics2DSystem.Physicbody2DAdded(GetEntityByHandler(args.entityHandler));
+            m_physics2DSystem.Physicbody2DAdded(entity);
         }
     }
 }

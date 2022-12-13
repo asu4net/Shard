@@ -19,6 +19,7 @@ namespace Shard::Ecs
     private:
         static Math::Vector2 m_gravity;
         static b2World* m_currentPhysicWorld;
+        static float m_timeStep;
         static int32 m_velocityIterations;
         static int32 m_positionIterations;
 

@@ -4,7 +4,6 @@
 #include "box2d/b2_body.h"
 #include "box2d/b2_fixture.h"
 #include "Components.h"
-#include "TimeData.h"
 
 using namespace Shard::Math;
 
@@ -12,6 +11,7 @@ namespace Shard::Ecs
 {
     Vector2 Physics2DSystem::m_gravity = { 0, -9.8f };
     b2World* Physics2DSystem::m_currentPhysicWorld = nullptr;
+    float Physics2DSystem::m_timeStep = 1.0f / 120.0f;
     int32 Physics2DSystem::m_velocityIterations = 6;
     int32 Physics2DSystem::m_positionIterations = 2;
 
@@ -35,7 +35,7 @@ namespace Shard::Ecs
 
     void Physics2DSystem::HandlePhysics(entt::registry& registry)
     {
-        m_physicWorld.Step(Time::DeltaTime(), m_velocityIterations, m_positionIterations);
+        m_physicWorld.Step(m_timeStep, m_velocityIterations, m_positionIterations);
 
         auto view = registry.view<Transform, Physicbody2D>();
 
