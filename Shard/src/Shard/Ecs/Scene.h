@@ -7,7 +7,6 @@
 #include "SpriteSystem.h"
 #include "TextSystem.h"
 #include "Rendering/Window.h"
-#include "Ecs/Physics2DSystem.h"
 
 namespace Shard::Ecs
 {
@@ -41,7 +40,6 @@ namespace Shard::Ecs
         SpriteSystem m_spriteSystem;
         TextSystem m_textSystem;
         SimpleSpriteAnimationSystem m_spriteAnimationSystem;
-        Physics2DSystem m_physics2DSystem;
 
         std::vector<System*> m_systems;
 

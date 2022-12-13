@@ -4,6 +4,7 @@
 #include "Ecs/Components.h"
 #include "Ecs/System.h"
 #include "CollisionSystem.h"
+#include "Ecs/Physics2DSystem.h"
 
 namespace Shard::Ecs
 {
@@ -16,12 +17,14 @@ namespace Shard::Ecs
         OnComponentAdded.ADD_LISTENER(Scene, OnComponentAddedListener);
 
         AddSystem<CollisionSystem>();
+        AddSystem<Physics2DSystem>();
     }
 
     Scene::~Scene()
     {
         for (System* system : m_systems)
         {
+            system->OnSceneFinish();
             delete system;
             system = nullptr;
         }
@@ -64,7 +67,7 @@ namespace Shard::Ecs
         const Entity mainCamera = CreateEntity("Main Camera");
         mainCamera.Add<Camera>();       
 
-        for (System* system : m_systems) system->OnEngineStart();
+        for (System* system : m_systems) system->OnSceneStart();
     }
 
     void Scene::OnRenderFrame(Rendering::RenderFrameArgs args)
@@ -75,9 +78,8 @@ namespace Shard::Ecs
         m_basicShapesSystem.DrawBasicShapes(m_registry);
         m_textSystem.RenderTexts(m_registry);
         m_spriteAnimationSystem.HandleSpriteAnimations(m_registry);
-        m_physics2DSystem.HandlePhysics(m_registry);
 
-        for (System* system : m_systems) system->OnEngineUpdate();
+        for (System* system : m_systems) system->OnSceneUpdate();
     }
 
     void Scene::OnComponentAddedListener(EntityArgs args)
@@ -88,11 +90,6 @@ namespace Shard::Ecs
         {
             TextRenderer& textRenderer = entity.Get<TextRenderer>();
             TextSystem::SetText(textRenderer, textRenderer.Text());
-        }
-
-        if (entity.Has<Physicbody2D>())
-        {
-            m_physics2DSystem.Physicbody2DAdded(entity);
         }
     }
 }

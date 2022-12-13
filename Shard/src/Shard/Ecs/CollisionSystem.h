@@ -15,7 +15,7 @@ namespace Shard::Ecs
         static const Math::Color collidingColor;
         static const Math::Color defaultColor;
 
-        void OnEngineUpdate() override;
+        void OnSceneUpdate() override;
 
         void CheckCircleCircleCollisions();
         void CheckRectangleRectangleCollisions();

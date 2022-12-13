@@ -34,6 +34,12 @@ namespace Shard::Ecs
         return GetCameraEntity().Get<Camera>();
     }
 
+    Entity System::GetEntityByHandler(entt::entity entityHandler)
+    {
+        if (!m_scene) assert(false);
+        return m_scene->GetEntityByHandler(entityHandler);
+    }
+
     void System::OnEntityCreated(EntityArgs args)
     {
     }

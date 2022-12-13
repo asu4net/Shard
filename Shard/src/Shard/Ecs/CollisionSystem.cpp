@@ -11,8 +11,8 @@ namespace Shard::Ecs
     const float CollisionSystem::circleCollidersFade = 0.005f;
     const Color CollisionSystem::defaultColor = Color::LightGreen;
     const Color CollisionSystem::collidingColor = Color::LightRed;
-
-    void CollisionSystem::OnEngineUpdate()
+    
+    void CollisionSystem::OnSceneUpdate()
     {
         CheckCircleCircleCollisions();
         CheckRectangleRectangleCollisions();

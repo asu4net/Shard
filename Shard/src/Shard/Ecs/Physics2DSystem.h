@@ -1,16 +1,16 @@
 #pragma once
 #include "entt.hpp"
 #include "box2d/b2_world.h"
+#include "System.h"
 
 namespace Shard::Ecs
 {
     struct Physicbody2D;
     class Entity;
 
-    class Physics2DSystem
+    class Physics2DSystem : public System
     {
     public:
-        Physics2DSystem();
         ~Physics2DSystem() { m_currentPhysicWorld = nullptr; }
 
         static const Math::Vector2 GetGravity() { return m_gravity; }
@@ -23,12 +23,11 @@ namespace Shard::Ecs
         static int32 m_velocityIterations;
         static int32 m_positionIterations;
 
-        b2World m_physicWorld;
+        b2World* m_physicWorld = nullptr;
         
-        void HandlePhysics(entt::registry& registry);
-        void Physicbody2DAdded(Entity physicEntity);
-
-        friend class Scene;
+        void OnSceneStart() override;
+        void OnSceneUpdate() override;
+        void OnComponentAdded(EntityArgs args) override;
     };
 }
 

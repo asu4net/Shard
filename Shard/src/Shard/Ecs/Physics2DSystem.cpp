@@ -27,17 +27,17 @@ namespace Shard::Ecs
         m_currentPhysicWorld->SetGravity(gravity.ToBox2D());
     }
 
-    Physics2DSystem::Physics2DSystem()
-        : m_physicWorld(m_gravity.ToBox2D())
+    void Physics2DSystem::OnSceneStart()
     {
-        m_currentPhysicWorld = &m_physicWorld;
+        m_currentPhysicWorld = m_physicWorld;
+        m_physicWorld = new b2World(m_gravity.ToBox2D());
     }
 
-    void Physics2DSystem::HandlePhysics(entt::registry& registry)
+    void Physics2DSystem::OnSceneUpdate()
     {
-        m_physicWorld.Step(m_timeStep, m_velocityIterations, m_positionIterations);
+        m_physicWorld->Step(m_timeStep, m_velocityIterations, m_positionIterations);
 
-        auto view = registry.view<Transform, Physicbody2D>();
+        auto view = Registry().view<Transform, Physicbody2D>();
 
         for (entt::entity entity : view)
         {
@@ -45,21 +45,24 @@ namespace Shard::Ecs
             transform.position = { physicBody.m_body->GetTransform().p, transform.position.z };
             TransformSystem::Rotate(transform, physicBody.m_body->GetAngle(), Vector3::forward);
         }
-
     }
 
-    void Physics2DSystem::Physicbody2DAdded(Entity physicEntity)
+    void Physics2DSystem::OnComponentAdded(EntityArgs args)
     {
-        auto& pb = physicEntity.Get<Physicbody2D>();
-        TRANSFORM_REF(physicEntity);
+        Entity entity = GetEntityByHandler(args.entityHandler);
+        if (!entity.Has<Physicbody2D>()) return;
+
+        auto& pb = entity.Get<Physicbody2D>();
+        TRANSFORM_REF(entity);
+
         b2BodyDef bodyDef;
         bodyDef.type = static_cast<b2BodyType>(pb.bodyType);
-        bodyDef.position = physicEntityTr.position.ToBox2D();
-        pb.m_body = m_physicWorld.CreateBody(&bodyDef);
+        bodyDef.position = entityTr.position.ToBox2D();
+        pb.m_body = m_physicWorld->CreateBody(&bodyDef);
 
         //TODO: move to box collider
         b2PolygonShape dynamicBox;
-        dynamicBox.SetAsBox(physicEntityTr.scale.x * 1.0f, physicEntityTr.scale.y * 1.0f);
+        dynamicBox.SetAsBox(entityTr.scale.x * 1.0f, entityTr.scale.y * 1.0f);
 
         b2FixtureDef fixtureDef;
         fixtureDef.shape = &dynamicBox;

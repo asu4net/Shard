@@ -21,11 +21,11 @@ namespace Shard::Ecs
         entt::registry& Registry();
         Entity GetCameraEntity();
         Camera& GetCamera();
+        Entity GetEntityByHandler(entt::entity entityHandler);
 
-        virtual void OnEngineStart() {};
-        virtual void OnEngineUpdate() {};
-        virtual void OnRuntimeStart() {};
-        virtual void OnRuntimeUpate() {};
+        virtual void OnSceneStart() {};
+        virtual void OnSceneUpdate() {};
+        virtual void OnSceneFinish() {};
 
         virtual void OnEntityCreated(EntityArgs args);
         virtual void OnEntityDestroyed(EntityArgs args);
