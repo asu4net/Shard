@@ -31,20 +31,20 @@ namespace Shard::Ecs
 
     void Physics2DSystem::OnSceneStart()
     {
-        m_currentPhysicWorld = m_physicWorld;
         m_physicWorld = new b2World(m_gravity.ToBox2D());
+        m_currentPhysicWorld = m_physicWorld;
     }
 
     void Physics2DSystem::OnSceneFixedUpdate()
     {
         m_physicWorld->Step(Time::FixedDeltaTime(), m_velocityIterations, m_positionIterations);
 
-        auto view = Registry().view<Transform, Physicbody2D>();
+        auto view = Registry().view<BoxCollider2D, Transform, Physicbody2D>();
 
         for (entt::entity entity : view)
         {
-            auto& [transform, physicBody] = view.get<Transform, Physicbody2D>(entity);
-            transform.position = { physicBody.m_body->GetTransform().p, transform.position.z };
+            auto& [c, transform, physicBody] = view.get<BoxCollider2D, Transform, Physicbody2D>(entity);
+            transform.position = { physicBody.m_body->GetTransform().p - c.center.ToBox2D(), transform.position.z};
             float rotationDegrees = glm::degrees(physicBody.m_body->GetAngle());
             transform.rotation = glm::angleAxis(physicBody.m_body->GetAngle(), glm::vec3(0, 0, 1));
         }
@@ -62,13 +62,13 @@ namespace Shard::Ecs
 
         b2BodyDef bodyDef;
         bodyDef.type = static_cast<b2BodyType>(pb.bodyType);
-        bodyDef.position = entityTr.position.ToBox2D();
+        bodyDef.position = (entityTr.position + c.center).ToBox2D();
         bodyDef.angle = glm::eulerAngles(entityTr.rotation).z;
         pb.m_body = m_physicWorld->CreateBody(&bodyDef);
 
         //TODO: move to box collider
         b2PolygonShape dynamicBox;
-        dynamicBox.SetAsBox(c.size.x, c.size.y);
+        dynamicBox.SetAsBox(c.size.x/2, c.size.y/2);
 
         b2FixtureDef fixtureDef;
         fixtureDef.shape = &dynamicBox;

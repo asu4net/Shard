@@ -91,6 +91,7 @@ namespace Shard::Ecs
 
     void Scene::OnFixedUpdate()
     {
+        OnFixedUpdateCalled();
         for (System* system : m_systems) system->OnSceneFixedUpdate();
     }
 }

@@ -16,6 +16,8 @@ namespace Shard
 		//Application listens ImGui
 		imGuiRenderer.OnImGuiReady.ADD_LISTENER(Application, OnImGuiReady);
 		imGuiRenderer.OnImGuiRender.ADD_LISTENER(Application, OnImGuiRender);
+
+		scene.OnFixedUpdateCalled = [&] { OnFixedUpdate(); };
 		
 		printf("Shard Application constructed.\n");
 	}
@@ -36,4 +38,5 @@ namespace Shard
 	void Application::OnImGuiRender(ImGuiRenderArgs args){}
 	void Application::OnRenderReady(Rendering::RenderReadyArgs args) {}
 	void Application::OnRenderFrame(Rendering::RenderFrameArgs args) {}
+	void Application::OnFixedUpdate() {}
 }

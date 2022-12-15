@@ -10,7 +10,7 @@ namespace Shard::Ecs
     class System;
 
     struct EntityArgs { entt::entity entityHandler; };
-    
+
     class Scene
     {
     public:
@@ -18,7 +18,8 @@ namespace Shard::Ecs
         Event<EntityArgs> OnEntityDestroyed;
         Event<EntityArgs> OnComponentAdded;
         Event<EntityArgs> OnComponentRemoved;
-        
+        std::function<void()> OnFixedUpdateCalled;
+
         Scene() = default;
         Scene(Rendering::Window* window);
         ~Scene();
