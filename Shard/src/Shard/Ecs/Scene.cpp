@@ -11,6 +11,7 @@
 #include "SpriteSystem.h"
 #include "CameraSystem.h"
 #include "TransformSystem.h"
+#include "TimeData.h"
 
 namespace Shard::Ecs
 {
@@ -85,5 +86,11 @@ namespace Shard::Ecs
     void Scene::OnRenderFrame(Rendering::RenderFrameArgs args)
     {
         for (System* system : m_systems) system->OnSceneUpdate();
+        Time::CalculateFixedDeltaTime([&] { OnFixedUpdate(); });
+    }
+
+    void Scene::OnFixedUpdate()
+    {
+        for (System* system : m_systems) system->OnSceneFixedUpdate();
     }
 }

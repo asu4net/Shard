@@ -26,7 +26,7 @@ namespace Shard::Ecs
         b2World* m_physicWorld = nullptr;
         
         void OnSceneStart() override;
-        void OnSceneUpdate() override;
+        void OnSceneFixedUpdate() override;
         void OnComponentAdded(EntityArgs args) override;
     };
 }

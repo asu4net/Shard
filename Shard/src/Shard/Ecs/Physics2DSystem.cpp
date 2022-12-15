@@ -5,6 +5,7 @@
 #include "box2d/b2_fixture.h"
 #include "Components.h"
 #include "TransformSystem.h"
+#include "TimeData.h"
 
 using namespace Shard::Math;
 
@@ -12,7 +13,7 @@ namespace Shard::Ecs
 {
     Vector2 Physics2DSystem::m_gravity = { 0, -9.8f };
     b2World* Physics2DSystem::m_currentPhysicWorld = nullptr;
-    float Physics2DSystem::m_timeStep = 1.0f / 120.0f;
+    float Physics2DSystem::m_timeStep = 1.0f / 60.0f;
     int32 Physics2DSystem::m_velocityIterations = 6;
     int32 Physics2DSystem::m_positionIterations = 2;
 
@@ -34,9 +35,9 @@ namespace Shard::Ecs
         m_physicWorld = new b2World(m_gravity.ToBox2D());
     }
 
-    void Physics2DSystem::OnSceneUpdate()
+    void Physics2DSystem::OnSceneFixedUpdate()
     {
-        m_physicWorld->Step(m_timeStep, m_velocityIterations, m_positionIterations);
+        m_physicWorld->Step(Time::FixedDeltaTime(), m_velocityIterations, m_positionIterations);
 
         auto view = Registry().view<Transform, Physicbody2D>();
 
@@ -44,7 +45,8 @@ namespace Shard::Ecs
         {
             auto& [transform, physicBody] = view.get<Transform, Physicbody2D>(entity);
             transform.position = { physicBody.m_body->GetTransform().p, transform.position.z };
-            TransformSystem::Rotate(transform, physicBody.m_body->GetAngle(), Vector3::forward);
+            float rotationDegrees = glm::degrees(physicBody.m_body->GetAngle());
+            transform.rotation = glm::angleAxis(physicBody.m_body->GetAngle(), glm::vec3(0, 0, 1));
         }
     }
 
@@ -54,21 +56,25 @@ namespace Shard::Ecs
         if (!entity.Has<Physicbody2D>()) return;
 
         auto& pb = entity.Get<Physicbody2D>();
+        auto& c = entity.Get<BoxCollider2D>();
+
         TRANSFORM_REF(entity);
 
         b2BodyDef bodyDef;
         bodyDef.type = static_cast<b2BodyType>(pb.bodyType);
         bodyDef.position = entityTr.position.ToBox2D();
+        bodyDef.angle = glm::eulerAngles(entityTr.rotation).z;
         pb.m_body = m_physicWorld->CreateBody(&bodyDef);
 
         //TODO: move to box collider
         b2PolygonShape dynamicBox;
-        dynamicBox.SetAsBox(entityTr.scale.x * 1.0f, entityTr.scale.y * 1.0f);
+        dynamicBox.SetAsBox(c.size.x, c.size.y);
 
         b2FixtureDef fixtureDef;
         fixtureDef.shape = &dynamicBox;
         fixtureDef.density = 1.0f;
-        fixtureDef.friction = 0.3f;
+        fixtureDef.friction = 0.1f;
+        fixtureDef.restitution = 0.1f;
 
         pb.m_body->CreateFixture(&fixtureDef);
     }

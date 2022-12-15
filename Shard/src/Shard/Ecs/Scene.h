@@ -43,6 +43,7 @@ namespace Shard::Ecs
         
         void OnRenderReady(Rendering::RenderReadyArgs args);
         void OnRenderFrame(Rendering::RenderFrameArgs args);
+        void OnFixedUpdate();
         
         friend class Entity;
         friend class System;

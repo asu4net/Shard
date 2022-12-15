@@ -26,6 +26,7 @@ namespace Shard::Ecs
 
         virtual void OnSceneStart() {};
         virtual void OnSceneUpdate() {};
+        virtual void OnSceneFixedUpdate() {};
         virtual void OnSceneFinish() {};
 
         virtual void OnEntityCreated(EntityArgs args);

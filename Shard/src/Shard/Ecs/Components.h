@@ -173,7 +173,7 @@ namespace Shard::Ecs
         {}
 
     private:
-        b2PolygonShape* m_shape;
+        b2PolygonShape* m_shape = nullptr;
     };
 
     struct Physicbody2D
@@ -183,8 +183,10 @@ namespace Shard::Ecs
 
         Physicbody2D() = default;
 
+        b2Body& RuntimeBody() { return *m_body; }
+
     private:
-        b2Body* m_body;
+        b2Body* m_body = nullptr;
 
         friend class Physics2DSystem;
     };
