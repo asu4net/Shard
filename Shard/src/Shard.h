@@ -20,7 +20,6 @@
 #include "Shard/Ecs/Scene.h"
 
 #include "Shard/Ecs/Physics2DSystem.h"
-#include "Shard/Ecs/CollisionSystem.h"
 #include "Shard/Ecs/TextSystem.h"
 #include "Shard/Ecs/SimpleSpriteAnimationSystem.h"
 #include "Shard/Ecs/BasicShapesSystem.h"

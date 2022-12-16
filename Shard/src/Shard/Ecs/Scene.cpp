@@ -4,7 +4,6 @@
 #include "Components.h"
 #include "System.h"
 #include "Physics2DSystem.h"
-#include "CollisionSystem.h"
 #include "TextSystem.h"
 #include "SimpleSpriteAnimationSystem.h"
 #include "BasicShapesSystem.h"
@@ -28,7 +27,6 @@ namespace Shard::Ecs
         AddSystem<SpriteSystem>();
         AddSystem<BasicShapesSystem>();
         AddSystem<SimpleSpriteAnimationSystem>();
-        AddSystem<CollisionSystem>();
         AddSystem<Physics2DSystem>();
         AddSystem<TextSystem>();
     }
@@ -86,7 +84,7 @@ namespace Shard::Ecs
     void Scene::OnRenderFrame(Rendering::RenderFrameArgs args)
     {
         for (System* system : m_systems) system->OnSceneUpdate();
-        Time::CalculateFixedDeltaTime([&] { OnFixedUpdate(); });
+        Time::CheckFixedUpdate([&] { OnFixedUpdate(); });
     }
 
     void Scene::OnFixedUpdate()

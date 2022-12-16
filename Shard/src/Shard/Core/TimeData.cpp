@@ -4,17 +4,16 @@
 namespace Shard
 {
     float Time::maxDeltaTime = 0.016f;
-    float Time::maxFixedDeltaTime = 0.02f;
+    float Time::fixedDeltaTime = 0.02f;
     float Time::timeScale = 1.f;
 
     float Time::m_deltaTime = 0;
     float Time::m_lastTime = 0;
 
-    float Time::m_currentFixedDeltaTime = 0;
-    float Time::m_fixedDeltaTime = 0;
+    float Time::m_elapsed = 0;
 
     float Time::DeltaTime() { return m_deltaTime; }
-    float Time::FixedDeltaTime() { return m_fixedDeltaTime; }
+    float Time::FixedDeltaTime() { return fixedDeltaTime; }
 
     void Time::CalculateDeltaTime(float currentTime)
     {
@@ -23,18 +22,14 @@ namespace Shard
         m_lastTime = currentTime;
     }
 
-    void Time::CalculateFixedDeltaTime(std::function<void()> fixedUpdate)
+    void Time::CheckFixedUpdate(std::function<void()> fixedUpdate)
     {
-        m_currentFixedDeltaTime += m_deltaTime;
+        m_elapsed += m_deltaTime;
         
-        if (m_currentFixedDeltaTime < maxFixedDeltaTime) return;
-
-        m_fixedDeltaTime = m_currentFixedDeltaTime;
-        int bufferedFixedUpdates = static_cast<int>(m_currentFixedDeltaTime / maxFixedDeltaTime);
-        
-        for (int i = 0; i < bufferedFixedUpdates; i++) 
+        while (m_elapsed >= fixedDeltaTime)
+        {
             fixedUpdate();
-        
-        m_currentFixedDeltaTime = 0;
+            m_elapsed -= fixedDeltaTime;
+        }
     }
 }

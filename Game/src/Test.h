@@ -12,8 +12,6 @@ class Game final : public Application
 
     void OnRenderReady(RenderReadyArgs args) override
     {
-        Physics2DSystem::SetGravity({ 0, 0 });
-
         window.SetTitle("Test - Alejandro :D");
 
         entityA = scene.CreateEntity("test");
@@ -21,8 +19,8 @@ class Game final : public Application
             entityA.Get<Transform>().position += Vector3::up * 2.f;
             entityA.Add<SpriteRenderer>().color = Color::LightRed;
             auto& collider = entityA.Add<BoxCollider2D>();
-            entityA.Add<Physicbody2D>();
-            
+            entityA.Add<Physicbody2D>().RuntimeBody().SetGravityScale(0);
+
         }
 
         entityB = scene.CreateEntity();
@@ -30,11 +28,12 @@ class Game final : public Application
             entityB.Get<Transform>().position += Vector3::down * 2.f;
 
             auto& collider = entityB.Add<BoxCollider2D>();
+            TransformSystem::Rotate(entityB.Get<Transform>(), 12, { 0, 0, 1 });
             collider.center = { 0, 1 };
             collider.size = { 6, 1 };
 
             auto& pb = entityB.Add<Physicbody2D>();
-            
+
             pb.RuntimeBody().SetType((b2BodyType)Physicbody2D::BodyType::Kinematic);
         }
 
@@ -43,12 +42,12 @@ class Game final : public Application
             entityC.Add<SpriteRenderer>().color = Color::LightBlue;
             entityC.Get<Transform>().position += Vector3::up;
             auto& collider = entityC.Add<BoxCollider2D>();
-            entityC.Add<Physicbody2D>().RuntimeBody().SetType((b2BodyType)Physicbody2D::BodyType::Kinematic);
+            entityC.Add<Physicbody2D>();
         }
     }
 
     void MoveEntityByInput(Entity entity)
-    {      
+    {
         auto& pb = entity.Get<Physicbody2D>();
         Vector3 position = entity.Get<Transform>().position;
 

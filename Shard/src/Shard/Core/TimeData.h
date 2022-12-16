@@ -19,7 +19,7 @@ namespace Shard
     {
     public:
         static float maxDeltaTime;
-        static float maxFixedDeltaTime;
+        static float fixedDeltaTime;
         static float timeScale;
 
         static float DeltaTime();
@@ -28,12 +28,10 @@ namespace Shard
     private:
         static float m_deltaTime;
         static float m_lastTime;
-        
-        static float m_fixedDeltaTime;
-        static float m_currentFixedDeltaTime;
+        static float m_elapsed;
         
         static void CalculateDeltaTime(float currentTime);
-        static void CalculateFixedDeltaTime(std::function<void()> fixedUpdate = []{});
+        static void CheckFixedUpdate(std::function<void()> fixedUpdate = []{});
 
         friend class Rendering::Window;
         friend class Ecs::Scene;
