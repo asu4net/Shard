@@ -19,7 +19,7 @@ class Game final : public Application
             entityA.Get<Transform>().position += Vector3::up * 2.f;
             entityA.Add<SpriteRenderer>().color = Color::LightRed;
             auto& collider = entityA.Add<BoxCollider2D>();
-            entityA.Add<Physicbody2D>().RuntimeBody().SetGravityScale(0);
+            entityA.Add<Physicbody2D>().gravityScale = 0;
 
         }
 
@@ -34,7 +34,8 @@ class Game final : public Application
 
             auto& pb = entityB.Add<Physicbody2D>();
 
-            pb.RuntimeBody().SetType((b2BodyType)Physicbody2D::BodyType::Kinematic);
+            pb.bodyType = Physicbody2D::BodyType::Kinematic;
+            //pb.RuntimeBody().SetType(b2BodyType::b2_kinematicBody);
         }
 
         Entity entityC = scene.CreateEntity("test");
@@ -43,6 +44,16 @@ class Game final : public Application
             entityC.Get<Transform>().position += Vector3::up;
             auto& collider = entityC.Add<BoxCollider2D>();
             entityC.Add<Physicbody2D>();
+        }
+
+        Entity entityD = scene.CreateEntity("test");
+        {
+            entityD.Add<CircleRenderer>().color = Color::Yellow;
+            entityD.Get<Transform>().position += Vector3::up * 3;
+            entityD.Get<Transform>().position += Vector3::right;
+            auto& collider = entityD.Add<CircleCollider>();
+            collider.radius /= 2;
+            entityD.Add<Physicbody2D>();
         }
     }
 

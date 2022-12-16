@@ -193,6 +193,8 @@ namespace Shard::Ecs
     {
         enum class BodyType { Static, Kinematic, Dynamic };
         BodyType bodyType = BodyType::Dynamic;
+        float mass = 1.f;
+        float gravityScale = 1.f;
 
         b2Body& RuntimeBody() { return *m_body; }
 
@@ -200,6 +202,7 @@ namespace Shard::Ecs
 
     private:
         b2Body* m_body = nullptr;
+        BodyType m_prevBodyType;
 
         friend class Physics2DSystem;
     };

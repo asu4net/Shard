@@ -12,6 +12,8 @@
 using namespace Shard::Math;
 using namespace Shard::Rendering;
 
+//TODO: Handle destruction. Check collisions and save references in components. Change colors if collides. Add runtime body functions.
+
 namespace Shard::Ecs
 {
     Vector2 Physics2DSystem::m_gravity = { 0, -9.8f };
@@ -74,6 +76,7 @@ namespace Shard::Ecs
                 CreateBoxFixture(physicBody, collider);
             transform.position = { physicBody.m_body->GetTransform().p - collider.center.ToBox2D(), transform.position.z };
             transform.rotation = glm::angleAxis(physicBody.m_body->GetAngle(), glm::vec3(0, 0, 1));
+            UpdatePhysicBody(physicBody);
         }
     }
 
@@ -88,7 +91,21 @@ namespace Shard::Ecs
                 CreateCircleFixture(physicBody, collider);
             transform.position = { physicBody.m_body->GetTransform().p - collider.center.ToBox2D(), transform.position.z };
             transform.rotation = glm::angleAxis(physicBody.m_body->GetAngle(), glm::vec3(0, 0, 1));
+            UpdatePhysicBody(physicBody);
         }
+    }
+
+    void Physics2DSystem::UpdatePhysicBody(Physicbody2D& physicBody)
+    {
+        b2Body& body = physicBody.RuntimeBody();
+        body.SetGravityScale(physicBody.gravityScale);
+        
+        if (physicBody.bodyType != physicBody.m_prevBodyType)
+        {
+            body.SetType(static_cast<b2BodyType>(physicBody.bodyType));
+            if (physicBody.bodyType == Physicbody2D::BodyType::Kinematic)
+                body.SetLinearVelocity({ 0, 0 });
+        }    
     }
 
     void Physics2DSystem::OnComponentAdded(EntityArgs args)
@@ -123,6 +140,7 @@ namespace Shard::Ecs
     void Physics2DSystem::CreateBody(Physicbody2D& pb2D, const Vector3& position, const glm::quat& rotation)
     {
         b2BodyDef bodyDef;
+        pb2D.m_prevBodyType = pb2D.bodyType;
         bodyDef.type = static_cast<b2BodyType>(pb2D.bodyType);
         bodyDef.position = position.ToBox2D();
         bodyDef.angle = glm::eulerAngles(rotation).z;
@@ -163,6 +181,7 @@ namespace Shard::Ecs
         fixtureDef.density = pMaterial.density;
         fixtureDef.friction = pMaterial.friction;
         fixtureDef.restitution = pMaterial.bounciness;
+        fixtureDef.restitutionThreshold = pMaterial.bouncinessThreshold;
     }
 
     void Physics2DSystem::DrawCircleGizmos(const Color& color, Transform& transform, CircleCollider& circleCollider)
