@@ -56,7 +56,7 @@ namespace Shard::Ecs
         Entity::m_entities[entity.GetHandler()] = entity;
         entity.Add<String>(name, tag);
         entity.Add<Transform>();
-        OnEntityCreated.Invoke({entity.GetHandler()});
+        OnEntityCreated.Invoke({entity.GetHandler(), nullptr});
         return entity;
     }
 
@@ -64,7 +64,7 @@ namespace Shard::Ecs
     {
         if (!entity.IsValid()) return;
         const entt::entity entityId = entity.GetHandler();
-        OnEntityDestroyed.Invoke({entity.GetHandler()});
+        OnEntityDestroyed.Invoke({entity.GetHandler(), nullptr});
         Entity::m_entities.erase(entityId);
         m_registry.destroy(entityId);
     }

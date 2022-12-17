@@ -41,7 +41,7 @@ namespace Shard::Ecs
         T& Add(Args&&... args) const
         {
             T& component = m_scene->m_registry.emplace<T>(m_entityHandler, std::forward<Args>(args)...);
-            m_scene->OnComponentAdded.Invoke({m_entityHandler});
+            m_scene->OnComponentAdded.Invoke({m_entityHandler, T::GetType()});
             return component;
         }
         
@@ -54,7 +54,7 @@ namespace Shard::Ecs
         template<typename T>
         void Remove() const
         {
-            m_scene->OnComponentRemoved.Invoke({m_entityHandler});
+            m_scene->OnComponentRemoved.Invoke({m_entityHandler, T::GetType()});
             m_scene->m_registry.erase<T>(m_entityHandler);
         }
 

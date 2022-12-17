@@ -9,7 +9,7 @@ namespace Shard::Ecs
     class Entity;
     class System;
 
-    struct EntityArgs { entt::entity entityHandler; };
+    struct EntityArgs { entt::entity entityHandler; const Type* componentType; };
 
     class Scene
     {

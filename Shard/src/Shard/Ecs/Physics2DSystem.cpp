@@ -73,6 +73,8 @@ namespace Shard::Ecs
 
     void Physics2DSystem::OnComponentRemoved(EntityArgs args)
     {
+        if (args.componentType != Physicbody2D::GetType()) return;
+
         FinalizePhysicComponents(GetEntityByHandler(args.entityHandler));
     }
 

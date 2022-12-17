@@ -15,6 +15,7 @@ namespace Shard
         Object* (*m_createObjectFunc)();
 
     public:
+        Type() = default;
         Type(const std::string& name, const Type* parentType, Object* (*createObjectFunc)());
 
         const Type* GetNextType() const { return m_nextType; }
