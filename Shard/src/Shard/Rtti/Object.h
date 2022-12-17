@@ -16,7 +16,7 @@ namespace Shard
     };
 }
 
-#define DECLARE_OBJECT(_TYPE, _PARENT_TYPE) \
+#define SHARD_OBJECT(_TYPE, _PARENT_TYPE) \
 public: \
   static Object* CreateObject() \
   { \
