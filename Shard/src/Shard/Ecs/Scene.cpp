@@ -11,6 +11,7 @@
 #include "CameraSystem.h"
 #include "TransformSystem.h"
 #include "TimeData.h"
+#include "LogicSystem.h"
 
 namespace Shard::Ecs
 {
@@ -22,13 +23,19 @@ namespace Shard::Ecs
         window->OnRenderReady.ADD_LISTENER(Scene, OnRenderReady);
         window->OnRenderFrame.ADD_LISTENER(Scene, OnRenderFrame);
 
+        AddSystem<LogicSystem>();
+        AddSystem<Physics2DSystem>();
+
         AddSystem<TransformSystem>();
         AddSystem<CameraSystem>();
+
+        //Rendering
         AddSystem<SpriteSystem>();
         AddSystem<BasicShapesSystem>();
         AddSystem<SimpleSpriteAnimationSystem>();
-        AddSystem<Physics2DSystem>();
         AddSystem<TextSystem>();
+        
+        
     }
 
     Scene::~Scene()
@@ -76,8 +83,7 @@ namespace Shard::Ecs
     void Scene::OnRenderReady(Rendering::RenderReadyArgs args)
     {
         const Entity mainCamera = CreateEntity("Main Camera");
-        mainCamera.Add<Camera>();       
-
+        mainCamera.Add<Camera>();
         for (System* system : m_systems) system->OnSceneStart();
     }
 

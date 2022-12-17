@@ -54,8 +54,8 @@ namespace Shard::Ecs
         template<typename T>
         void Remove() const
         {
-            m_scene->m_registry.erase<T>(m_entityHandler);
             m_scene->OnComponentRemoved.Invoke({m_entityHandler});
+            m_scene->m_registry.erase<T>(m_entityHandler);
         }
 
     private:

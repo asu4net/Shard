@@ -1,7 +1,24 @@
 ﻿#pragma once
+
 #include "KeyCodes.h"
+#include "Rtti/TypeManager.h"
+#include "Rtti/Object.h"
 
 #ifdef TEST
+
+struct TestScript : public Script
+{
+    void Start() override
+    {
+        std::cout << "Hello Script!" << std::endl;
+        TypeManager::PrintTypes();
+    }
+
+    void OnCollision(Entity other) override
+    {
+        //std::cout << "Collision!" << std::endl;
+    }
+};
 
 class Game final : public Application
 {
@@ -20,7 +37,7 @@ class Game final : public Application
             entityA.Add<SpriteRenderer>().color = Color::LightRed;
             auto& collider = entityA.Add<BoxCollider2D>();
             entityA.Add<Physicbody2D>().gravityScale = 0;
-
+            entityA.Add<Logic>().AddScript<TestScript>();
         }
 
         entityB = scene.CreateEntity();

@@ -63,6 +63,24 @@ namespace Shard::Ecs
         m_physicWorld->Step(Time::FixedDeltaTime(), m_velocityIterations, m_positionIterations);
         UpdateBox2DBodies();
         UpdateCircleBodies();
+        CheckCollisions();
+    }
+
+    void Physics2DSystem::OnEntityDestroyed(EntityArgs args)
+    {
+        FinalizePhysicComponents(GetEntityByHandler(args.entityHandler));
+    }
+
+    void Physics2DSystem::OnComponentRemoved(EntityArgs args)
+    {
+        FinalizePhysicComponents(GetEntityByHandler(args.entityHandler));
+    }
+
+    void Physics2DSystem::FinalizePhysicComponents(Entity entity)
+    {
+        if (!entity.Has<Physicbody2D>()) return;
+
+        
     }
 
     void Physics2DSystem::UpdateBox2DBodies()
@@ -92,6 +110,46 @@ namespace Shard::Ecs
             transform.position = { physicBody.m_body->GetTransform().p - collider.center.ToBox2D(), transform.position.z };
             transform.rotation = glm::angleAxis(physicBody.m_body->GetAngle(), glm::vec3(0, 0, 1));
             UpdatePhysicBody(physicBody);
+        }
+    }
+
+    void Physics2DSystem::CheckCollisions()
+    {
+        auto view = Registry().view<Physicbody2D, Logic>();
+        auto otherView = Registry().view<Physicbody2D>();
+
+        for (entt::entity entity : view)
+        {
+            auto& [pb, logic] = view.get<Physicbody2D, Logic>(entity);
+            b2Body* body = pb.m_body;
+            b2Shape* shape = body->GetFixtureList()[0].GetShape();
+            if (!shape) continue;
+
+            for (entt::entity otherEntity : otherView)
+            {
+                if (entity == otherEntity) continue;
+
+                auto& otherPb = otherView.get<Physicbody2D>(otherEntity);
+                b2Body* otherBody = otherPb.m_body;
+                b2Shape* otherShape = body->GetFixtureList()[0].GetShape();
+                if (!otherShape) continue;
+
+                bool isCollision = b2TestOverlap(shape, 0, otherShape, 0, body->GetTransform(), otherBody->GetTransform());
+                
+                if (!isCollision) continue;
+                
+                Entity other = GetEntityByHandler(otherEntity);
+                
+                for (Script* script : logic.m_scripts)
+                    script->OnCollision(other);
+
+                if (!other.Has<Logic>()) continue;
+
+                auto& otherLogic = other.Get<Logic>();
+
+                for (Script* otherScript : otherLogic.m_scripts)
+                    otherScript->OnCollision(GetEntityByHandler(entity));
+            }
         }
     }
 

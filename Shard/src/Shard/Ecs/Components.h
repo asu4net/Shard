@@ -6,6 +6,7 @@
 #include "box2d/b2_circle_shape.h"
 #include "box2d/b2_body.h"
 #include "PhysicMaterial.h"
+#include "Script.h"
 
 namespace Shard::Ecs
 {
@@ -204,6 +205,25 @@ namespace Shard::Ecs
         b2Body* m_body = nullptr;
         BodyType m_prevBodyType;
 
+        friend class Physics2DSystem;
+    };
+
+    struct Logic
+    {
+    public:
+        Logic() = default;
+
+        template<typename T>
+        void AddScript()
+        {
+            m_scripts.push_back(new T());
+        }
+        
+    private:
+        std::vector<Script*> m_scripts;
+        //TODO: Awake, onCollision, destroy
+
+        friend class LogicSystem;
         friend class Physics2DSystem;
     };
 }

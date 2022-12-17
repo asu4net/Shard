@@ -37,7 +37,9 @@ namespace Shard::Ecs
 
         void UpdateBox2DBodies();
         void UpdateCircleBodies();
+        void CheckCollisions();
         void UpdatePhysicBody(Physicbody2D& physicBody);
+        void FinalizePhysicComponents(Entity entity);
         void DrawCircleGizmos(const Math::Color& color, Transform& transform, CircleCollider& circleCollider);
         void DrawBox2DGizmos(const Math::Color& color, Transform& transform, BoxCollider2D& boxCollider2D);
 
@@ -46,6 +48,8 @@ namespace Shard::Ecs
         void OnSceneStart() override;
         void OnSceneUpdate() override;
         void OnSceneFixedUpdate() override;
+        void OnEntityDestroyed(EntityArgs args) override;
+        void OnComponentRemoved(EntityArgs args) override;
         void OnComponentAdded(EntityArgs args) override;
     };
 }
