@@ -10,19 +10,31 @@
 
 namespace Shard::Ecs
 {
-    struct String
+    struct BaseComponent : public Object
     {
+    SHARD_OBJECT(BaseComponent, Object)
+    //TODO: Implement enabled, entt::entity and so on
+    };
+
+    struct String : public BaseComponent
+    {
+    SHARD_OBJECT(String, BaseComponent) 
+    public:
         std::string name;
         std::string tag;
         
+        String() = default;
+
         String(std::string name, std::string tag)
             : name(std::move(name))
             , tag(std::move(tag))
         {}
     };
     
-    struct Transform
+    struct Transform : public BaseComponent
     {
+    SHARD_OBJECT(Transform, BaseComponent)
+    public:
         Math::Vector3 position;
         glm::quat rotation = IdentityQuat;
         Math::Vector3 scale = Math::Vector3::one;
@@ -45,8 +57,10 @@ namespace Shard::Ecs
         friend class Physics2DSystem;
     };
 
-    struct Camera
+    struct Camera : public BaseComponent
     {
+    SHARD_OBJECT(Camera, BaseComponent) 
+    public:
         enum class Mode { Perspective, Orthographic };
         
         Mode mode = Mode::Orthographic;
@@ -64,8 +78,10 @@ namespace Shard::Ecs
         friend class CameraSystem;
     };
 
-    struct QuadRenderer
+    struct QuadRenderer : public BaseComponent
     {
+    SHARD_OBJECT(QuadRenderer, BaseComponent) 
+    public:
         Math::Color color;
         bool enabled = true;
         
@@ -73,8 +89,10 @@ namespace Shard::Ecs
             : color(theColor) {}
     };
     
-    struct CircleRenderer
+    struct CircleRenderer : public BaseComponent
     {
+    SHARD_OBJECT(CircleRenderer, BaseComponent) 
+    public:
         Math::Color color;
         float thickness;
         float fade;
@@ -86,8 +104,10 @@ namespace Shard::Ecs
             : color(theColor), thickness(theThickness), fade(theFade) {}
     };
 
-    struct SpriteRenderer
+    struct SpriteRenderer : public BaseComponent
     {
+    SHARD_OBJECT(SpriteRenderer, BaseComponent) 
+    public:
         std::shared_ptr<Rendering::Sprite> sprite;
         std::shared_ptr<Rendering::Shader> shader;
         int orderInLayer = 0;
@@ -107,8 +127,10 @@ namespace Shard::Ecs
         }
     };
     
-    struct TextRenderer
+    struct TextRenderer : public BaseComponent
     {
+    SHARD_OBJECT(TextRenderer, BaseComponent) 
+    public:
         std::shared_ptr<Rendering::Font> font;
         float spacing = .3f;
         Math::Color color;
@@ -130,8 +152,10 @@ namespace Shard::Ecs
     };
 
     //Requires SpriteRenderer component attached with multiple layout.
-    struct SimpleSpriteAnimation
+    struct SimpleSpriteAnimation : public BaseComponent
     {
+    SHARD_OBJECT(SimpleSpriteAnimation, BaseComponent) 
+    public:
         float framesPerSecond = 8.f;
         bool paused = false;
         
@@ -149,8 +173,10 @@ namespace Shard::Ecs
         friend class SimpleSpriteAnimationSystem;
     };
 
-    struct CircleCollider
+    struct CircleCollider : public BaseComponent
     {
+    SHARD_OBJECT(CircleCollider, BaseComponent) 
+    public:
         float radius = 1;
         Math::Vector2 center;
         PhysicMaterial physicMaterial;
@@ -169,8 +195,10 @@ namespace Shard::Ecs
         friend class Physics2DSystem;
     };
 
-    struct BoxCollider2D
+    struct BoxCollider2D : public BaseComponent
     {
+    SHARD_OBJECT(BoxCollider2D, BaseComponent) 
+    public:
         Math::Vector2 size{1, 1};
         Math::Vector2 center;
         PhysicMaterial physicMaterial;
@@ -190,8 +218,10 @@ namespace Shard::Ecs
         friend class Physics2DSystem;
     };
     
-    struct Physicbody2D
+    struct Physicbody2D : public BaseComponent
     {
+    SHARD_OBJECT(Physicbody2D, BaseComponent) 
+    public:
         enum class BodyType { Static, Kinematic, Dynamic };
         BodyType bodyType = BodyType::Dynamic;
         float mass = 1.f;
@@ -208,8 +238,9 @@ namespace Shard::Ecs
         friend class Physics2DSystem;
     };
 
-    struct Logic
+    struct Logic : public BaseComponent
     {
+    SHARD_OBJECT(Logic, BaseComponent) 
     public:
         Logic() = default;
 

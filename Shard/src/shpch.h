@@ -33,6 +33,12 @@ const glm::quat IdentityQuat = {1, 0, 0, 0};
 
 #include "Event.h"
 
+//Rtti
+#include "KeyCodes.h"
+#include "Rtti/TypeManager.h"
+#include "Rtti/Object.h"
+#include "Rtti/Type.h"
+
 namespace Shard
 {
     constexpr float ToRadians = 0.0174533f;

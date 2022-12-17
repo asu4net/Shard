@@ -9,7 +9,7 @@ namespace Shard
     public:
         static Object* CreateObject() { return new Object(); };
 
-        const Type* GetType() const { return &m_type; }
+        static const Type* GetType() { return &m_type; }
 
     private:
         inline static Type m_type = Type("Object", nullptr, &Object::CreateObject);
@@ -22,6 +22,6 @@ public: \
   { \
     return new _TYPE(); \
   } \
-  static const Type* GetType() const { return &m_type; } \
+  static const Type* GetType() { return &m_type; } \
 private: \
-  inline static Type m_type = _TYPE(#_TYPE, _PARENT_TYPE::GetStaticType(), &_TYPE::CreateObject);
+  inline static Type m_type = Type(#_TYPE, _PARENT_TYPE::GetType(), &_TYPE::CreateObject);

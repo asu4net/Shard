@@ -1,9 +1,5 @@
 ﻿#pragma once
 
-#include "KeyCodes.h"
-#include "Rtti/TypeManager.h"
-#include "Rtti/Object.h"
-
 #ifdef TEST
 
 struct TestScript : public Script
