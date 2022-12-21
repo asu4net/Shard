@@ -139,7 +139,7 @@ namespace Shard::Ecs
                     script->OnCollision(other);
                 }
                 
-                if (!other.Has<Logic>()) return;
+                if (!other.IsValid() || !other.Has<Logic>()) return;
                 
                 const auto& otherLogic = other.Get<Logic>();
                 

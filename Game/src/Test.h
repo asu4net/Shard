@@ -2,12 +2,11 @@
 
 #ifdef TEST
 
-class BlueCubeScript : public Script
+class RedCubeScript : public Script
 {
     void Start() override
     {
         std::cout << "Blue entity start!" << std::endl;
-        
     }
 
     void Update() override
@@ -19,7 +18,6 @@ class BlueCubeScript : public Script
     {
         if (!entity.IsValid() || static_cast<int>(entity.GetHandler()) == 1) return;
         std::cout << entity.Get<Tag>().name << std::endl;
-        //DestroyEntity(entity);
         DestroyEntity(entity);
     }
 };
@@ -30,9 +28,6 @@ class Game final : public Application
     Entity entityB;
     float move = 10;
     float torque = 5;
-    
-    float time = 0;
-    float maxTime = 3;
 
     Entity entityD;
     
@@ -49,23 +44,23 @@ class Game final : public Application
         {
             entityA.Get<Transform>().position += Vector3::up * 2.f;
             entityA.Add<SpriteRenderer>().color = Color::LightRed;
-            auto& collider = entityA.Add<BoxCollider2D>();
+            entityA.Add<BoxCollider2D>();
             entityA.Add<Physicbody2D>().gravityScale = 0;
+            entityA.Add<Logic>().AddScript<RedCubeScript>();
         }
 
         entityB = scene.CreateEntity("Ground");
         {
             entityB.Get<Transform>().position += Vector3::down * 2.f;
-
+            
             auto& collider = entityB.Add<BoxCollider2D>();
             TransformSystem::Rotate(entityB.Get<Transform>(), 12, { 0, 0, 1 });
             collider.center = { 0, 1 };
             collider.size = { 6, 1 };
-
+            
             auto& pb = entityB.Add<Physicbody2D>();
-
+            
             pb.bodyType = Physicbody2D::BodyType::Kinematic;
-            //pb.RuntimeBody().SetType(b2BodyType::b2_kinematicBody);
         }
 
         Entity entityC = scene.CreateEntity("Blue Cube");
@@ -74,7 +69,6 @@ class Game final : public Application
             entityC.Get<Transform>().position += Vector3::up;
             auto& collider = entityC.Add<BoxCollider2D>();
             entityC.Add<Physicbody2D>();
-            entityC.Add<Logic>().AddScript<BlueCubeScript>();
         }
 
         Entity entityD = scene.CreateEntity("Yellow Circle");
@@ -124,16 +118,6 @@ class Game final : public Application
     void OnFixedUpdate() override
     {
         MoveEntityByInput(entityA);
-
-        time += Time::FixedDeltaTime();
-
-        if (time >= maxTime)
-        {
-            scene.DestroyEntity(entityD);
-            time = 0;
-        }
-
-        
     }
 };
 
