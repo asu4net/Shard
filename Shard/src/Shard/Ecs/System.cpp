@@ -51,10 +51,10 @@ namespace Shard::Ecs
     void System::OnEntityDestroyed(EntityArgs args)
     {
     }
-    void System::OnComponentAdded(EntityArgs args)
+    void System::OnComponentAdded(ComponentArgs args)
     {
     }
-    void System::OnComponentRemoved(EntityArgs args)
+    void System::OnComponentRemoved(ComponentArgs args)
     {
     }
 }

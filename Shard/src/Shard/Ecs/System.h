@@ -5,6 +5,7 @@ namespace Shard::Ecs
 {
     class Scene;
     class Entity;
+    struct ComponentArgs;
     struct EntityArgs;
     struct Camera;
 
@@ -23,16 +24,17 @@ namespace Shard::Ecs
         Camera& GetCamera();
         Entity GetEntityByHandler(entt::entity entityHandler);
         float GetWindowAspect() const;
+        Scene* GetScene() const { return m_scene; }
 
-        virtual void OnSceneStart() {};
-        virtual void OnSceneUpdate() {};
-        virtual void OnSceneFixedUpdate() {};
-        virtual void OnSceneFinish() {};
+        virtual void OnSceneStart() {}
+        virtual void OnSceneUpdate() {}
+        virtual void OnSceneFixedUpdate() {}
+        virtual void OnSceneFinish() {}
 
         virtual void OnEntityCreated(EntityArgs args);
         virtual void OnEntityDestroyed(EntityArgs args);
-        virtual void OnComponentAdded(EntityArgs args);
-        virtual void OnComponentRemoved(EntityArgs args);
+        virtual void OnComponentAdded(ComponentArgs args);
+        virtual void OnComponentRemoved(ComponentArgs args);
 
         friend class Scene;
     };

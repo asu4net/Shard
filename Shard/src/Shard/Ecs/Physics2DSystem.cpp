@@ -6,13 +6,12 @@
 #include "Components.h"
 #include "TransformSystem.h"
 #include "TimeData.h"
-#include "Rendering/Renderer.h"
 #include "PhysicMaterial.h"
 
 using namespace Shard::Math;
 using namespace Shard::Rendering;
 
-//TODO: Handle destruction. Check collisions and save references in components. Change colors if collides. Add runtime body functions.
+//TODO: Handle destruction. Add runtime body functions.
 
 namespace Shard::Ecs
 {
@@ -39,25 +38,6 @@ namespace Shard::Ecs
         m_currentPhysicWorld = m_physicWorld;
     }
 
-    void Physics2DSystem::OnSceneUpdate()
-    {
-        auto boxView = Registry().view<Transform, BoxCollider2D>();
-
-        for (entt::entity entity : boxView)
-        {
-            auto& [transform, boxCollider2D] = boxView.get<Transform, BoxCollider2D>(entity);
-            DrawBox2DGizmos(Color::LightGreen, transform, boxCollider2D);
-        }
-
-        auto circleView = Registry().view<Transform, CircleCollider>();
-
-        for (entt::entity entity : circleView)
-        {
-            auto& [transform, circleCollider] = circleView.get<Transform, CircleCollider>(entity);
-            DrawCircleGizmos(Color::LightGreen, transform, circleCollider);
-        }
-    }
-
     void Physics2DSystem::OnSceneFixedUpdate()
     {
         m_physicWorld->Step(Time::FixedDeltaTime(), m_velocityIterations, m_positionIterations);
@@ -68,21 +48,34 @@ namespace Shard::Ecs
 
     void Physics2DSystem::OnEntityDestroyed(EntityArgs args)
     {
-        FinalizePhysicComponents(GetEntityByHandler(args.entityHandler));
-    }
+        Entity entity = GetEntityByHandler(args.entityHandler);
 
-    void Physics2DSystem::OnComponentRemoved(EntityArgs args)
-    {
-        if (args.componentType != Physicbody2D::GetType()) return;
-
-        FinalizePhysicComponents(GetEntityByHandler(args.entityHandler));
-    }
-
-    void Physics2DSystem::FinalizePhysicComponents(Entity entity)
-    {
-        if (!entity.Has<Physicbody2D>()) return;
-
+        if (entity.Has<Physicbody2D>())
+            FinalizePhysicbody2DComponent(entity);
         
+    }
+
+    void Physics2DSystem::OnComponentRemoved(ComponentArgs args)
+    {
+        if (args.componentType == Physicbody2D::GetType())
+            FinalizePhysicbody2DComponent(GetEntityByHandler(args.entityHandler));
+    }
+
+    void Physics2DSystem::FinalizePhysicbody2DComponent(Entity entity)
+    {
+        Physicbody2D& pb = entity.Get<Physicbody2D>();
+        m_physicWorld->DestroyBody(pb.m_body);
+        pb.m_body = nullptr;
+
+        if (entity.Has<BoxCollider2D>())
+        {
+            entity.Get<BoxCollider2D>().m_fixture = nullptr;
+        }
+
+        if (entity.Has<CircleCollider>())
+        {
+            entity.Get<CircleCollider>().m_fixture = nullptr;
+        }
     }
 
     void Physics2DSystem::UpdateBox2DBodies()
@@ -117,42 +110,47 @@ namespace Shard::Ecs
 
     void Physics2DSystem::CheckCollisions()
     {
-        auto view = Registry().view<Physicbody2D, Logic>();
-        auto otherView = Registry().view<Physicbody2D>();
-
-        for (entt::entity entity : view)
+        Registry().view<Physicbody2D, Logic>().each([&](const auto entity, auto& pb, auto& logic)
         {
-            auto& [pb, logic] = view.get<Physicbody2D, Logic>(entity);
-            b2Body* body = pb.m_body;
-            b2Shape* shape = body->GetFixtureList()[0].GetShape();
-            if (!shape) continue;
-
-            for (entt::entity otherEntity : otherView)
+            if (!Registry().valid(entity)) return;
+            
+            const b2Body* body = pb.m_body;
+            const b2Shape* shape = body->GetFixtureList()[0].GetShape();
+            if (!shape) return;
+            
+            Registry().view<Physicbody2D>().each([&](const auto otherEntity, auto& otherPb)
             {
-                if (entity == otherEntity) continue;
+                if (entity == otherEntity || !Registry().valid(otherEntity) || !Registry().valid(entity)) return;
+                
+                const b2Body* otherBody = otherPb.m_body;
+                const b2Shape* otherShape = otherBody->GetFixtureList()[0].GetShape();
+                if (!otherShape) return;
+                
+                const bool isCollision = b2TestOverlap(shape, 0, otherShape, 0, body->GetTransform(), otherBody->GetTransform());
+                
+                if (!isCollision) return;
+                
+                const Entity other = GetEntityByHandler(otherEntity);
 
-                auto& otherPb = otherView.get<Physicbody2D>(otherEntity);
-                b2Body* otherBody = otherPb.m_body;
-                b2Shape* otherShape = body->GetFixtureList()[0].GetShape();
-                if (!otherShape) continue;
-
-                bool isCollision = b2TestOverlap(shape, 0, otherShape, 0, body->GetTransform(), otherBody->GetTransform());
-                
-                if (!isCollision) continue;
-                
-                Entity other = GetEntityByHandler(otherEntity);
-                
-                for (Script* script : logic.m_scripts)
+                for (size_t i = 0; i < logic.m_scripts.size(); i++)
+                {
+                    if (!Registry().valid(entity)) break;
+                    Script* script = logic.m_scripts[i];
                     script->OnCollision(other);
-
-                if (!other.Has<Logic>()) continue;
-
-                auto& otherLogic = other.Get<Logic>();
-
-                for (Script* otherScript : otherLogic.m_scripts)
-                    otherScript->OnCollision(GetEntityByHandler(entity));
-            }
-        }
+                }
+                
+                if (!other.Has<Logic>()) return;
+                
+                const auto& otherLogic = other.Get<Logic>();
+                
+                for (size_t i = 0; i < otherLogic.m_scripts.size(); i++)
+                {
+                    if (!Registry().valid(otherEntity)) break;
+                    Script* script = otherLogic.m_scripts[i];
+                    script->OnCollision(GetEntityByHandler(entity));
+                }
+            });
+        });
     }
 
     void Physics2DSystem::UpdatePhysicBody(Physicbody2D& physicBody)
@@ -168,7 +166,7 @@ namespace Shard::Ecs
         }    
     }
 
-    void Physics2DSystem::OnComponentAdded(EntityArgs args)
+    void Physics2DSystem::OnComponentAdded(ComponentArgs args)
     {  
         Entity entity = GetEntityByHandler(args.entityHandler);
         
@@ -242,29 +240,5 @@ namespace Shard::Ecs
         fixtureDef.friction = pMaterial.friction;
         fixtureDef.restitution = pMaterial.bounciness;
         fixtureDef.restitutionThreshold = pMaterial.bouncinessThreshold;
-    }
-
-    void Physics2DSystem::DrawCircleGizmos(const Color& color, Transform& transform, CircleCollider& circleCollider)
-    {
-        glm::mat4 gizmosTransform = glm::mat4(1.f);
-
-        float size = circleCollider.radius * 2;
-        gizmosTransform = glm::translate(gizmosTransform, (transform.m_worldPosition + circleCollider.center).ToGlm());
-        gizmosTransform *= glm::toMat4(transform.m_worldRotation);
-        gizmosTransform = glm::scale(gizmosTransform, { size, size, 1.f });
-
-        MvpData mvp{ gizmosTransform, GetCamera().View(), GetCamera().Projection() };
-        Renderer::DrawCircle(mvp, color, .05f, 0.005f);
-    }
-
-    void Physics2DSystem::DrawBox2DGizmos(const Color& color, Transform& transform, BoxCollider2D& boxCollider2D)
-    {
-        glm::mat4 gizmosTransform = glm::mat4(1.f);
-        gizmosTransform = glm::translate(gizmosTransform, (transform.m_worldPosition + boxCollider2D.center).ToGlm());
-        gizmosTransform *= glm::toMat4(transform.m_worldRotation);
-        gizmosTransform = glm::scale(gizmosTransform, { boxCollider2D.size.x, boxCollider2D.size.y, 1.f });
-
-        MvpData mvp{ gizmosTransform, GetCamera().View(), GetCamera().Projection() };
-        Renderer::DrawLines(Renderer::GetDefaultLineBox2D(), mvp, color);
     }
 }

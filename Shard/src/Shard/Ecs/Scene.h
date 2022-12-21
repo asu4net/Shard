@@ -6,18 +6,19 @@ namespace Shard::Rendering { class Window; }
 
 namespace Shard::Ecs
 {
-    class Entity;
     class System;
+    class Entity;
 
-    struct EntityArgs { entt::entity entityHandler; const Type* componentType; };
-
+    struct ComponentArgs { entt::entity entityHandler; const Type* componentType; };
+    struct EntityArgs { entt::entity entityHandler; };
+    
     class Scene
     {
     public:
         Event<EntityArgs> OnEntityCreated;
         Event<EntityArgs> OnEntityDestroyed;
-        Event<EntityArgs> OnComponentAdded;
-        Event<EntityArgs> OnComponentRemoved;
+        Event<ComponentArgs> OnComponentAdded;
+        Event<ComponentArgs> OnComponentRemoved;
         std::function<void()> OnFixedUpdateCalled;
 
         Scene() = default;

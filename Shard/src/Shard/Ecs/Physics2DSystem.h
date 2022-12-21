@@ -1,5 +1,4 @@
 #pragma once
-#include "entt.hpp"
 #include "box2d/b2_world.h"
 #include "System.h"
 
@@ -39,18 +38,15 @@ namespace Shard::Ecs
         void UpdateCircleBodies();
         void CheckCollisions();
         void UpdatePhysicBody(Physicbody2D& physicBody);
-        void FinalizePhysicComponents(Entity entity);
-        void DrawCircleGizmos(const Math::Color& color, Transform& transform, CircleCollider& circleCollider);
-        void DrawBox2DGizmos(const Math::Color& color, Transform& transform, BoxCollider2D& boxCollider2D);
+        void FinalizePhysicbody2DComponent(Entity entity);
 
         b2World* m_physicWorld = nullptr;
         
         void OnSceneStart() override;
-        void OnSceneUpdate() override;
         void OnSceneFixedUpdate() override;
         void OnEntityDestroyed(EntityArgs args) override;
-        void OnComponentRemoved(EntityArgs args) override;
-        void OnComponentAdded(EntityArgs args) override;
+        void OnComponentRemoved(ComponentArgs args) override;
+        void OnComponentAdded(ComponentArgs args) override;
     };
 }
 

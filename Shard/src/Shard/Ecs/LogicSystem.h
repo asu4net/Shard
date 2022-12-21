@@ -10,5 +10,6 @@ namespace Shard::Ecs
         void OnSceneStart() override;
         void OnSceneUpdate() override;
         void OnSceneFixedUpdate() override;
+        void OnComponentAdded(ComponentArgs args) override;
     };
 }

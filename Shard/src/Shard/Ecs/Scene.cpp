@@ -9,6 +9,7 @@
 #include "BasicShapesSystem.h"
 #include "SpriteSystem.h"
 #include "CameraSystem.h"
+#include "GizmosSystem.h"
 #include "TransformSystem.h"
 #include "TimeData.h"
 #include "LogicSystem.h"
@@ -34,8 +35,7 @@ namespace Shard::Ecs
         AddSystem<BasicShapesSystem>();
         AddSystem<SimpleSpriteAnimationSystem>();
         AddSystem<TextSystem>();
-        
-        
+        AddSystem<GizmosSystem>();
     }
 
     Scene::~Scene()
@@ -54,9 +54,9 @@ namespace Shard::Ecs
     {
         const Entity entity{this, m_registry.create()};
         Entity::m_entities[entity.GetHandler()] = entity;
-        entity.Add<String>(name, tag);
+        entity.Add<Tag>(name, tag);
         entity.Add<Transform>();
-        OnEntityCreated.Invoke({entity.GetHandler(), nullptr});
+        OnEntityCreated.Invoke({entity.GetHandler()});
         return entity;
     }
 
@@ -64,7 +64,7 @@ namespace Shard::Ecs
     {
         if (!entity.IsValid()) return;
         const entt::entity entityId = entity.GetHandler();
-        OnEntityDestroyed.Invoke({entity.GetHandler(), nullptr});
+        OnEntityDestroyed.Invoke({entity.GetHandler()});
         Entity::m_entities.erase(entityId);
         m_registry.destroy(entityId);
     }

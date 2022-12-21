@@ -10,7 +10,7 @@ namespace Shard::Ecs
     class TextSystem : public System
     {
         void OnSceneUpdate() override;
-        void OnComponentAdded(EntityArgs args) override;
+        void OnComponentAdded(ComponentArgs args) override;
         
         static void SetText(TextRenderer& textRenderer, const std::string& newText);
         

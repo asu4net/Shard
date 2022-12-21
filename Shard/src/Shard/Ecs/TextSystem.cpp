@@ -19,7 +19,7 @@ namespace Shard::Ecs
         }
     }
 
-    void TextSystem::OnComponentAdded(EntityArgs args)
+    void TextSystem::OnComponentAdded(ComponentArgs args)
     {
         Entity entity = GetEntityByHandler(args.entityHandler);
 

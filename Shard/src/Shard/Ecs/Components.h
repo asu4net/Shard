@@ -16,16 +16,16 @@ namespace Shard::Ecs
     //TODO: Implement enabled, entt::entity and so on
     };
 
-    struct String : public BaseComponent
+    struct Tag : public BaseComponent
     {
-    SHARD_OBJECT(String, BaseComponent) 
+    SHARD_OBJECT(Tag, BaseComponent) 
     public:
         std::string name;
         std::string tag;
         
-        String() = default;
+        Tag() = default;
 
-        String(std::string name, std::string tag)
+        Tag(std::string name, std::string tag)
             : name(std::move(name))
             , tag(std::move(tag))
         {}
@@ -44,7 +44,9 @@ namespace Shard::Ecs
         Math::Vector3 Up() const { return m_up; }
         Math::Vector3 Forward() const { return m_forward; }
         glm::mat4 Model() const { return m_model; }
-
+        Math::Vector3 WorldPosition() const { return m_worldPosition; }
+        glm::quat WorldRotation() const { return m_worldRotation; }
+        
     private:
         Math::Vector3 m_worldPosition;
         glm::quat m_worldRotation = IdentityQuat;
@@ -101,7 +103,9 @@ namespace Shard::Ecs
         CircleRenderer(const Math::Color& theColor = Math::Color::White
             , const float theThickness = 1.f
             , const float theFade = 0.005f)
-            : color(theColor), thickness(theThickness), fade(theFade) {}
+            : color(theColor), thickness(theThickness), fade(theFade) 
+        {
+        }
     };
 
     struct SpriteRenderer : public BaseComponent
@@ -245,13 +249,20 @@ namespace Shard::Ecs
         Logic() = default;
 
         template<typename T>
-        void AddScript()
+        Script& AddScript()
         {
-            m_scripts.push_back(new T());
+            Script* script = new T();
+            script->m_entity = m_entity;
+            script->m_scene = m_scene;
+            m_scripts.push_back(script);
+            script->Awake();
+            return *script;
         }
         
     private:
         std::vector<Script*> m_scripts;
+        Entity m_entity;
+        Scene* m_scene = nullptr;
         //TODO: Awake, onCollision, destroy
 
         friend class LogicSystem;
