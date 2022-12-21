@@ -1,9 +1,11 @@
 ﻿#pragma once
-#include "System.h"
+#include "Ecs/System.h"
 
 namespace Shard
 {
-    class SpriteSystem : public System
+    class Scene;
+
+    class BasicShapesSystem : public System
     {
     private:
         void OnSceneUpdate() override;

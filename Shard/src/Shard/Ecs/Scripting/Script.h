@@ -1,5 +1,5 @@
 #pragma once
-#include "Entity.h"
+#include "Ecs/Entity.h"
 
 namespace Shard
 {

@@ -1,7 +1,6 @@
 ﻿#include "shpch.h"
 #include "CameraSystem.h"
-#include "TransformSystem.h"
-#include "Components.h"
+#include "Ecs/Components.h"
 
 namespace Shard
 {

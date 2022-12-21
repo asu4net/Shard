@@ -1,6 +1,6 @@
 #include "shpch.h"
 #include "System.h"
-#include "Scene.h"
+#include "Scene/Scene.h"
 #include "Entity.h"
 #include "Components.h"
 

@@ -1,6 +1,6 @@
 ﻿#include "shpch.h"
 #include "BasicShapesSystem.h"
-#include "Components.h"
+#include "Ecs/Components.h"
 #include "Rendering/Renderer.h"
 
 namespace Shard

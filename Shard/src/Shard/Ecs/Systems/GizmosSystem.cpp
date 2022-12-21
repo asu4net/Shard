@@ -1,7 +1,7 @@
 ﻿#include "shpch.h"
 #include "GizmosSystem.h"
 #include "Rendering/Renderer.h"
-#include "Components.h"
+#include "Ecs/Components.h"
 
 namespace Shard
 {

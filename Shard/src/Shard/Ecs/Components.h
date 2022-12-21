@@ -3,8 +3,8 @@
 #include "Rendering/Font.h"
 #include "Rendering/Sprite.h"
 #include "box2d/b2_body.h"
-#include "PhysicMaterial.h"
-#include "Script.h"
+#include "Ecs/Systems/PhysicMaterial.h"
+#include "Ecs/Scripting/Script.h"
 
 namespace Shard
 {

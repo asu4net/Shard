@@ -1,7 +1,7 @@
 ﻿#include "shpch.h"
 #include "TransformSystem.h"
-#include "Components.h"
-#include "Entity.h"
+#include "Ecs/Components.h"
+#include "Ecs/Entity.h"
 
 namespace Shard
 {

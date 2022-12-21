@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "Scene.h"
+#include "Scene/Scene.h"
 #include "entt.hpp"
 
 #define TRANSFORM_REF(_ENTITY) auto& _ENTITY##Tr = _ENTITY.Get<Transform>()

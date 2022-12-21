@@ -1,6 +1,6 @@
 ﻿#include "shpch.h"
 #include "SimpleSpriteAnimationSystem.h"
-#include "Components.h"
+#include "Ecs/Components.h"
 #include "TimeData.h"
 
 namespace Shard

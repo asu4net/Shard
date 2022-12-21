@@ -1,6 +1,6 @@
 ﻿#include "shpch.h"
 #include "SpriteSystem.h"
-#include "Components.h"
+#include "Ecs/Components.h"
 
 namespace Shard
 {

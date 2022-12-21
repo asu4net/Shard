@@ -17,15 +17,15 @@
 
 #include "Shard/Ecs/Components.h"
 #include "Shard/Ecs/Entity.h"
-#include "Shard/Ecs/Scene.h"
+#include "Shard/Ecs/Scene/Scene.h"
 
-#include "Shard/Ecs/Physics2DSystem.h"
-#include "Shard/Ecs/TextSystem.h"
-#include "Shard/Ecs/SimpleSpriteAnimationSystem.h"
-#include "Shard/Ecs/BasicShapesSystem.h"
-#include "Shard/Ecs/SpriteSystem.h"
-#include "Shard/Ecs/CameraSystem.h"
-#include "Shard/Ecs/TransformSystem.h"
+#include "Shard/Ecs/Systems/Physics2DSystem.h"
+#include "Shard/Ecs/Systems/TextSystem.h"
+#include "Shard/Ecs/Systems/SimpleSpriteAnimationSystem.h"
+#include "Shard/Ecs/Systems/BasicShapesSystem.h"
+#include "Shard/Ecs/Systems/SpriteSystem.h"
+#include "Shard/Ecs/Systems/CameraSystem.h"
+#include "Shard/Ecs/Systems/TransformSystem.h"
 
 // ReSharper disable CppClangTidyClangDiagnosticHeaderHygiene
 #ifdef USE_SHARD_NAMESPACES

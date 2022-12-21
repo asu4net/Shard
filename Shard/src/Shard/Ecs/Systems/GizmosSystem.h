@@ -1,6 +1,6 @@
 ﻿#pragma once
-#include "Components.h"
-#include "System.h"
+#include "Ecs/Components.h"
+#include "Ecs/System.h"
 
 namespace Shard
 {
