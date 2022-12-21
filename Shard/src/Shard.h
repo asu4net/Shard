@@ -26,8 +26,3 @@
 #include "Shard/Ecs/Systems/SpriteSystem.h"
 #include "Shard/Ecs/Systems/CameraSystem.h"
 #include "Shard/Ecs/Systems/TransformSystem.h"
-
-// ReSharper disable CppClangTidyClangDiagnosticHeaderHygiene
-#ifdef USE_SHARD_NAMESPACES
-using namespace Shard;
-#endif
