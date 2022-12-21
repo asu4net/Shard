@@ -7,13 +7,12 @@
 #include "TransformSystem.h"
 #include "TimeData.h"
 #include "PhysicMaterial.h"
-
-using namespace Shard::Math;
-using namespace Shard::Rendering;
+#include "box2d/b2_circle_shape.h"
+#include "box2d/b2_polygon_shape.h"
 
 //TODO: Handle destruction. Add runtime body functions.
 
-namespace Shard::Ecs
+namespace Shard
 {
     Vector2 Physics2DSystem::m_gravity = { 0, -9.8f };
     b2World* Physics2DSystem::m_currentPhysicWorld = nullptr;

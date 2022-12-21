@@ -1,7 +1,7 @@
 #pragma once
 #include <GLEW/glew.h>
 
-namespace Shard::Rendering
+namespace Shard
 {
 	struct VertexBufferElement
 	{

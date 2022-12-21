@@ -1,6 +1,6 @@
 #pragma once
 
-namespace Shard::Ecs
+namespace Shard
 {
     struct PhysicMaterial
     {

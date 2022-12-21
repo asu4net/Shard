@@ -2,7 +2,7 @@
 
 //TODO: Add texture mode multiple and spriteSheets layouts (an array of pixel size for each sprite)
 
-namespace Shard::Rendering
+namespace Shard
 {
 	class Texture
 	{
@@ -14,7 +14,7 @@ namespace Shard::Rendering
 		Texture(const unsigned char* rawData);
 		~Texture();
 
-		std::array<Math::Vector2, 4> GetSubTexUvCoords(const Math::Vector2& pos, const Math::Vector2& size) const;
+		std::array<Vector2, 4> GetSubTexUvCoords(const Vector2& pos, const Vector2& size) const;
 		
 		void Bind(unsigned int slot = 0) const;
 		void Unbind() const;	

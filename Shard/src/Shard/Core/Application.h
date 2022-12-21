@@ -9,9 +9,9 @@ namespace Shard
     class Application
     {
     public:
-        Rendering::Window window;
+        Window window;
         ImGuiRenderer imGuiRenderer;
-        Ecs::Scene scene;
+        Scene scene;
         
         Application();
         virtual ~Application();
@@ -20,8 +20,8 @@ namespace Shard
 
         virtual void OnImGuiReady(ImGuiReadyArgs args);
         virtual void OnImGuiRender(ImGuiRenderArgs args);
-        virtual void OnRenderReady(Rendering::RenderReadyArgs args);
-        virtual void OnRenderFrame(Rendering::RenderFrameArgs args);
+        virtual void OnRenderReady(RenderReadyArgs args);
+        virtual void OnRenderFrame(RenderFrameArgs args);
         virtual void OnFixedUpdate();
     };
 

@@ -2,7 +2,7 @@
 #include "LogicSystem.h"
 #include "Components.h"
 
-namespace Shard::Ecs
+namespace Shard
 {
     void LogicSystem::OnSceneStart()
     {

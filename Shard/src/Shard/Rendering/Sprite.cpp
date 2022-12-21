@@ -1,9 +1,7 @@
 ﻿#include "shpch.h"
 #include "Sprite.h"
 
-using namespace Shard::Math;
-
-namespace Shard::Rendering
+namespace Shard
 {
     Sprite::Sprite(const std::string& texturePath, const std::shared_ptr<Shader>& shader)
         : mode(SpriteMode::Simple)
@@ -19,7 +17,7 @@ namespace Shard::Rendering
         AddTexture(m_texturePath);
     }
     
-    void Sprite::Draw(const Math::MvpData& mvp, const Math::Color& color)
+    void Sprite::Draw(const MvpData& mvp, const Color& color)
     {
         if (mode == SpriteMode::Simple)
         {

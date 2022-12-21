@@ -1,6 +1,6 @@
 #pragma once
 
-namespace Shard::Rendering
+namespace Shard
 {
 	class Shader
 	{
@@ -22,7 +22,7 @@ namespace Shard::Rendering
 		void SetUniformFloat(const char* name, float value);
 		void SetUniformMat4(const char* name, glm::mat4 value);
 		void SetUniformVec4(const char* name, glm::vec4 value);
-		void SetUniformVec3(const char* name, Math::Vector3 value);
+		void SetUniformVec3(const char* name, Vector3 value);
 
 		void Bind();
 		void Unbind();

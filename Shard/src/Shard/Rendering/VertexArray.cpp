@@ -2,7 +2,7 @@
 #include "VertexArray.h"
 #include "GLEW/glew.h"
 
-namespace Shard::Rendering
+namespace Shard
 {
 	VertexArray::VertexArray()
 	{

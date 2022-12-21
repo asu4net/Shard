@@ -6,7 +6,7 @@
 #include "TimeData.h"
 #include "Renderer.h"
 
-namespace Shard::Rendering
+namespace Shard
 {
 	static void APIENTRY OnDebugMessage(GLenum source, GLenum type, unsigned int id, GLenum severity,
 		GLsizei length, const char* message, const void* userParam)
@@ -29,14 +29,14 @@ namespace Shard::Rendering
 	constexpr int Window::DefaultHeight = 1080;
 	int Window::CurrentWindowWidth = DefaultWidth;
 	int Window::CurrentWindowHeight = DefaultHeight;
-	const Math::Color Window::DefaultColor = Math::Color::DarkGrey;
+	const Color Window::DefaultColor = Color::DarkGrey;
 	constexpr CursorMode Window::DefaultCursorMode = CursorMode::Normal;
 
 	//Static parameters
 	bool Window::ShowOpenGlDebugMessages = false;
 	bool Window::KeepWindowOpened = true;
 	
-	Window::Window(const int width, const int height, const char* name, const Math::Color& color)
+	Window::Window(const int width, const int height, const char* name, const Color& color)
 		: m_title(name)
 		, m_window(nullptr)
 		, m_width(width)
@@ -106,7 +106,7 @@ namespace Shard::Rendering
 		glfwSetWindowTitle(m_window, title.c_str());
 	}
 
-	Math::Vector3 Window::ScreenToWorldPoint(const Math::Vector2 screenPoint, const glm::mat4 proj, const glm::mat4 view)
+	Vector3 Window::ScreenToWorldPoint(const Vector2 screenPoint, const glm::mat4 proj, const glm::mat4 view)
 	{
 		const float halfScreenWidth =  static_cast<float>(CurrentWindowWidth) / 2;
 		const float halfScreenHeight =  static_cast<float>(CurrentWindowHeight) / 2;

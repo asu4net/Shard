@@ -2,10 +2,8 @@
 #include "Rendering/Renderer.h"
 #include "Rendering/Sprite.h"
 
-namespace Shard::Rendering::Primitives
+namespace Shard
 {
-	using namespace Math;
-
 	struct StaticCamera
 	{
 		inline static Window* window = nullptr;

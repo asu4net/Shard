@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-namespace Shard::Math
+namespace Shard
 {
     struct UvCoords
     {

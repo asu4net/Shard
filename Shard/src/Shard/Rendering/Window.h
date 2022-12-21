@@ -2,7 +2,7 @@
 
 struct GLFWwindow;
 
-namespace Shard::Rendering
+namespace Shard
 {
     class Window;
     
@@ -35,7 +35,7 @@ namespace Shard::Rendering
         static const int DefaultHeight;
         static int CurrentWindowWidth;
         static int CurrentWindowHeight;
-        static const Math::Color DefaultColor;
+        static const Color DefaultColor;
         static const CursorMode DefaultCursorMode;
         static bool ShowOpenGlDebugMessages;
         static bool KeepWindowOpened;
@@ -43,7 +43,7 @@ namespace Shard::Rendering
         Event<RenderFrameArgs> OnRenderFrame;
         Event<RenderReadyArgs> OnRenderReady;
         
-        explicit Window(const int width = DefaultWidth, const int height = DefaultHeight, const char* name = DefaultTitle, const Math::Color& color = DefaultColor);
+        explicit Window(const int width = DefaultWidth, const int height = DefaultHeight, const char* name = DefaultTitle, const Color& color = DefaultColor);
         Window(const Window& other) = delete;
         Window(Window&& other) = delete;
         ~Window() = default;
@@ -57,7 +57,7 @@ namespace Shard::Rendering
         CursorMode GetCursorMode() const { return m_cursorMode; }
         void SetCursorMode(const CursorMode mode);
 
-        void SetBackgroundColor(const Math::Color& color) { m_color = color; }
+        void SetBackgroundColor(const Color& color) { m_color = color; }
 
         float GetWidth() const { return static_cast<float>(m_bufferWidth); }
         float GetHeight() const { return static_cast<float>(m_bufferHeight); }
@@ -65,7 +65,7 @@ namespace Shard::Rendering
         
         float CurrentTime() const;
         
-        Math::Vector3 ScreenToWorldPoint(Math::Vector2 screenPoint, glm::mat4 proj = glm::mat4(1), glm::mat4 view = glm::mat4(1));
+        Vector3 ScreenToWorldPoint(Vector2 screenPoint, glm::mat4 proj = glm::mat4(1), glm::mat4 view = glm::mat4(1));
         
         void StartLoop();
 
@@ -75,7 +75,7 @@ namespace Shard::Rendering
         std::string m_title;
         GLFWwindow* m_window;
         int m_width, m_height;
-        Math::Color m_color;
+        Color m_color;
         int m_bufferWidth, m_bufferHeight;
         CursorMode m_cursorMode;
         bool m_loopStarted;

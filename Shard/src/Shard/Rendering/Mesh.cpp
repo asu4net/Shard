@@ -1,7 +1,7 @@
 #include "shpch.h"
 #include "Mesh.h"
 
-namespace Shard::Rendering
+namespace Shard
 {
 	Mesh::Mesh(unsigned int mode, bool uvLayout, float* vertices, unsigned int* indices, unsigned int verticesCount, unsigned int indicesCount)
     {

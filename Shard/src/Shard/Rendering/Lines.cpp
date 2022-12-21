@@ -1,7 +1,7 @@
 #include "shpch.h"
 #include "Lines.h"
 
-namespace Shard::Rendering
+namespace Shard
 {
     Lines::Lines(const std::vector<Line>& lines)
     {

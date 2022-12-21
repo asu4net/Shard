@@ -3,10 +3,8 @@
 #include "Rendering/Renderer.h"
 #include "Components.h"
 
-namespace Shard::Ecs
+namespace Shard
 {
-    using namespace Rendering;
-        
     void TextSystem::OnSceneUpdate()
     {
         const auto view = Registry().view<TextRenderer, Transform>();
@@ -42,7 +40,7 @@ namespace Shard::Ecs
         
         for (const std::string& charMesh : textRenderer.m_charMeshes)
         {
-            Math::MvpData mvp{charMatrix, mainCamera.View(), mainCamera.Projection()};
+            MvpData mvp{charMatrix, mainCamera.View(), mainCamera.Projection()};
             
             Renderer::DrawQuad(charMesh, mvp, Renderer::GetDefaultShader(),
                 textRenderer.color, true, textRenderer.font->GetTextureAtlasPath());

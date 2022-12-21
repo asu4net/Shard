@@ -36,7 +36,7 @@ namespace Shard
 	//Event listeners
 	void Application::OnImGuiReady(ImGuiReadyArgs args){}
 	void Application::OnImGuiRender(ImGuiRenderArgs args){}
-	void Application::OnRenderReady(Rendering::RenderReadyArgs args) {}
-	void Application::OnRenderFrame(Rendering::RenderFrameArgs args) {}
+	void Application::OnRenderReady(RenderReadyArgs args) {}
+	void Application::OnRenderFrame(RenderFrameArgs args) {}
 	void Application::OnFixedUpdate() {}
 }

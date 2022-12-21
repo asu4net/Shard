@@ -2,7 +2,7 @@
 #include "IndexBuffer.h"
 #include <GLEW/glew.h>
 
-namespace Shard::Rendering
+namespace Shard
 {
 	IndexBuffer::IndexBuffer(const unsigned int* data, unsigned int size)
 		: m_Count(size)

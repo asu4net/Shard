@@ -5,15 +5,8 @@
 
 namespace Shard
 {
-    namespace Rendering
-    {
-        class Window;
-    }
-
-    namespace Ecs
-    {
-        class Scene;
-    }
+    class Window;
+    class Scene;
 
     class Time
     {
@@ -33,7 +26,7 @@ namespace Shard
         static void CalculateDeltaTime(float currentTime);
         static void CheckFixedUpdate(std::function<void()> fixedUpdate = []{});
 
-        friend class Rendering::Window;
-        friend class Ecs::Scene;
+        friend class Window;
+        friend class Scene;
     };
 }

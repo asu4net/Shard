@@ -3,7 +3,7 @@
 #include "Renderer.h"
 #include "stb_truetype.h"
 
-namespace Shard::Rendering
+namespace Shard
 {
     Font::Font(const std::string& fileLocation, const int pixelHeight, const int height, const int width)
         : m_height(height)
@@ -107,7 +107,7 @@ namespace Shard::Rendering
         m_pixelsRgb = nullptr;
     }
 
-    Math::UvCoords Font::GetUvOfChar(const char c)
+    UvCoords Font::GetUvOfChar(const char c)
     {
         if (!m_bakedChar) return{};
 
@@ -116,16 +116,16 @@ namespace Shard::Rendering
         float xPos{0}, yPos{0};
         auto* q = new stbtt_aligned_quad();
         stbtt_GetBakedQuad(bakedCharPtr, m_width, m_height, c, &xPos, &yPos, q, true);
-        const Math::UvCoords uv{xPos, yPos, q->s0, q->s1, q->t0, q->t1, q->x0, q->x1, q->y0, q->y1};
+        const UvCoords uv{xPos, yPos, q->s0, q->s1, q->t0, q->t1, q->x0, q->x1, q->y0, q->y1};
         delete q;
         return uv;
     }
 
     std::string Font::CreateCharQuad(const char c)
     {
-        const Math::UvCoords uv = GetUvOfChar(c);
+        const UvCoords uv = GetUvOfChar(c);
 
-        Math::Vector2 s;
+        Vector2 s;
         s.x = (uv.s1 - uv.s0);
         s.y = (uv.t1 - uv.t0);
         //s = s.Normalized() / 2;

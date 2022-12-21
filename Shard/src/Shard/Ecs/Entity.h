@@ -5,7 +5,7 @@
 #define TRANSFORM_REF(_ENTITY) auto& _ENTITY##Tr = _ENTITY.Get<Transform>()
 #define ENTITY_ACCESS_ERROR(_FUNC) std::cout << "Error!: " << #_FUNC << "<" << T::GetType()->GetName().c_str() << ">() called on invalid entity id: " << static_cast<int>(m_entityHandler) << std::endl;
 
-namespace Shard::Ecs
+namespace Shard
 {
     struct Transform;
 

@@ -2,7 +2,7 @@
 #include "VertexBuffer.h"
 #include "VertexBufferLayout.h"
 
-namespace Shard::Rendering
+namespace Shard
 {
 	class VertexArray
 	{

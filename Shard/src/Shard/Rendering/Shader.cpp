@@ -3,7 +3,7 @@
 #include <GLEW/glew.h>
 #include "ShaderStrings.h"
 
-namespace Shard::Rendering
+namespace Shard
 {
     const int Shader::GetUniform(const char* name) const { return glGetUniformLocation(shaderID, name); }
 
@@ -151,7 +151,7 @@ namespace Shard::Rendering
 		glUniform4fv(location, 1, glm::value_ptr(value));
 	}
 	
-	void Shader::SetUniformVec3(const char* name, Math::Vector3 value)
+	void Shader::SetUniformVec3(const char* name, Vector3 value)
 	{
 		int location = GetUniform(name);
 		glUniform3fv(location, 1, glm::value_ptr(value.ToGlm()));

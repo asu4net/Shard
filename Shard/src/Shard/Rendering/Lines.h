@@ -2,14 +2,14 @@
 #include "VertexArray.h"
 #include "VertexBuffer.h"
 
-//TODO: usar glBufferSubData para actualizar las líneas
+//TODO: usar glBufferSubData para actualizar las lï¿½neas
 
-namespace Shard::Rendering
+namespace Shard
 {
     struct Line
     {
-        Math::Vector3 start;
-        Math::Vector3 end;
+        Vector3 start;
+        Vector3 end;
     };
 
     class Lines

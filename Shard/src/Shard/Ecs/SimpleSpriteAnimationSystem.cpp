@@ -3,7 +3,7 @@
 #include "Components.h"
 #include "TimeData.h"
 
-namespace Shard::Ecs
+namespace Shard
 {
     void SimpleSpriteAnimationSystem::OnSceneUpdate()
     {

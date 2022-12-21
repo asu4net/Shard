@@ -2,7 +2,7 @@
 #include "VertexBuffer.h"
 #include "GLEW/glew.h"
 
-namespace Shard::Rendering
+namespace Shard
 {
 	VertexBuffer::VertexBuffer(const void* data, unsigned int size)
 	{

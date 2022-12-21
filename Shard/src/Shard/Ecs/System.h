@@ -1,7 +1,7 @@
 #pragma once
 #include "entt.hpp"
 
-namespace Shard::Ecs
+namespace Shard
 {
     class Scene;
     class Entity;

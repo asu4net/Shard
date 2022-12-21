@@ -1,7 +1,7 @@
 #include "shpch.h"
 #include "Color.h"
 
-namespace Shard::Math
+namespace Shard
 {
     const Color Color::Black = { 0, 0, 0, 1 };
     const Color Color::Blue = { 0, 0, 1, 1 };

@@ -4,11 +4,11 @@
 
 namespace Shard
 {
-    Type* TypeManager::m_FirstType = nullptr;
+    Type* TypeManager::m_firstType = nullptr;
 
     void TypeManager::PrintTypes()
     {
-        const Type* currentType = m_FirstType;
+        const Type* currentType = m_firstType;
         while (currentType)
         {
             printf("%s\n", currentType->GetName().c_str());
@@ -18,7 +18,7 @@ namespace Shard
 
     const Type* TypeManager::GetType(std::string name)
     {
-        const Type* currentType = m_FirstType;
+        const Type* currentType = m_firstType;
 
         while (currentType)
         {

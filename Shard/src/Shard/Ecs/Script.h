@@ -1,7 +1,7 @@
 #pragma once
 #include "Entity.h"
 
-namespace Shard::Ecs
+namespace Shard
 {
     class Script
     {

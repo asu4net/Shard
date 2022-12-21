@@ -30,8 +30,4 @@
 // ReSharper disable CppClangTidyClangDiagnosticHeaderHygiene
 #ifdef USE_SHARD_NAMESPACES
 using namespace Shard;
-using namespace Math;
-using namespace Rendering;
-using namespace Primitives;
-using namespace Ecs;
 #endif

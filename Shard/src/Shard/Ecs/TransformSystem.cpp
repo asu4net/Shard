@@ -3,7 +3,7 @@
 #include "Components.h"
 #include "Entity.h"
 
-namespace Shard::Ecs
+namespace Shard
 {
     void TransformSystem::OnSceneUpdate()
     {
@@ -36,27 +36,27 @@ namespace Shard::Ecs
         model = glm::scale(model, t.m_worldScale.ToGlm());
         t.m_model = model;
 
-        t.m_right = Math::Vector3::LookAt(t.rotation, Math::Vector3::right);
-        t.m_up = Math::Vector3::LookAt(t.rotation, Math::Vector3::up);
-        t.m_forward = Math::Vector3::LookAt(t.rotation, Math::Vector3::forward);
+        t.m_right = Vector3::LookAt(t.rotation, Vector3::right);
+        t.m_up = Vector3::LookAt(t.rotation, Vector3::up);
+        t.m_forward = Vector3::LookAt(t.rotation, Vector3::forward);
     }
 
-    void TransformSystem::SmoothTranslation(Transform& transform, const Math::Vector3& destination, const float deltaSpeed, const float offset)
+    void TransformSystem::SmoothTranslation(Transform& transform, const Vector3& destination, const float deltaSpeed, const float offset)
     {
-        const Math::Vector3 moveDir = (destination - transform.position).Normalized();
-        const Math::Vector3 newPos = transform.position + moveDir * deltaSpeed;
-        if (Math::Vector3::Distance(destination, newPos) <= offset)
+        const Vector3 moveDir = (destination - transform.position).Normalized();
+        const Vector3 newPos = transform.position + moveDir * deltaSpeed;
+        if (Vector3::Distance(destination, newPos) <= offset)
             return;
         transform.position = newPos;
     }
 
-    void TransformSystem::Rotate(Transform& transform, const float degrees, const Math::Vector3& axis)
+    void TransformSystem::Rotate(Transform& transform, const float degrees, const Vector3& axis)
     {
         transform.rotation = transform.rotation * glm::normalize(glm::angleAxis(glm::radians(degrees), axis.ToGlm()));
         transform.rotation = glm::normalize(transform.rotation);
     }
 
-    void TransformSystem::RotateAround(Transform& transform, const float degrees, const Math::Vector3& axis)
+    void TransformSystem::RotateAround(Transform& transform, const float degrees, const Vector3& axis)
     {
         transform.rotation = glm::normalize(glm::angleAxis(glm::radians(degrees), axis.ToGlm())) * transform.rotation;
         transform.rotation = glm::normalize(transform.rotation);

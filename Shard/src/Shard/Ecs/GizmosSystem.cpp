@@ -3,9 +3,7 @@
 #include "Rendering/Renderer.h"
 #include "Components.h"
 
-using namespace Shard::Math;
-
-namespace Shard::Ecs
+namespace Shard
 {
     void GizmosSystem::OnSceneUpdate()
     {
@@ -35,8 +33,8 @@ namespace Shard::Ecs
         gizmosTransform *= glm::toMat4(transform.WorldRotation());
         gizmosTransform = glm::scale(gizmosTransform, { size, size, 1.f });
 
-        Math::MvpData mvp{ gizmosTransform, GetCamera().View(), GetCamera().Projection() };
-        Rendering::Renderer::DrawCircle(mvp, color, .05f, 0.005f);
+        MvpData mvp{ gizmosTransform, GetCamera().View(), GetCamera().Projection() };
+        Renderer::DrawCircle(mvp, color, .05f, 0.005f);
     }
 
     void GizmosSystem::DrawBoxCollider2D(const Color& color, const Transform& transform, BoxCollider2D& boxCollider2D)
@@ -46,7 +44,7 @@ namespace Shard::Ecs
         gizmosTransform *= glm::toMat4(transform.WorldRotation());
         gizmosTransform = glm::scale(gizmosTransform, { boxCollider2D.size.x, boxCollider2D.size.y, 1.f });
 
-        Math::MvpData mvp{ gizmosTransform, GetCamera().View(), GetCamera().Projection() };
-        Rendering::Renderer::DrawLines(Rendering::Renderer::GetDefaultLineBox2D(), mvp, color);
+        MvpData mvp{ gizmosTransform, GetCamera().View(), GetCamera().Projection() };
+        Renderer::DrawLines(Renderer::GetDefaultLineBox2D(), mvp, color);
     }
 }

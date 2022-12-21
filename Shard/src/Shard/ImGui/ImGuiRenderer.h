@@ -15,8 +15,8 @@ namespace Shard
         Event<ImGuiRenderArgs> OnImGuiRender;
         Event<ImGuiReadyArgs> OnImGuiReady;
 
-        void ListenWindowEvents(Rendering::Window& window);
-        void OnRenderReady(Rendering::RenderReadyArgs args);
-        void OnRenderFrame(Rendering::RenderFrameArgs args);
+        void ListenWindowEvents(Window& window);
+        void OnRenderReady(RenderReadyArgs args);
+        void OnRenderFrame(RenderFrameArgs args);
     };
 }

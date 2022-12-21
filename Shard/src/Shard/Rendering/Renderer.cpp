@@ -2,7 +2,7 @@
 #include "Renderer.h"
 #include "ShaderStrings.h"
 
-namespace Shard::Rendering
+namespace Shard
 {
     std::shared_ptr<Shader> Renderer::defaultShader;
     std::shared_ptr<Shader> Renderer::circleShader;
@@ -33,10 +33,10 @@ namespace Shard::Rendering
 
         const std::function genDefaultLineBox2D = []
         {
-            Line a{ Math::Vector3(-0.5, -0.5, 0), Math::Vector3(0.5, -0.5, 0) };
-            Line b{ Math::Vector3(0.5, -0.5, 0), Math::Vector3(0.5, 0.5, 0) };
-            Line c{ Math::Vector3(0.5, 0.5, 0), Math::Vector3(-0.5, 0.5, 0) };
-            Line d{ Math::Vector3(-0.5, 0.5, 0), Math::Vector3(-0.5, -0.5, 0) };
+            Line a{ Vector3(-0.5, -0.5, 0), Vector3(0.5, -0.5, 0) };
+            Line b{ Vector3(0.5, -0.5, 0), Vector3(0.5, 0.5, 0) };
+            Line c{ Vector3(0.5, 0.5, 0), Vector3(-0.5, 0.5, 0) };
+            Line d{ Vector3(-0.5, 0.5, 0), Vector3(-0.5, -0.5, 0) };
             std::vector<Line> lines = { a, b, c, d };
             return lines;
         };
@@ -145,7 +145,7 @@ namespace Shard::Rendering
     {
         std::stringstream ss;
 
-        const std::function fn = [&ss](const std::array<Math::Vector2, 4>& vectors)
+        const std::function fn = [&ss](const std::array<Vector2, 4>& vectors)
         {
             for (const auto& v : vectors) { ss << v.x; ss << v.y; }
         };
@@ -156,8 +156,8 @@ namespace Shard::Rendering
         return ss.str();
     }
 
-    void Renderer::DrawQuad(const std::string&   meshKey, const Math::MvpData& matrices,
-                            const std::shared_ptr<Shader>& shader, const Math::Color& color, const bool useTexture,
+    void Renderer::DrawQuad(const std::string&   meshKey, const MvpData& matrices,
+                            const std::shared_ptr<Shader>& shader, const Color& color, const bool useTexture,
                             const std::string& texturePath, const float uvMultiplier, const BlendingMode blendingMode)
     {
         if (!m_initialized) return;
@@ -199,7 +199,7 @@ namespace Shard::Rendering
         SetBlendMode(BlendingMode::Alpha);
     }
     
-    void Renderer::DrawCircle(const Math::MvpData& matrices, const Math::Color& color, const float thickness, const float fade)
+    void Renderer::DrawCircle(const MvpData& matrices, const Color& color, const float thickness, const float fade)
     {
         if (!m_initialized) return;
         circleShader->Bind();
@@ -212,7 +212,7 @@ namespace Shard::Rendering
         
         DrawQuad(m_defaultQuadKey, matrices, circleShader, color);
     }
-    void Renderer::DrawLines(const std::string& linesKey, const Math::MvpData& matrices, const Math::Color& color)
+    void Renderer::DrawLines(const std::string& linesKey, const MvpData& matrices, const Color& color)
     {
         if (!m_initialized) return;
 

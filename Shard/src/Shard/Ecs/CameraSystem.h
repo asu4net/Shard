@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "System.h"
 
-namespace Shard::Ecs
+namespace Shard
 {
     struct Transform;
     struct Camera;

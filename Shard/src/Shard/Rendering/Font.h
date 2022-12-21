@@ -3,7 +3,7 @@
 #include "Rendering/Mesh.h"
 #include "Math/SimpleStructs.h"
 
-namespace Shard::Rendering
+namespace Shard
 {
     constexpr int CharCount = 256;
     
@@ -40,7 +40,7 @@ namespace Shard::Rendering
         void BakeFontBuffer(const unsigned char* buffer);
         void ClearBuffers();
         
-        Math::UvCoords GetUvOfChar(const char c);
+        UvCoords GetUvOfChar(const char c);
         std::string CreateCharQuad(const char c);
     };
 }

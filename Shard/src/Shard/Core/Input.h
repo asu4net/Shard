@@ -10,7 +10,7 @@ namespace Shard
 		static void Init(GLFWwindow* window);
 		static bool GetKeyPressed(int keycode);
 		static bool GetMouseButtonPressed(int button);
-		static Math::Vector2 GetMousePosition();
+		static Vector2 GetMousePosition();
 
 	private:
 		static GLFWwindow* m_Window;

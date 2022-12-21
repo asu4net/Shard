@@ -8,13 +8,13 @@
 
 namespace Shard
 {
-    void ImGuiRenderer::ListenWindowEvents(Rendering::Window& window)
+    void ImGuiRenderer::ListenWindowEvents(Window& window)
     {
         window.OnRenderReady.ADD_LISTENER(ImGuiRenderer, OnRenderReady);
         window.OnRenderFrame.ADD_LISTENER(ImGuiRenderer, OnRenderFrame);
     }
 
-    void ImGuiRenderer::OnRenderReady(Rendering::RenderReadyArgs args)
+    void ImGuiRenderer::OnRenderReady(RenderReadyArgs args)
     {
         IMGUI_CHECKVERSION();
         ImGui::CreateContext();
@@ -28,7 +28,7 @@ namespace Shard
         OnImGuiReady.Invoke({});
     }
 
-    void ImGuiRenderer::OnRenderFrame(Rendering::RenderFrameArgs args)
+    void ImGuiRenderer::OnRenderFrame(RenderFrameArgs args)
     {
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();

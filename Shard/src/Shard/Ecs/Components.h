@@ -2,13 +2,11 @@
 #include "Entity.h"
 #include "Rendering/Font.h"
 #include "Rendering/Sprite.h"
-#include "box2d/b2_polygon_shape.h"
-#include "box2d/b2_circle_shape.h"
 #include "box2d/b2_body.h"
 #include "PhysicMaterial.h"
 #include "Script.h"
 
-namespace Shard::Ecs
+namespace Shard
 {
     struct BaseComponent : public Object
     {
@@ -35,23 +33,23 @@ namespace Shard::Ecs
     {
     SHARD_OBJECT(Transform, BaseComponent)
     public:
-        Math::Vector3 position;
+        Vector3 position;
         glm::quat rotation = IdentityQuat;
-        Math::Vector3 scale = Math::Vector3::one;
+        Vector3 scale = Vector3::one;
         Entity parent;
         
-        Math::Vector3 Right() const { return m_right; }
-        Math::Vector3 Up() const { return m_up; }
-        Math::Vector3 Forward() const { return m_forward; }
+        Vector3 Right() const { return m_right; }
+        Vector3 Up() const { return m_up; }
+        Vector3 Forward() const { return m_forward; }
         glm::mat4 Model() const { return m_model; }
-        Math::Vector3 WorldPosition() const { return m_worldPosition; }
+        Vector3 WorldPosition() const { return m_worldPosition; }
         glm::quat WorldRotation() const { return m_worldRotation; }
         
     private:
-        Math::Vector3 m_worldPosition;
+        Vector3 m_worldPosition;
         glm::quat m_worldRotation = IdentityQuat;
-        Math::Vector3 m_worldScale = Math::Vector3::one;
-        Math::Vector3 m_right, m_up, m_forward;
+        Vector3 m_worldScale = Vector3::one;
+        Vector3 m_right, m_up, m_forward;
         glm::mat4 m_model{1};
         
         friend class TransformSystem;
@@ -84,10 +82,10 @@ namespace Shard::Ecs
     {
     SHARD_OBJECT(QuadRenderer, BaseComponent) 
     public:
-        Math::Color color;
+        Color color;
         bool enabled = true;
         
-        QuadRenderer(const Math::Color& theColor = Math::Color::White)
+        QuadRenderer(const Color& theColor = Color::White)
             : color(theColor) {}
     };
     
@@ -95,12 +93,12 @@ namespace Shard::Ecs
     {
     SHARD_OBJECT(CircleRenderer, BaseComponent) 
     public:
-        Math::Color color;
+        Color color;
         float thickness;
         float fade;
         bool enabled = true;
         
-        CircleRenderer(const Math::Color& theColor = Math::Color::White
+        CircleRenderer(const Color& theColor = Color::White
             , const float theThickness = 1.f
             , const float theFade = 0.005f)
             : color(theColor), thickness(theThickness), fade(theFade) 
@@ -112,10 +110,10 @@ namespace Shard::Ecs
     {
     SHARD_OBJECT(SpriteRenderer, BaseComponent) 
     public:
-        std::shared_ptr<Rendering::Sprite> sprite;
-        std::shared_ptr<Rendering::Shader> shader;
+        std::shared_ptr<Sprite> sprite;
+        std::shared_ptr<Shader> shader;
         int orderInLayer = 0;
-        Math::Color color = Math::Color::White;
+        Color color = Color::White;
         bool enabled = true;
         
         SpriteRenderer(const std::string& texturePath = "",
@@ -123,11 +121,11 @@ namespace Shard::Ecs
             const std::string& fragmentLoc = "")
         {
             if (vertexLoc.empty() || fragmentLoc.empty())
-                shader = std::make_shared<Rendering::Shader>();
+                shader = std::make_shared<Shader>();
             else
-                shader = std::make_shared<Rendering::Shader>(vertexLoc.c_str(), fragmentLoc.c_str());
+                shader = std::make_shared<Shader>(vertexLoc.c_str(), fragmentLoc.c_str());
 
-            sprite = std::make_shared<Rendering::Sprite>(texturePath, shader);
+            sprite = std::make_shared<Sprite>(texturePath, shader);
         }
     };
     
@@ -135,13 +133,13 @@ namespace Shard::Ecs
     {
     SHARD_OBJECT(TextRenderer, BaseComponent) 
     public:
-        std::shared_ptr<Rendering::Font> font;
+        std::shared_ptr<Font> font;
         float spacing = .3f;
-        Math::Color color;
+        Color color;
         bool enabled = true;
         
-        TextRenderer(std::string text = "", const Math::Color& color = Math::Color::Black, const std::string& fontPath = "res/Fonts/Orange.ttf")
-            : font(std::make_shared<Rendering::Font>(fontPath))
+        TextRenderer(std::string text = "", const Color& color = Color::Black, const std::string& fontPath = "res/Fonts/Orange.ttf")
+            : font(std::make_shared<Font>(fontPath))
             , color(color)
             , m_text(std::move(text))
         {}
@@ -182,13 +180,13 @@ namespace Shard::Ecs
     SHARD_OBJECT(CircleCollider, BaseComponent) 
     public:
         float radius = 1;
-        Math::Vector2 center;
+        Vector2 center;
         PhysicMaterial physicMaterial;
 
         b2Fixture& RuntimeFixture() { return *m_fixture; }
 
         CircleCollider() = default;
-        CircleCollider(float radius, Math::Vector2 center = Math::Vector3::zero)
+        CircleCollider(float radius, Vector2 center = Vector3::zero)
             : radius(radius),  center(center)
         {}
 
@@ -203,21 +201,21 @@ namespace Shard::Ecs
     {
     SHARD_OBJECT(BoxCollider2D, BaseComponent) 
     public:
-        Math::Vector2 size{1, 1};
-        Math::Vector2 center;
+        Vector2 size{1, 1};
+        Vector2 center;
         PhysicMaterial physicMaterial;
 
         BoxCollider2D() = default;
 
         b2Fixture& RuntimeFixture() { return *m_fixture; }
 
-        BoxCollider2D(Math::Vector2 size, Math::Vector2 center = Math::Vector3::zero)
+        BoxCollider2D(Vector2 size, Vector2 center = Vector3::zero)
             : size(size), center(center)
         {}
 
     private:
         b2Fixture* m_fixture = nullptr;
-        Math::Vector2 m_prevSize;
+        Vector2 m_prevSize;
 
         friend class Physics2DSystem;
     };

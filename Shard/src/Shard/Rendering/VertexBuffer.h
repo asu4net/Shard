@@ -1,6 +1,6 @@
 #pragma once
 
-namespace Shard::Rendering
+namespace Shard
 {
 	class VertexBuffer
 	{

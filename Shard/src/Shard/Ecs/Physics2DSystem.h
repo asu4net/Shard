@@ -5,7 +5,7 @@
 struct b2FixtureDef;
 class b2Shape;
 
-namespace Shard::Ecs
+namespace Shard
 {
     struct Physicbody2D;
     struct BoxCollider2D;
@@ -19,16 +19,16 @@ namespace Shard::Ecs
     public:
         ~Physics2DSystem() { m_currentPhysicWorld = nullptr; }
 
-        static const Math::Vector2 GetGravity() { return m_gravity; }
-        static void SetGravity(const Math::Vector2& gravity);
+        static const Vector2 GetGravity() { return m_gravity; }
+        static void SetGravity(const Vector2& gravity);
 
     private:
-        static Math::Vector2 m_gravity;
+        static Vector2 m_gravity;
         static b2World* m_currentPhysicWorld;
         static int32 m_velocityIterations;
         static int32 m_positionIterations;
 
-        void CreateBody(Physicbody2D& pb2D, const Math::Vector3& position, const glm::quat& rotation);
+        void CreateBody(Physicbody2D& pb2D, const Vector3& position, const glm::quat& rotation);
         
         static void CreateBoxFixture(Physicbody2D& pb2D, BoxCollider2D& boxCollider2D);
         static void CreateCircleFixture(Physicbody2D& pb2D, CircleCollider& circleCollider);
@@ -49,4 +49,3 @@ namespace Shard::Ecs
         void OnComponentAdded(ComponentArgs args) override;
     };
 }
-

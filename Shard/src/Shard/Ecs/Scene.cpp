@@ -14,11 +14,11 @@
 #include "TimeData.h"
 #include "LogicSystem.h"
 
-namespace Shard::Ecs
+namespace Shard
 {
     std::map<entt::entity, Entity> Entity::m_entities;
     
-    Scene::Scene(Rendering::Window* window)
+    Scene::Scene(Window* window)
         : m_window(window)
     {
         window->OnRenderReady.ADD_LISTENER(Scene, OnRenderReady);
@@ -80,14 +80,14 @@ namespace Shard::Ecs
         return GetEntityByHandler(CameraSystem::MainCameraEntityHandler());
     }
     
-    void Scene::OnRenderReady(Rendering::RenderReadyArgs args)
+    void Scene::OnRenderReady(RenderReadyArgs args)
     {
         const Entity mainCamera = CreateEntity("Main Camera");
         mainCamera.Add<Camera>();
         for (System* system : m_systems) system->OnSceneStart();
     }
 
-    void Scene::OnRenderFrame(Rendering::RenderFrameArgs args)
+    void Scene::OnRenderFrame(RenderFrameArgs args)
     {
         for (System* system : m_systems) system->OnSceneUpdate();
         Time::CheckFixedUpdate([&] { OnFixedUpdate(); });

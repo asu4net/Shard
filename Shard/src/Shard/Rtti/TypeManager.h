@@ -8,7 +8,7 @@ namespace Shard
     class TypeManager
     {
     private:
-        static Type* m_FirstType;
+        static Type* m_firstType;
 
     public:
         static void PrintTypes();

@@ -4,12 +4,12 @@
 #include "Texture.h"
 #include "Lines.h"
 
-namespace Shard::Rendering
+namespace Shard
 {
 	struct QuadLayout
 	{
-		std::array<Math::Vector2, 4> size;
-		std::array<Math::Vector2, 4> uv;
+		std::array<Vector2, 4> size;
+		std::array<Vector2, 4> uv;
 	};
 
 	enum class BlendingMode
@@ -45,22 +45,22 @@ namespace Shard::Rendering
 		static std::string GetDefaultQuad() { return m_defaultQuadKey; }
 		
 		static void DrawQuad(const std::string& meshKey,
-			const Math::MvpData& matrices,
+			const MvpData& matrices,
 			const std::shared_ptr<Shader>& shader = defaultShader,
-			const Math::Color& color = Math::Color::White,
+			const Color& color = Color::White,
 			const bool useTexture = false,
 			const std::string& texturePath = "",
 			const float uvMultiplier = 1.f,
 			const BlendingMode blendingMode = BlendingMode::Alpha);
 
-		static void DrawCircle(const Math::MvpData& matrices,
-			const Math::Color& color = Math::Color::White,
+		static void DrawCircle(const MvpData& matrices,
+			const Color& color = Color::White,
 			const float thickness = 1.f,
 			const float fade = .005f);
 
 		static void DrawLines(const std::string& linesKey,
-			const Math::MvpData& matrices,
-			const Math::Color& color = Math::Color::White);
+			const MvpData& matrices,
+			const Color& color = Color::White);
 
 	private:
 		static bool m_initialized;

@@ -2,9 +2,7 @@
 #include "entt.hpp"
 #include "Rendering/Window.h"
 
-namespace Shard::Rendering { class Window; }
-
-namespace Shard::Ecs
+namespace Shard
 {
     class System;
     class Entity;
@@ -22,7 +20,7 @@ namespace Shard::Ecs
         std::function<void()> OnFixedUpdateCalled;
 
         Scene() = default;
-        Scene(Rendering::Window* window);
+        Scene(Window* window);
         ~Scene();
 
         Entity CreateEntity(const std::string& name = "Entity", const std::string& tag = "Default");
@@ -32,7 +30,7 @@ namespace Shard::Ecs
         
     private:
         entt::registry m_registry;
-        Rendering::Window* m_window = nullptr;
+        Window* m_window = nullptr;
         std::vector<System*> m_systems;
 
         template<class T>
@@ -43,8 +41,8 @@ namespace Shard::Ecs
             m_systems.push_back(system);
         }
         
-        void OnRenderReady(Rendering::RenderReadyArgs args);
-        void OnRenderFrame(Rendering::RenderFrameArgs args);
+        void OnRenderReady(RenderReadyArgs args);
+        void OnRenderFrame(RenderFrameArgs args);
         void OnFixedUpdate();
         
         friend class Entity;

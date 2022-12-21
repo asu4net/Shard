@@ -2,7 +2,7 @@
 
 struct b2Vec2;
 
-namespace Shard::Math
+namespace Shard
 {
     struct Vector3;
     struct Vector2

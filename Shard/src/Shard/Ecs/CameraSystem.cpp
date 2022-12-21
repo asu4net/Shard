@@ -3,7 +3,7 @@
 #include "TransformSystem.h"
 #include "Components.h"
 
-namespace Shard::Ecs
+namespace Shard
 {
     entt::entity CameraSystem::m_mainCamera;
 

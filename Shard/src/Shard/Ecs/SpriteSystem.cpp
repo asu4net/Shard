@@ -2,7 +2,7 @@
 #include "SpriteSystem.h"
 #include "Components.h"
 
-namespace Shard::Ecs
+namespace Shard
 {
     void SpriteSystem::OnSceneUpdate()
     {
@@ -17,7 +17,7 @@ namespace Shard::Ecs
         {
             const auto& [spriteRenderer, transform] = view.get<SpriteRenderer, Transform>(entity);
             if (!spriteRenderer.enabled) return;
-            Math::MvpData mvp{ transform.Model(), GetCamera().View(), GetCamera().Projection()};
+            MvpData mvp{ transform.Model(), GetCamera().View(), GetCamera().Projection()};
             spriteRenderer.sprite->Draw(mvp, spriteRenderer.color);
         }
     }

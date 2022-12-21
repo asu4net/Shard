@@ -4,7 +4,7 @@
 #include "Entity.h"
 #include "Components.h"
 
-namespace Shard::Ecs
+namespace Shard
 {
     void System::Initialize(Scene* scene)
     {

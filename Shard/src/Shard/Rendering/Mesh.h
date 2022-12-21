@@ -8,7 +8,7 @@
 #define MESH_3D 3
 #define MESH_2D 2
 
-namespace Shard::Rendering
+namespace Shard
 {
 	class Mesh
 	{

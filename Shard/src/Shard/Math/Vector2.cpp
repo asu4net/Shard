@@ -2,7 +2,7 @@
 #include "Vector2.h"
 #include "box2d/b2_math.h"
 
-namespace Shard::Math
+namespace Shard
 {
     const Vector2 Vector2::zero = { 0, 0 };
     const Vector2 Vector2::one = { 1, 1 };
