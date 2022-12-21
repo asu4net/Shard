@@ -6,7 +6,7 @@ class RedCubeScript : public Script
 {
     void Start() override
     {
-        std::cout << "Blue entity start!" << std::endl;
+        std::cout << "Red entity start!" << std::endl;
     }
 
     void Update() override
@@ -16,9 +16,8 @@ class RedCubeScript : public Script
 
     void OnCollision(Entity entity) override
     {
-        if (!entity.IsValid() || static_cast<int>(entity.GetHandler()) == 1) return;
         std::cout << entity.Get<Tag>().name << std::endl;
-        DestroyEntity(entity);
+        //DestroyEntity(entity);
     }
 };
 
@@ -28,17 +27,10 @@ class Game final : public Application
     Entity entityB;
     float move = 10;
     float torque = 5;
-
-    Entity entityD;
     
     void OnRenderReady(RenderReadyArgs args) override
     {
         window.SetTitle("Test - Alejandro :D");
-        {
-            entityD = scene.CreateEntity();
-            entityD.Add<Physicbody2D>();
-            entityD.Add<BoxCollider2D>();
-        }
         
         entityA = scene.CreateEntity("Red Cube");
         {
