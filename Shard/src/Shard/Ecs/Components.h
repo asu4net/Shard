@@ -254,9 +254,9 @@ namespace Shard
         Logic() = default;
 
         template<typename T>
-        Script& AddScript()
+        T& AddScript()
         {
-            Script* script = new T();
+            T* script = new T();
             script->m_entity = m_entity;
             script->m_scene = m_scene;
             m_scripts.push_back(script);

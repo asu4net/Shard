@@ -15,6 +15,13 @@ namespace Shard
     {
         const Entity mainCamera = GetMainCameraEntity();
         if (!mainCamera.IsValid()) return;
-        Get<Transform>().position += scrollRate + mainCamera.Get<Transform>().position;
+
+        const Vector3 currentCameraPosition = mainCamera.Get<Transform>().position;
+        Vector3 deltaMovement = currentCameraPosition - lastCameraPosition;
+        lastCameraPosition = currentCameraPosition;
+        deltaMovement.x *= scrollScale.x;
+        deltaMovement.y *= scrollScale.y;
+        //Get<Transform>().position += scrollRate + mainCamera.Get<Transform>().position;
+        Get<Transform>().position += deltaMovement;
     }
 }

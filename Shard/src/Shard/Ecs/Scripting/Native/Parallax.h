@@ -7,9 +7,12 @@ namespace Shard
     {
         SHARD_OBJECT(Parallax, Script)
     public:
-        Vector2 scrollRate;
+        Vector2 scrollScale = {1, 1};
         
         void Start() override;
         void Update() override;
+
+    private:
+        Vector3 lastCameraPosition;
     };
 }
