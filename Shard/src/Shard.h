@@ -26,3 +26,6 @@
 #include "Shard/Ecs/Systems/SpriteSystem.h"
 #include "Shard/Ecs/Systems/CameraSystem.h"
 #include "Shard/Ecs/Systems/TransformSystem.h"
+
+#include "Shard/Ecs/Scripting/Native/Parallax.h"
+#include "Shard/Ecs/Scripting/Native/CameraController.h"

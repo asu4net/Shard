@@ -16,7 +16,7 @@
 namespace Shard
 {
     std::map<entt::entity, Entity> Entity::m_entities;
-    
+
     Scene::Scene(Window* window)
         : m_window(window)
     {
@@ -25,7 +25,7 @@ namespace Shard
 
         AddSystem<LogicSystem>();
         AddSystem<Physics2DSystem>();
-
+        
         AddSystem<TransformSystem>();
         AddSystem<CameraSystem>();
 

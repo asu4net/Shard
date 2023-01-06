@@ -30,8 +30,13 @@ class Game final : public Application
     
     void OnRenderReady(RenderReadyArgs args) override
     {
-        window.SetTitle("Test - Alejandro :D");
+        TypeManager::PrintTypes();
+
+        {
+            
+        }
         
+        window.SetTitle("Test - Alejandro :D");
         entityA = scene.CreateEntity("Red Cube");
         {
             entityA.Get<Transform>().position += Vector3::up * 2.f;

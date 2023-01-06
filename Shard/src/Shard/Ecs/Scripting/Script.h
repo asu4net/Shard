@@ -3,8 +3,9 @@
 
 namespace Shard
 {
-    class Script
+    class Script : public Object
     {
+        SHARD_OBJECT(Script, Object)
     public:
         Script() = default;
 
@@ -17,30 +18,35 @@ namespace Shard
         template<typename T>
         bool Has() const
         {
-            return entity.Has<T>();
+            return m_entity.Has<T>();
         }
 
         template<typename T, typename... Args>
         T& Add(Args&&... args) const
         {
-            return entity.Add<T>(args);
+            return m_entity.Add<T>(args);
         }
 
         template<typename T>
         T& Get() const
         {
-            return entity.Get<T>();
+            return m_entity.Get<T>();
         }
 
         template<typename T>
         void Remove() const
         {
-            entity.Remove<T>();
+            m_entity.Remove<T>();
         }
 
         Entity CreateEntity(const std::string& name = "Entity", const std::string& tag = "Default")
         {
             return m_scene->CreateEntity();
+        }
+
+        Entity GetMainCameraEntity()
+        {
+            return m_scene->GetMainCameraEntity();
         }
 
         void DestroyEntity(Entity entity) { m_scene->DestroyEntity(entity); }

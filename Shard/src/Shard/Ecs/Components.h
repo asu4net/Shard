@@ -116,6 +116,13 @@ namespace Shard
         Color color = Color::White;
         bool enabled = true;
         
+        SpriteRenderer(const Color& color)
+            : color(color)
+        {
+            shader = std::make_shared<Shader>();
+            sprite = std::make_shared<Sprite>("", shader);
+        }
+        
         SpriteRenderer(const std::string& texturePath = "",
             const std::string& vertexLoc = "",
             const std::string& fragmentLoc = "")
@@ -158,7 +165,7 @@ namespace Shard
     {
     SHARD_OBJECT(SimpleSpriteAnimation, BaseComponent) 
     public:
-        float framesPerSecond = 8.f;
+        float rate = 0.08f;
         bool paused = false;
         
         SimpleSpriteAnimation(std::vector<int> layout = {})

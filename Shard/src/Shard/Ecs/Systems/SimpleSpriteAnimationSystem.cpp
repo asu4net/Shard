@@ -17,8 +17,8 @@ namespace Shard
 
             animation.m_currentTime += Time::DeltaTime();
 
-            if (animation.m_currentTime < animation.framesPerSecond * Time::DeltaTime()) continue;
-
+            if (animation.m_currentTime < animation.rate) continue;
+            
             animation.m_currentTime = 0;
 
             if (animation.m_layout.empty())

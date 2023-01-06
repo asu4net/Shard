@@ -18,7 +18,7 @@ namespace Shard
         Event<ComponentArgs> OnComponentAdded;
         Event<ComponentArgs> OnComponentRemoved;
         std::function<void()> OnFixedUpdateCalled;
-
+        
         Scene() = default;
         Scene(Window* window);
         ~Scene();
