@@ -158,7 +158,7 @@ namespace Shard
 
     void Renderer::DrawQuad(const std::string&   meshKey, const MvpData& matrices,
                             const std::shared_ptr<Shader>& shader, const Color& color, const bool useTexture,
-                            const std::string& texturePath, const float uvMultiplier, const BlendingMode blendingMode)
+                            const std::string& texturePath, const Vector2& uvMultiplier, const BlendingMode blendingMode)
     {
         if (!m_initialized) return;
         
@@ -172,7 +172,7 @@ namespace Shard
         {
             glEnable(GL_BLEND);
             SetBlendMode(blendingMode);
-            shader->SetUniformFloat(UNIFORM_UV_MULTIPLIER, uvMultiplier);
+            shader->SetUniformVec2(UNIFORM_UV_MULTIPLIER, uvMultiplier);
             shader->SetUniformInt(UNIFORM_TEXTURE_NAME, 0);
             m_textures[texturePath].Bind();
         }

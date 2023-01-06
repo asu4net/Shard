@@ -21,6 +21,7 @@ namespace Shard
 		void SetUniformInt(const char* name, int value);
 		void SetUniformFloat(const char* name, float value);
 		void SetUniformMat4(const char* name, glm::mat4 value);
+		void SetUniformVec2(const char* name, Vector2 value);
 		void SetUniformVec4(const char* name, glm::vec4 value);
 		void SetUniformVec3(const char* name, Vector3 value);
 

@@ -11,7 +11,7 @@ namespace Shard
         SpriteMode mode;
         bool useTexture;
         BlendingMode blendingMode;
-        float uvMultiplier = 1;
+        Vector2 uvMultiplier = Vector2::one;
         int currentSubMesh = 0;
         
         Sprite(const std::string& texturePath = "", const std::shared_ptr<Shader>& shader = Renderer::GetDefaultShader());

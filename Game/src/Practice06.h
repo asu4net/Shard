@@ -38,11 +38,20 @@ class Game final : public Application
         {
             const Entity platform = scene.CreateEntity("Platform");
             auto& sprite = platform.Add<SpriteRenderer>(parallaxFolder + "Platform.png");
-            sprite.sprite->uvMultiplier = 20.f;
+            sprite.sprite->uvMultiplier = {20.f, 1.f};
             sprite.orderInLayer = -3;
             auto& transform = platform.Get<Transform>();
-            transform.scale = { 3, 3, 3};
-            transform.position += Vector3::down * 2.35f;
+            transform.scale = { 20, 1.5f, 1.5f};
+            transform.position += Vector3::down * 2.f;
+        }
+
+        {
+            const Entity clouds = scene.CreateEntity("Clouds");
+            auto& sprite = clouds.Add<SpriteRenderer>(parallaxFolder + "Clouds.png");
+            sprite.orderInLayer = -1;
+            auto& transform = clouds.Get<Transform>();
+            transform.scale = { 10, 10, 10};
+            transform.position += Vector3::up * 1.f;
         }
     }
 };

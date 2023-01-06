@@ -78,7 +78,7 @@ namespace Shard
 		{
 			m_sprite = Sprite(texturePath);
 			m_sprite.blendingMode = mode;
-			m_sprite.uvMultiplier = uvMultiplier;
+			m_sprite.uvMultiplier = {uvMultiplier, uvMultiplier};
 		}
 
 		Sprite& GetSprite() { return m_sprite; }

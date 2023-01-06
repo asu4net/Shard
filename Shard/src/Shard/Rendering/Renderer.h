@@ -50,7 +50,7 @@ namespace Shard
 			const Color& color = Color::White,
 			const bool useTexture = false,
 			const std::string& texturePath = "",
-			const float uvMultiplier = 1.f,
+			const Vector2& uvMultiplier = Vector2::one,
 			const BlendingMode blendingMode = BlendingMode::Alpha);
 
 		static void DrawCircle(const MvpData& matrices,

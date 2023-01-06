@@ -144,7 +144,13 @@ namespace Shard
 		int location = GetUniform(name);
 		glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(value));
 	}
-	
+
+	void Shader::SetUniformVec2(const char* name, Vector2 value)
+	{
+    	int location = GetUniform(name);
+    	glUniform2fv(location, 1, glm::value_ptr(value.ToGlm()));
+	}
+
 	void Shader::SetUniformVec4(const char* name, glm::vec4 value)
 	{
 		int location = GetUniform(name);
