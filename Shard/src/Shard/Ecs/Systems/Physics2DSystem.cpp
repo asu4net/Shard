@@ -46,7 +46,7 @@ namespace Shard
 
     void Physics2DSystem::OnEntityDestroyed(EntityArgs args)
     {
-        Entity entity = GetEntityByHandler(args.entityHandler);
+        Entity entity = Scene::GetEntityByHandler(args.entityHandler);
 
         if (entity.Has<Physicbody2D>())
             FinalizePhysicbody2DComponent(entity);
@@ -56,7 +56,7 @@ namespace Shard
     void Physics2DSystem::OnComponentRemoved(ComponentArgs args)
     {
         if (args.componentType == Physicbody2D::GetType())
-            FinalizePhysicbody2DComponent(GetEntityByHandler(args.entityHandler));
+            FinalizePhysicbody2DComponent(Scene::GetEntityByHandler(args.entityHandler));
     }
 
     void Physics2DSystem::FinalizePhysicbody2DComponent(Entity entity)
@@ -128,7 +128,7 @@ namespace Shard
                 
                 if (!isCollision) return;
                 
-                const Entity other = GetEntityByHandler(otherEntity);
+                const Entity other = Scene::GetEntityByHandler(otherEntity);
 
                 for (size_t i = 0; i < logic.m_scripts.size(); i++)
                 {
@@ -145,7 +145,7 @@ namespace Shard
                 {
                     if (!Registry().valid(otherEntity)) break;
                     Script* script = otherLogic.m_scripts[i];
-                    script->OnCollision(GetEntityByHandler(entity));
+                    script->OnCollision(Scene::GetEntityByHandler(entity));
                 }
             });
         });
@@ -166,7 +166,7 @@ namespace Shard
 
     void Physics2DSystem::OnComponentAdded(ComponentArgs args)
     {  
-        Entity entity = GetEntityByHandler(args.entityHandler);
+        Entity entity = Scene::GetEntityByHandler(args.entityHandler);
         
         if (!entity.Has<Physicbody2D>()) return;
         auto& pb = entity.Get<Physicbody2D>();

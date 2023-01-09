@@ -2,6 +2,7 @@
 #include "Parallax.h"
 #include "Ecs/Components.h"
 #include "Ecs/Entity.h"
+#include "Ecs/Systems/CameraSystem.h"
 
 namespace Shard
 {
@@ -13,7 +14,7 @@ namespace Shard
     
     void Parallax::Update()
     {
-        const Entity mainCamera = GetMainCameraEntity();
+        const Entity mainCamera = CameraSystem::GetMainCameraEntity();
         if (!mainCamera.IsValid()) return;
 
         const Vector3 currentCameraPosition = mainCamera.Get<Transform>().position;

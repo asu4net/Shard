@@ -20,9 +20,7 @@ namespace Shard
 
     protected:
         entt::registry& Registry();
-        Entity GetCameraEntity();
         Camera& GetCamera();
-        Entity GetEntityByHandler(entt::entity entityHandler);
         float GetWindowAspect() const;
         Scene* GetScene() const { return m_scene; }
 

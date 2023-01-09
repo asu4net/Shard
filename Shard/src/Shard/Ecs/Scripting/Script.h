@@ -44,14 +44,7 @@ namespace Shard
             return m_scene->CreateEntity();
         }
 
-        Entity GetMainCameraEntity()
-        {
-            return m_scene->GetMainCameraEntity();
-        }
-
         void DestroyEntity(Entity entity) { m_scene->DestroyEntity(entity); }
-
-        Vector3 ScreenToWorldPoint(const Vector2& screenPos);
         
         Entity GetOwner() const 
         {

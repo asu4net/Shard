@@ -16,7 +16,7 @@ void BeeController::Update()
     Transform& beeTransform = Get<Transform>();
         
     //Bee translation
-    const Vector3 mouseWorld = ScreenToWorldPoint(Input::GetMousePosition());
+    const Vector3 mouseWorld = CameraSystem::ScreenToWorldPoint(Input::GetMousePosition());
     TransformSystem::SmoothTranslation(beeTransform, mouseWorld, mouseFollowSpeed * Time::DeltaTime());
     
     //Bee rotation

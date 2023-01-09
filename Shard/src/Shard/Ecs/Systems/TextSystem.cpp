@@ -19,8 +19,8 @@ namespace Shard
 
     void TextSystem::OnComponentAdded(ComponentArgs args)
     {
-        Entity entity = GetEntityByHandler(args.entityHandler);
-
+        Entity entity = Scene::GetEntityByHandler(args.entityHandler);
+        
         if (entity.Has<TextRenderer>())
         {
             TextRenderer& textRenderer = entity.Get<TextRenderer>();

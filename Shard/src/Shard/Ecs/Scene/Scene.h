@@ -25,8 +25,7 @@ namespace Shard
 
         Entity CreateEntity(const std::string& name = "Entity", const std::string& tag = "Default");
         void DestroyEntity(const Entity& entity);
-        Entity GetEntityByHandler(const entt::entity handler);
-        Entity GetMainCameraEntity();
+        static Entity GetEntityByHandler(const entt::entity handler);
         Window* GetWindow() { return m_window; }
         
     private:

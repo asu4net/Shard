@@ -65,12 +65,8 @@ namespace Shard
         
         float CurrentTime() const;
         
-        Vector3 ScreenToWorldPoint(Vector2 screenPoint, glm::mat4 proj = glm::mat4(1), glm::mat4 view = glm::mat4(1));
-        
         void StartLoop();
-
-        
-        
+    
     private:
         std::string m_title;
         GLFWwindow* m_window;

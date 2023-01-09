@@ -70,13 +70,7 @@ namespace Shard
 
     Entity Scene::GetEntityByHandler(const entt::entity handler)
     {
-        if (!m_registry.valid(handler)) return {};
         return Entity::m_entities[handler];
-    }
-
-    Entity Scene::GetMainCameraEntity()
-    {
-        return GetEntityByHandler(CameraSystem::MainCameraEntityHandler());
     }
     
     void Scene::OnRenderReady(RenderReadyArgs args)

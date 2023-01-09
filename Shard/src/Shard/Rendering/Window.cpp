@@ -105,18 +105,7 @@ namespace Shard
 		m_title = title;
 		glfwSetWindowTitle(m_window, title.c_str());
 	}
-
-	Vector3 Window::ScreenToWorldPoint(const Vector2 screenPoint, const glm::mat4 proj, const glm::mat4 view)
-	{
-		const float halfScreenWidth =  static_cast<float>(CurrentWindowWidth) / 2;
-		const float halfScreenHeight =  static_cast<float>(CurrentWindowHeight) / 2;
-		const glm::mat4 inverseMv = glm::inverse(proj * view);
-		const glm::vec4 near = glm::vec4(((screenPoint.x - halfScreenWidth) / halfScreenWidth),(-1 * (screenPoint.y - halfScreenHeight) / halfScreenHeight), -1, 1.0);
-		glm::vec4 nearResult = inverseMv * near;
-		nearResult /= nearResult.w;
-		return {nearResult.x, nearResult.y, 0};
-	}
-
+	
 	void Window::SetCursorMode(const CursorMode mode)
 	{
 		m_cursorMode = mode;

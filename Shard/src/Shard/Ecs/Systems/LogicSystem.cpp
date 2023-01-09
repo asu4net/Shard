@@ -43,7 +43,7 @@ namespace Shard
     {
         if (args.componentType != Logic::GetType()) return;
         
-        const Entity entity = GetEntityByHandler(args.entityHandler);
+        const Entity entity = Scene::GetEntityByHandler(args.entityHandler);
         Logic& logic = entity.Get<Logic>();
         logic.m_entity = entity;
         logic.m_scene = GetScene();

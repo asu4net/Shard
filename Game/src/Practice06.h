@@ -16,7 +16,7 @@ class Game final : public Application
         bee.Add<Logic>().AddScript<BeeController>();
         
         {
-            const Entity mainCamera = scene.GetMainCameraEntity();
+            const Entity mainCamera = CameraSystem::GetMainCameraEntity();
             Logic& logic = mainCamera.Add<Logic>();
             logic.AddScript<CameraController>();
             FollowEntity& followEntity = logic.AddScript<FollowEntity>();

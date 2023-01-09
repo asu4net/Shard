@@ -3,6 +3,7 @@
 #include "Scene/Scene.h"
 #include "Entity.h"
 #include "Components.h"
+#include "Systems/CameraSystem.h"
 
 namespace Shard
 {
@@ -23,23 +24,11 @@ namespace Shard
         return m_scene->m_registry;
     }
 
-    Entity System::GetCameraEntity()
-    {
-        if (!m_scene) assert(false);
-        return m_scene->GetMainCameraEntity();
-    }
-
     Camera& System::GetCamera()
     {
-        return GetCameraEntity().Get<Camera>();
+        return CameraSystem::GetMainCameraEntity().Get<Camera>();
     }
-
-    Entity System::GetEntityByHandler(entt::entity entityHandler)
-    {
-        if (!m_scene) assert(false);
-        return m_scene->GetEntityByHandler(entityHandler);
-    }
-
+    
     float System::GetWindowAspect() const
     {
         return m_scene->m_window->Aspect();

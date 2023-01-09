@@ -4,12 +4,13 @@
 #include "Input.h"
 #include "TimeData.h"
 #include "Ecs/Components.h"
+#include "Ecs/Systems/CameraSystem.h"
 
 namespace Shard
 {
     void CameraController::Update()
     {
-        const Entity mainCamera = GetMainCameraEntity();
+        const Entity mainCamera = CameraSystem::GetMainCameraEntity();
         auto& transform = mainCamera.Get<Transform>();
         auto& camera = mainCamera.Get<Camera>();
         
