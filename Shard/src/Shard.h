@@ -30,6 +30,7 @@
 #include "Shard/Ecs/Scripting/Script.h"
 #include "Shard/Ecs/Scripting/Native/Parallax.h"
 #include "Shard/Ecs/Scripting/Native/CameraController.h"
+#include "Shard/Ecs/Scripting/Native/FollowEntity.h"
 
 #include "Rtti/TypeManager.h"
 #include "Rtti/Type.h"

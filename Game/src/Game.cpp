@@ -13,14 +13,14 @@ using namespace Shard;
 //#define PRACTICE_03
 //#include "Practice03.h"
 
-#define PRACTICE_04
-#include "Practice04.h"
+// #define PRACTICE_04
+// #include "Practice04.h"
 
 // #define PRACTICE_05
 // #include "Practice05.h"
 
-// #define PRACTICE_06
-// #include "Practice06.h"
+#define PRACTICE_06
+#include "Practice06.h"
 
 // #define TEST
 // #include "Test.h"

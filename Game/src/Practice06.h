@@ -4,19 +4,26 @@
 
 class Game final : public Application 
 {
+    Entity bee;
+    
     void OnRenderReady(RenderReadyArgs args) override
     {
         window.SetTitle("Practice 06 - Alejandro :D");
         window.SetBackgroundColor(Color::DarkGray);
 
-        const Entity mainCamera = scene.GetMainCameraEntity();
-        mainCamera.Add<Logic>().AddScript<CameraController>();
-        mainCamera.Get<Camera>().size = 2.5f;
+        const std::string parallaxFolder = "res/Textures/Parallax/";
 
-        const Entity bee = scene.CreateEntity();
+        bee = scene.CreateEntity();
         bee.Add<Logic>().AddScript<BeeController>();
         
-        const std::string parallaxFolder = "res/Textures/Parallax/";
+        {
+            const Entity mainCamera = scene.GetMainCameraEntity();
+            Logic& logic = mainCamera.Add<Logic>();
+            logic.AddScript<CameraController>();
+            FollowEntity& followEntity = logic.AddScript<FollowEntity>();
+            followEntity.target = bee;
+            mainCamera.Get<Camera>().size = 2.5f;
+        }
         
         {
             const Entity background = scene.CreateEntity("Background");
@@ -62,7 +69,7 @@ class Game final : public Application
             const Entity clouds = scene.CreateEntity("Clouds");
             auto& sprite = clouds.Add<SpriteRenderer>(parallaxFolder + "Clouds.png");
             auto& parallax = clouds.Add<Logic>().AddScript<Parallax>();
-            parallax.scrollScale = {.5f, 0.f};
+            parallax.scrollScale = {.5f, .3f};
             sprite.orderInLayer = -1;
             auto& transform = clouds.Get<Transform>();
             transform.scale = { 20, 20, 20};
