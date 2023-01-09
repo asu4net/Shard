@@ -9,7 +9,6 @@ class Game final : public Application
     void OnRenderReady(RenderReadyArgs args) override
     {
         window.SetTitle("Practice 06 - Alejandro :D");
-        window.SetBackgroundColor(Color::DarkGray);
 
         const std::string parallaxFolder = "res/Textures/Parallax/";
 
@@ -27,7 +26,7 @@ class Game final : public Application
         
         {
             const Entity background = scene.CreateEntity("Background");
-            auto& sprite = background.Add<SpriteRenderer>(parallaxFolder + "Background.png");
+            background.Add<SpriteRenderer>(parallaxFolder + "Background.png");
             background.Add<Logic>().AddScript<Parallax>();
             auto& transform = background.Get<Transform>();
             transform.scale = { 800, 7, 1};
