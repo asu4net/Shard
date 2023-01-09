@@ -27,5 +27,10 @@
 #include "Shard/Ecs/Systems/CameraSystem.h"
 #include "Shard/Ecs/Systems/TransformSystem.h"
 
+#include "Shard/Ecs/Scripting/Script.h"
 #include "Shard/Ecs/Scripting/Native/Parallax.h"
 #include "Shard/Ecs/Scripting/Native/CameraController.h"
+
+#include "Rtti/TypeManager.h"
+#include "Rtti/Type.h"
+#include "Rtti/Object.h"

@@ -21,7 +21,7 @@ namespace Shard
         lastCameraPosition = currentCameraPosition;
         deltaMovement.x *= scrollScale.x;
         deltaMovement.y *= scrollScale.y;
-        //Get<Transform>().position += scrollRate + mainCamera.Get<Transform>().position;
+        
         Get<Transform>().position += deltaMovement;
     }
 }

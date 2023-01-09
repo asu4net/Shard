@@ -1,5 +1,6 @@
 ﻿#pragma once
 #ifdef PRACTICE_06
+#include "Scripts/BeeController.h"
 
 class Game final : public Application 
 {
@@ -11,6 +12,9 @@ class Game final : public Application
         const Entity mainCamera = scene.GetMainCameraEntity();
         mainCamera.Add<Logic>().AddScript<CameraController>();
         mainCamera.Get<Camera>().size = 2.5f;
+
+        const Entity bee = scene.CreateEntity();
+        bee.Add<Logic>().AddScript<BeeController>();
         
         const std::string parallaxFolder = "res/Textures/Parallax/";
         
@@ -26,7 +30,7 @@ class Game final : public Application
             const Entity trees = scene.CreateEntity("Trees");
             auto& sprite = trees.Add<SpriteRenderer>(parallaxFolder + "Trees.png");
             auto& parallax = trees.Add<Logic>().AddScript<Parallax>();
-            parallax.scrollScale = {.4f, 0.1f};
+            parallax.scrollScale = {.4f, 0.0f};
             sprite.orderInLayer = -2;
             auto& transform = trees.Get<Transform>();
             transform.scale = { 30, 10, 1};
@@ -37,7 +41,7 @@ class Game final : public Application
             const Entity mountains = scene.CreateEntity("Mountains");
             auto& sprite = mountains.Add<SpriteRenderer>(parallaxFolder + "Mountains.png");
             auto& parallax = mountains.Add<Logic>().AddScript<Parallax>();
-            parallax.scrollScale = {.6f, 0.3f};
+            parallax.scrollScale = {.6f, 0.f};
             sprite.orderInLayer = -1;
             auto& transform = mountains.Get<Transform>();
             transform.scale = { 30, 10, 1};

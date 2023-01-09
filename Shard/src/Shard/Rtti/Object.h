@@ -18,10 +18,10 @@ namespace Shard
 
 #define SHARD_OBJECT(_TYPE, _PARENT_TYPE) \
 public: \
-  static Object* CreateObject() \
+  static Shard::Object* CreateObject() \
   { \
     return new _TYPE(); \
   } \
-  static const Type* GetType() { return &m_type; } \
+  static const Shard::Type* GetType() { return &m_type; } \
 private: \
-  inline static Type m_type = Type(#_TYPE, _PARENT_TYPE::GetType(), &_TYPE::CreateObject);
+  inline static Shard::Type m_type = Shard::Type(#_TYPE, _PARENT_TYPE::GetType(), &_TYPE::CreateObject);

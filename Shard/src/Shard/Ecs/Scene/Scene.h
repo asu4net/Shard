@@ -27,6 +27,7 @@ namespace Shard
         void DestroyEntity(const Entity& entity);
         Entity GetEntityByHandler(const entt::entity handler);
         Entity GetMainCameraEntity();
+        Window* GetWindow() { return m_window; }
         
     private:
         entt::registry m_registry;

@@ -263,6 +263,20 @@ namespace Shard
             script->Awake();
             return *script;
         }
+
+        template<typename T>
+        T& GetScript() //Not quite performant. TODO: Change this
+        {
+            for (Script* script : m_scripts)
+            {
+                T* outScript = static_cast<T*>(script);
+                if (!outScript) continue;
+                return *outScript;
+            }
+            
+            assert(false);
+            return T();
+        }
         
     private:
         std::vector<Script*> m_scripts;

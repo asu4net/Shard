@@ -24,7 +24,7 @@ namespace Shard
         template<typename T, typename... Args>
         T& Add(Args&&... args) const
         {
-            return m_entity.Add<T>(args);
+            return m_entity.Add<T>(std::forward<Args>(args)...);
         }
 
         template<typename T>
@@ -51,6 +51,8 @@ namespace Shard
 
         void DestroyEntity(Entity entity) { m_scene->DestroyEntity(entity); }
 
+        Vector3 ScreenToWorldPoint(const Vector2& screenPos);
+        
         Entity GetOwner() const 
         {
             return m_entity;
