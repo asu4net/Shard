@@ -22,7 +22,6 @@ namespace Shard
         virtual void OnImGuiRender(ImGuiRenderArgs args);
         virtual void OnRenderReady(RenderReadyArgs args);
         virtual void OnRenderFrame(RenderFrameArgs args);
-        virtual void OnFixedUpdate();
     };
 
     //This must be implemented in the user side.

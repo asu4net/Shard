@@ -1,9 +1,9 @@
 ﻿#pragma once
 #include "Shard.h"
 
-class BeeController : public Shard::Script
+class BeeController : public Shard::EntityScript
 {
-    SHARD_OBJECT(BeeController, Script)
+    SHARD_OBJECT(BeeController, EntityScript)
 public:
     float mouseFollowSpeed = 3.f;
     float rotationSpeed = 32.f;

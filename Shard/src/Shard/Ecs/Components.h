@@ -4,7 +4,7 @@
 #include "Rendering/Sprite.h"
 #include "box2d/b2_body.h"
 #include "Ecs/Systems/PhysicMaterial.h"
-#include "Ecs/Scripting/Script.h"
+#include "Ecs/Scripting/EntityScript.h"
 
 namespace Shard
 {
@@ -267,7 +267,7 @@ namespace Shard
         template<typename T>
         T& GetScript() //Not quite performant. TODO: Change this
         {
-            for (Script* script : m_scripts)
+            for (EntityScript* script : m_scripts)
             {
                 T* outScript = script->Cast<T*>();
                 if (!outScript) continue;
@@ -279,7 +279,7 @@ namespace Shard
         }
         
     private:
-        std::vector<Script*> m_scripts;
+        std::vector<EntityScript*> m_scripts;
         Entity m_entity;
         Scene* m_scene = nullptr;
         //TODO: Awake, onCollision, destroy

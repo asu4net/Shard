@@ -1,11 +1,11 @@
 ﻿#pragma once
-#include "Ecs/Scripting/Script.h"
+#include "Ecs/Scripting/EntityScript.h"
 
 namespace Shard
 {
-    class CameraController : public Script
+    class CameraController : public EntityScript
     {
-        SHARD_OBJECT(CameraController, Script)
+        SHARD_OBJECT(CameraController, EntityScript)
     public:
         float cameraSpeed = 5.f;
         float zoomSpeed = 3.f;

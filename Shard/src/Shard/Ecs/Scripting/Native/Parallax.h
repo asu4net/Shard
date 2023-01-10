@@ -1,11 +1,11 @@
 ﻿#pragma once
-#include "Ecs/Scripting/Script.h"
+#include "Ecs/Scripting/EntityScript.h"
 
 namespace Shard
 {
-    class Parallax : public Script
+    class Parallax : public EntityScript
     {
-        SHARD_OBJECT(Parallax, Script)
+        SHARD_OBJECT(Parallax, EntityScript)
     public:
         Vector2 scrollScale = {1, 1};
         

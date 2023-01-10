@@ -1,9 +1,9 @@
 ﻿#pragma once
 #include "Shard.h"
 
-class FollowEntity : public Shard::Script
+class FollowEntity : public Shard::EntityScript
 {
-    SHARD_OBJECT(FollowEntity, Script)
+    SHARD_OBJECT(FollowEntity, EntityScript)
 public:
     Shard::Entity target;
     float reachDistance = .1f;

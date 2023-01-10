@@ -15,7 +15,7 @@ namespace Shard
             for (size_t i = 0; i < logic.m_scripts.size(); i++)
             {
                 if (!Registry().valid(entity)) break;
-                Script* script = logic.m_scripts[i];
+                EntityScript* script = logic.m_scripts[i];
                 if (m_firstFrame) script->Start();
                 if (!Registry().valid(entity)) break;
                 script->Update();
@@ -33,7 +33,7 @@ namespace Shard
             for (size_t i = 0; i < logic.m_scripts.size(); i++)
             {
                 if (!Registry().valid(entity)) break;
-                Script* script = logic.m_scripts[i];
+                EntityScript* script = logic.m_scripts[i];
                 script->FixedUpdate();
             }
         });

@@ -17,7 +17,6 @@ namespace Shard
         Event<EntityArgs> OnEntityDestroyed;
         Event<ComponentArgs> OnComponentAdded;
         Event<ComponentArgs> OnComponentRemoved;
-        std::function<void()> OnFixedUpdateCalled;
         
         Scene() = default;
         Scene(Window* window);
@@ -43,7 +42,6 @@ namespace Shard
         
         void OnRenderReady(RenderReadyArgs args);
         void OnRenderFrame(RenderFrameArgs args);
-        void OnFixedUpdate();
         
         friend class Entity;
         friend class System;

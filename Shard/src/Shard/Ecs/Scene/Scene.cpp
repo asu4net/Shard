@@ -35,8 +35,11 @@ namespace Shard
         AddSystem<SimpleSpriteAnimationSystem>();
         AddSystem<TextSystem>();
         AddSystem<GizmosSystem>();
-    }
 
+        Time::SubscribeToFixedUpdate([&] { for (System* system : m_systems)
+            system->OnSceneFixedUpdate(); });
+    }
+    
     Scene::~Scene()
     {
         for (System* system : m_systems)
@@ -83,12 +86,6 @@ namespace Shard
     void Scene::OnRenderFrame(RenderFrameArgs args)
     {
         for (System* system : m_systems) system->OnSceneUpdate();
-        Time::CheckFixedUpdate([&] { OnFixedUpdate(); });
-    }
-
-    void Scene::OnFixedUpdate()
-    {
-        OnFixedUpdateCalled();
-        for (System* system : m_systems) system->OnSceneFixedUpdate();
+        Time::CheckFixedUpdate();
     }
 }

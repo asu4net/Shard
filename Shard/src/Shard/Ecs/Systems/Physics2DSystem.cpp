@@ -133,7 +133,7 @@ namespace Shard
                 for (size_t i = 0; i < logic.m_scripts.size(); i++)
                 {
                     if (!Registry().valid(entity)) break;
-                    Script* script = logic.m_scripts[i];
+                    EntityScript* script = logic.m_scripts[i];
                     script->OnCollision(other);
                 }
                 
@@ -144,7 +144,7 @@ namespace Shard
                 for (size_t i = 0; i < otherLogic.m_scripts.size(); i++)
                 {
                     if (!Registry().valid(otherEntity)) break;
-                    Script* script = otherLogic.m_scripts[i];
+                    EntityScript* script = otherLogic.m_scripts[i];
                     script->OnCollision(Scene::GetEntityByHandler(entity));
                 }
             });

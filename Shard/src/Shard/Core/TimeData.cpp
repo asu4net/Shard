@@ -12,23 +12,25 @@ namespace Shard
 
     float Time::m_elapsed = 0;
 
+    std::function<void()> Time::fixedUpdateFunction;
+
     float Time::DeltaTime() { return m_deltaTime; }
     float Time::FixedDeltaTime() { return fixedDeltaTime; }
 
-    void Time::CalculateDeltaTime(float currentTime)
+    void Time::CalculateDeltaTime(const float currentTime)
     {
         m_deltaTime = (currentTime - m_lastTime) * timeScale;
         if (m_deltaTime > maxDeltaTime) m_deltaTime = maxDeltaTime;
         m_lastTime = currentTime;
     }
 
-    void Time::CheckFixedUpdate(std::function<void()> fixedUpdate)
+    void Time::CheckFixedUpdate()
     {
         m_elapsed += m_deltaTime;
         
         while (m_elapsed >= fixedDeltaTime)
         {
-            fixedUpdate();
+            fixedUpdateFunction();
             m_elapsed -= fixedDeltaTime;
         }
     }
