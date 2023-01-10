@@ -39,6 +39,9 @@ namespace Shard
         static const CursorMode DefaultCursorMode;
         static bool ShowOpenGlDebugMessages;
         static bool KeepWindowOpened;
+
+        Event<RenderFrameArgs> OnRenderFrameStart;
+        Event<RenderFrameArgs> OnRenderFrameEnd;
         
         Event<RenderFrameArgs> OnRenderFrame;
         Event<RenderReadyArgs> OnRenderReady;

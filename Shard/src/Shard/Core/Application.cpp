@@ -6,6 +6,8 @@ namespace Shard
 	Application::Application()
 		:scene(&window)
 	{
+		imGuiRenderer.ListenWindowEvents(window);
+		
 		printf("Shard Application constructed.\n");
 	}
 

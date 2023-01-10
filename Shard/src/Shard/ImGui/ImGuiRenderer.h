@@ -10,13 +10,14 @@ namespace Shard
     class ImGuiRenderer
     {
     public:
-        inline static bool showDemo = false;
+        inline static bool showDemo = true;
         
         Event<ImGuiRenderArgs> OnImGuiRender;
         Event<ImGuiReadyArgs> OnImGuiReady;
 
         void ListenWindowEvents(Window& window);
         void OnRenderReady(RenderReadyArgs args);
-        void OnRenderFrame(RenderFrameArgs args);
+        void OnRenderFrameStart(RenderFrameArgs args);
+        void OnRenderFrameEnd(RenderFrameArgs args);
     };
 }
