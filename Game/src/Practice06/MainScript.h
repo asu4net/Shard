@@ -1,7 +1,5 @@
 ﻿#pragma once
-#include "Shard.h"
-
-using namespace Shard;
+#include "../Scripts/BeeController.h"
 
 class MainScript : public SceneScript
 {
