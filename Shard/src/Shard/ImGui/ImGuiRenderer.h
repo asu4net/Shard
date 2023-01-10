@@ -17,7 +17,6 @@ namespace Shard
 
         void ListenWindowEvents(Window& window);
         void OnRenderReady(RenderReadyArgs args);
-        void OnRenderFrameStart(RenderFrameArgs args);
-        void OnRenderFrameEnd(RenderFrameArgs args);
+        void OnRenderFrame(RenderFrameArgs args);
     };
 }

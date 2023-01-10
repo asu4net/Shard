@@ -12,8 +12,7 @@ namespace Shard
     void ImGuiRenderer::ListenWindowEvents(Window& window)
     {
         window.OnRenderReady.ADD_LISTENER(ImGuiRenderer, OnRenderReady);
-        window.OnRenderFrameStart.ADD_LISTENER(ImGuiRenderer, OnRenderFrameStart);
-        window.OnRenderFrameEnd.ADD_LISTENER(ImGuiRenderer, OnRenderFrameEnd);
+        window.OnRenderFrame.AddListener(this, &ImGuiRenderer::OnRenderFrame);
     }
 
     void ImGuiRenderer::OnRenderReady(RenderReadyArgs args)
@@ -30,10 +29,11 @@ namespace Shard
         ImGui_ImplGlfw_InitForOpenGL(args.windowHandler, true);
         ImGui_ImplOpenGL3_Init("#version 330");
         ImGui::StyleColorsDark();
+        
         OnImGuiReady.Invoke({});
     }
 
-    void ImGuiRenderer::OnRenderFrameStart(RenderFrameArgs args)
+    void ImGuiRenderer::OnRenderFrame(RenderFrameArgs args)
     {
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
@@ -49,13 +49,9 @@ namespace Shard
         OnImGuiRender.Invoke({});
         
         ImGui::Render();
-    }
-    
-    void ImGuiRenderer::OnRenderFrameEnd(RenderFrameArgs args)
-    {
+
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
         
-        const ImGuiIO& io = ImGui::GetIO();
         if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
         {
             GLFWwindow* backup_current_context = glfwGetCurrentContext();

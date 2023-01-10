@@ -151,8 +151,6 @@ namespace Shard
 			//Input events
 			glfwPollEvents();
 			
-			OnRenderFrameStart.Invoke({this, m_window});
-			
 			int display_w, display_h;
 			glfwGetFramebufferSize(m_window, &display_w, &display_h);
 			glViewport(0, 0, display_w, display_h);
@@ -162,7 +160,6 @@ namespace Shard
 			Time::CalculateDeltaTime(CurrentTime());
 			
 			//DRAW STUFF
-			OnRenderFrameEnd.Invoke({this, m_window}); //imgui open gl and shit
 			OnRenderFrame.Invoke({this, m_window});
 			
 			glfwSwapBuffers(m_window);
