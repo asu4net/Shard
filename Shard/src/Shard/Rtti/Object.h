@@ -1,5 +1,4 @@
 #pragma once
-#include <string>
 #include "Type.h"
 
 namespace Shard
@@ -7,9 +6,16 @@ namespace Shard
     class Object
     {        
     public:
-        static Object* CreateObject() { return new Object(); };
-
+        static Object* CreateObject() { return new Object(); }
+        
         static const Type* GetType() { return &m_type; }
+        
+        template<typename T>
+        T* Cast()
+        {
+            if (!IsChildOf(T::GetType())) return nullptr;
+            return static_cast<T*>(this);
+        }
 
     private:
         inline static Type m_type = Type("Object", nullptr, &Object::CreateObject);

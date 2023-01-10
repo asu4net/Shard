@@ -11,25 +11,18 @@ namespace Shard
     private:
         std::string m_name;
         Type* m_nextType = nullptr;
-        const Type* m_parentType;
-        Object* (*m_createObjectFunc)();
+        const Type* m_parentType = nullptr;
+        Object* (*m_createObjectFunc)() = nullptr;
 
     public:
         Type() = default;
         Type(const std::string& name, const Type* parentType, Object* (*createObjectFunc)());
-
+        
         const Type* GetNextType() const { return m_nextType; }
-        const std::string GetName() const { return m_name; }
-        Object* CreateObject() const { m_createObjectFunc(); }
-
+        std::string GetName() const { return m_name; }
+        Object* CreateObject() const { return m_createObjectFunc(); }
+        
         bool IsChildOf(const Type* type) const;
         bool operator==(const Type* type) const { return this == type; }
-
-        template<typename T>
-        T* Cast()
-        {
-            if (!IsChildOf(T::GetType())) return nullptr;
-            return static_cast<T*>(this);
-        }
     };
 }

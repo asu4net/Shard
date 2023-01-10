@@ -269,7 +269,7 @@ namespace Shard
         {
             for (Script* script : m_scripts)
             {
-                T* outScript = static_cast<T*>(script);
+                T* outScript = script->Cast<T*>();
                 if (!outScript) continue;
                 return *outScript;
             }
