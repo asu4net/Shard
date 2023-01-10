@@ -24,8 +24,10 @@ namespace Shard
 	{
 		printf("Shard Application destroyed.\n");
 	}
+	
+	void Application::PreInitialize() {}
 
-	void Application::OnCreate()
+	void Application::Initialize()
 	{
 		printf("Shard Application created.\n");
 		window.StartLoop();

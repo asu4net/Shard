@@ -6,6 +6,7 @@ namespace Shard
 {
     class System;
     class Entity;
+    class SceneScript;
 
     struct ComponentArgs { entt::entity entityHandler; const Type* componentType; };
     struct EntityArgs { entt::entity entityHandler; };
@@ -26,12 +27,29 @@ namespace Shard
         void DestroyEntity(const Entity& entity);
         static Entity GetEntityByHandler(const entt::entity handler);
         Window* GetWindow() { return m_window; }
+
+        template<class T>
+        T& AddScript()
+        {
+            if (m_sceneScript)
+            {
+                assert(false);
+                return T();
+            }
+            T* script = new T();
+            script->m_scene = this;
+            script->Awake();
+            m_sceneScript = script;
+            return *script;
+        }
         
     private:
         entt::registry m_registry;
         Window* m_window = nullptr;
         std::vector<System*> m_systems;
-
+        SceneScript* m_sceneScript = nullptr;
+        bool m_firstFrame = true;
+        
         template<class T>
         void AddSystem()
         {
@@ -42,6 +60,9 @@ namespace Shard
         
         void OnRenderReady(RenderReadyArgs args);
         void OnRenderFrame(RenderFrameArgs args);
+        
+        void FixedUpdateSceneScript();
+        void UpdateSceneScript();
         
         friend class Entity;
         friend class System;

@@ -7,7 +7,8 @@
 void main()
 {
 	const auto app = Shard::CreateApplication();
-	app->OnCreate();
+	app->PreInitialize();
+	app->Initialize();
 	delete app;
 }
 

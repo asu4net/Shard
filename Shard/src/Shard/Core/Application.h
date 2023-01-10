@@ -15,9 +15,10 @@ namespace Shard
         
         Application();
         virtual ~Application();
-
-        virtual void OnCreate();
-
+        
+        virtual void PreInitialize();
+        virtual void Initialize();
+        
         virtual void OnImGuiReady(ImGuiReadyArgs args);
         virtual void OnImGuiRender(ImGuiRenderArgs args);
         virtual void OnRenderReady(RenderReadyArgs args);

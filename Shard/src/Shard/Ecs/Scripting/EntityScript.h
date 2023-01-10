@@ -1,5 +1,6 @@
 #pragma once
 #include "Script.h"
+#include "Ecs/Entity.h"
 
 namespace Shard
 {

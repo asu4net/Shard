@@ -12,6 +12,7 @@
 #include "Ecs/Systems/GizmosSystem.h"
 #include "Ecs/Systems/TransformSystem.h"
 #include "Ecs/Systems/LogicSystem.h"
+#include "Ecs/Scripting/SceneScript.h"
 
 namespace Shard
 {
@@ -28,7 +29,7 @@ namespace Shard
         
         AddSystem<TransformSystem>();
         AddSystem<CameraSystem>();
-
+        
         //Rendering
         AddSystem<SpriteSystem>();
         AddSystem<BasicShapesSystem>();
@@ -36,8 +37,11 @@ namespace Shard
         AddSystem<TextSystem>();
         AddSystem<GizmosSystem>();
 
-        Time::SubscribeToFixedUpdate([&] { for (System* system : m_systems)
-            system->OnSceneFixedUpdate(); });
+        Time::SubscribeToFixedUpdate([&] {
+            FixedUpdateSceneScript();
+            for (System* system : m_systems)
+                system->OnSceneFixedUpdate();
+        });
     }
     
     Scene::~Scene()
@@ -82,10 +86,30 @@ namespace Shard
         mainCamera.Add<Camera>();
         for (System* system : m_systems) system->OnSceneStart();
     }
-
+    
     void Scene::OnRenderFrame(RenderFrameArgs args)
     {
+        UpdateSceneScript();
         for (System* system : m_systems) system->OnSceneUpdate();
         Time::CheckFixedUpdate();
+    }
+
+    void Scene::FixedUpdateSceneScript()
+    {
+        if (!m_sceneScript) return;
+        m_sceneScript->FixedUpdate();
+    }
+
+    void Scene::UpdateSceneScript()
+    {
+        if (!m_sceneScript) return;
+        
+        if (m_firstFrame)
+        {
+            m_sceneScript->Start();
+            m_firstFrame = false;
+        }
+
+        m_sceneScript->Update();
     }
 }

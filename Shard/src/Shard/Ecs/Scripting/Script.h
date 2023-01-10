@@ -1,8 +1,10 @@
 ﻿#pragma once
-#include "Ecs/Entity.h"
 
 namespace Shard
 {
+    class Entity;
+    class Scene;
+    
     class Script : public Object
     {
         SHARD_OBJECT(Script, Object)
@@ -14,17 +16,14 @@ namespace Shard
         virtual void Update() {}
         virtual void FixedUpdate() {}
         
-        Entity CreateEntity(const std::string& name = "Entity", const std::string& tag = "Default")
-        {
-            return m_scene->CreateEntity();
-        }
-        
-        void DestroyEntity(Entity entity) { m_scene->DestroyEntity(entity); }
+        Entity CreateEntity(const std::string& name = "Entity", const std::string& tag = "Default");
+        void DestroyEntity(Entity entity);
         
     private:
         Scene* m_scene = nullptr;
         
         friend struct Logic;
         friend class LogicSystem;
+        friend class Scene;
     };
 }
